@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radiant Grammar School Jallah Jeem - QR Attendance Final</title>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<style>
+body{margin:0;font-family:Arial;background:#f4f7fb}
+.header{background:#0b3d91;color:#fff;padding:15px;text-align:center}
+.tabs{display:flex;position:sticky;top:0;z-index:10;background:#fff;border-bottom:2px solid #0b3d91}
+.tab{flex:1;padding:12px;border:none;background:#fff;font-weight:bold;cursor:pointer}
+.tab.active{background:#0b3d91;color:#fff}
+.section{display:none;padding:15px}.section.active{display:block}
+.card{background:#fff;padding:15px;border-radius:10px;margin-bottom:15px;box-shadow:0 2px 5px rgba(0,0,0,.1)}
+input,select,button{width:100%;padding:10px;margin:5px 0;border-radius:6px;border:1px solid #ccc;box-sizing:border-box}
+button{background:#0b3d91;color:#fff;font-weight:bold;border:none}
+.qr-card{border:1px dashed #0b3d91;padding:10px;margin:10px;display:inline-block;width:200px;background:#fff;text-align:center}
+@media print{body *{visibility:hidden}#cards,#cards *{visibility:visible}#cards{position:absolute;left:0;top:0;width:100%}button,.tabs,.header{display:none}}
+</style>
+</head>
+<body>
+<div class="header"><h1>Radiant Grammar School Jallah Jeem</h1><p>Daily Attendance Register - QR System</p></div>
+<div class="tabs">
+<button class="tab active" onclick="openTab(event,'students')">Students</button>
+<button class="tab" onclick="openTab(event,'cards')">ID Cards</button>
+<button class="tab" onclick="openTab(event,'scan')">Scan</button>
+<button class="tab" onclick="openTab(event,'register')">Register</button>
+</div>
+<div id="students" class="section active"><div class="card">
+<input id="roll" placeholder="Roll / ID e.g. RGS-1001"><input id="name" placeholder="Student Name"><input id="fname" placeholder="Father Name">
+<select id="sclass"><option>Play Group to KG</option><option>Class 1 to 4</option><option>Class 5 to 6</option><option>Class 7 to 8</option></select>
+<button onclick="addStudent()">Add Student</button></div><div class="card"><div id="studentList"></div><button onclick="addSamples()" style="background:#28a745">Add 3 Sample Students</button></div></div>
+<div id="cards" class="section"><div class="card"><button onclick="generateCards()">Generate All Cards</button><button onclick="window.print()" style="background:#ff9800">Print A4 Sheet - Only Cards</button><div id="cardsArea"></div></div></div>
+<div id="scan" class="section"><div class="card"><div id="reader"></div><div id="msg" style="padding:10px;text-align:center;margin-top:10px"></div><button onclick="startScanner()">Start Camera</button><button onclick="stopScanner()" style="background:#dc3545">Stop Camera</button></div></div>
+<div id="register" class="section"><div class="card"><h3>Daily Register - <span id="todayDate"></span></h3><button onclick="exportCSV()">Export CSV for Excel</button><table width="100%" border="1" style="border-collapse:collapse;background:#fff"><thead><tr><th>Roll / ID</th><th>Student Name</th><th>Father Name</th><th>Class</th><th>Status</th><th>Scan Time</th></tr></thead><tbody id="registerBody"></tbody></table></div></div>
+<script>
+let students=JSON.parse(localStorage.getItem('rgs_final')||'[]');
+let todayKey=new Date().toDateString();
+let attendance=JSON.parse(localStorage.getItem('rgs_att_'+todayKey)||'{}');
+let lastScanned={roll:null,time:0};
+function save(){localStorage.setItem('rgs_final',JSON.stringify(students));localStorage.setItem('rgs_att_'+todayKey,JSON.stringify(attendance));}
+function openTab(e,id){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');e.target.classList.add('active');if(id==='register')renderRegister();}
+function addStudent(){let r=roll.value.trim(),n=name.value.trim(),f=fname.value.trim(),c=sclass.value;if(!r||!n)return alert('Required');students.push({roll:r,name:n,fname:f,sclass:c});save();renderStudents();roll.value='';name.value='';fname.value='';}
+function addSamples(){let a=[{roll:'RGS-1001',name:'Muhammad Ali',fname:'Ahmad Ali',sclass:'Class 5'},{roll:'RGS-1002',name:'Fatima Zahra',fname:'Zahoor',sclass:'Class 5'},{roll:'RGS-1003',name:'Usman Ghani',fname:'Ghani',sclass:'Class 6'}];a.forEach(x=>{if(!students.find(y=>y.roll===x.roll))students.push(x)});save();renderStudents();}
+function renderStudents(){let h='<table width=100% border=1><tr><th>Roll</th><th>Name</th><th>Father</th><th>Class</th></tr>';students.forEach(s=>{h+='<tr><td>'+s.roll+'</td><td>'+s.name+'</td><td>'+s.fname+'</td><td>'+s.sclass+'</td></tr>'});h+='</table>';studentList.innerHTML=h;}
+function generateCards(){cardsArea.innerHTML='';students.forEach((s,i)=>{let d=document.createElement('div');d.className='qr-card';d.innerHTML='<div id="qr'+i+'" style=display:flex;justify-content:center></div><b>'+s.name+'</b><br>'+s.fname+'<br>'+s.roll;cardsArea.appendChild(d);setTimeout(()=>{new QRCode(document.getElementById('qr'+i),{text:s.roll,width:110,height:110})},200)})}
+let scanner;function startScanner(){scanner=new Html5Qrcode("reader");scanner.start({facingMode:"environment"},{fps:10,qrbox:250},(decoded)=>{let now=Date.now();let r=decoded.trim();let m=document.getElementById('msg');if(lastScanned.roll===r && (now-lastScanned.time)<3000){m.style.background='#fff3cd';m.innerText='3-sec Cooldown - Wait';return;}lastScanned={roll:r,time:now};let stu=students.find(s=>s.roll===r);if(!stu){m.style.background='#f8d7da';m.innerText='Not Found: '+r;return;}if(attendance[r]){m.style.background='#f8d7da';m.innerText='Already Marked: '+stu.name+' at '+attendance[r];return;}let t=new Date().toLocaleTimeString();attendance[r]=t;save();m.style.background='#d4edda';m.innerText='Present: '+stu.name+' at '+t;renderRegister();},()=>{}).catch(e=>alert('Camera needs HTTPS. Enable Pages: '+e))}
+function stopScanner(){if(scanner){scanner.stop().then(()=>{reader.innerHTML='';}).catch(()=>{reader.innerHTML='';})}}
+function renderRegister(){registerBody.innerHTML='';todayDate.innerText=todayKey;students.forEach(s=>{let t=attendance[s.roll];let st=t?'PRESENT':'ABSENT';registerBody.innerHTML+='<tr><td>'+s.roll+'</td><td>'+s.name+'</td><td>'+(s.fname||'')+'</td><td>'+s.sclass+'</td><td>'+st+'</td><td>'+(t||'--:--')+'</td></tr>'})}
+function exportCSV(){if(students.length===0){alert('No students!');return;}let rows=[];rows.push(['Radiant Grammar School Jallah Jeem - Daily Attendance Register']);rows.push(['Date',todayKey]);rows.push([]);rows.push(['Roll / ID','Student Name','Father Name','Class','Status','Scan Time']);students.forEach(s=>{let t=attendance[s.roll];rows.push([s.roll,s.name,s.fname||'',s.sclass,t?'PRESENT':'ABSENT',t||'--:--'])});let csv="data:text/csv;charset=utf-8,"+rows.map(e=>e.join(",")).join("\n");let l=document.createElement("a");l.setAttribute("href",encodeURI(csv));l.setAttribute("download",'RGS_Attendance_'+todayKey+'.csv');document.body.appendChild(l);l.click();document.body.removeChild(l);}
+renderStudents();renderRegister();
+</script>
+</body>
+                                                          </html>
