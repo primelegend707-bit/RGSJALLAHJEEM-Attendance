@@ -1,56 +1,166 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Radiant Grammar School Jallah Jeem - QR Attendance Final</title>
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<title>Radiant Grammar School Jallah Jeem - QR Attendance</title>
+<script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-body{margin:0;font-family:Arial;background:#f4f7fb}
-.header{background:#0b3d91;color:#fff;padding:15px;text-align:center}
-.tabs{display:flex;position:sticky;top:0;z-index:10;background:#fff;border-bottom:2px solid #0b3d91}
-.tab{flex:1;padding:12px;border:none;background:#fff;font-weight:bold;cursor:pointer}
-.tab.active{background:#0b3d91;color:#fff}
-.section{display:none;padding:15px}.section.active{display:block}
-.card{background:#fff;padding:15px;border-radius:10px;margin-bottom:15px;box-shadow:0 2px 5px rgba(0,0,0,.1)}
-input,select,button{width:100%;padding:10px;margin:5px 0;border-radius:6px;border:1px solid #ccc;box-sizing:border-box}
-button{background:#0b3d91;color:#fff;font-weight:bold;border:none}
-.qr-card{border:1px dashed #0b3d91;padding:10px;margin:10px;display:inline-block;width:200px;background:#fff;text-align:center}
-@media print{body *{visibility:hidden}#cards,#cards *{visibility:visible}#cards{position:absolute;left:0;top:0;width:100%}button,.tabs,.header{display:none}}
+body{font-family:'Poppins',sans-serif}
+.tab-active{background:#1e40af;color:white}
+.qr-card canvas, .qr-card img{margin:auto}
 </style>
 </head>
-<body>
-<div class="header"><h1>Radiant Grammar School Jallah Jeem</h1><p>Daily Attendance Register - QR System</p></div>
-<div class="tabs">
-<button class="tab active" onclick="openTab(event,'students')">Students</button>
-<button class="tab" onclick="openTab(event,'cards')">ID Cards</button>
-<button class="tab" onclick="openTab(event,'scan')">Scan</button>
-<button class="tab" onclick="openTab(event,'register')">Register</button>
+<body class="bg-slate-100 min-h-screen">
+<header class="bg-blue-800 text-white p-4 text-center shadow-lg">
+<h1 class="text-xl md:text-2xl font-bold">Radiant Grammar School Jallah Jeem</h1>
+<p class="text-sm opacity-90">Daily Attendance Register - QR System</p>
+</header>
+
+<nav class="flex justify-center gap-2 p-3 bg-white shadow sticky top-0 z-10">
+<button onclick="showTab('students')" id="btn-students" class="tab-active px-4 py-2 rounded-lg font-semibold text-sm">Students</button>
+<button onclick="showTab('scan')" id="btn-scan" class="bg-slate-200 px-4 py-2 rounded-lg font-semibold text-sm">Scan QR</button>
+<button onclick="showTab('report')" id="btn-report" class="bg-slate-200 px-4 py-2 rounded-lg font-semibold text-sm">Report</button>
+</nav>
+
+<div id="tab-students" class="p-3 max-w-3xl mx-auto">
+  <div class="bg-white rounded-xl shadow p-4 mb-4">
+    <h2 class="font-bold mb-3">Add New Student</h2>
+    <div class="grid gap-2">
+      <input id="roll" placeholder="Roll / ID e.g. RGS-1001" class="border rounded-lg p-2.5 text-sm">
+      <input id="name" placeholder="Student Name" class="border rounded-lg p-2.5 text-sm">
+      <input id="father" placeholder="Father Name" class="border rounded-lg p-2.5 text-sm">
+      <select id="class" class="border rounded-lg p-2.5 text-sm">
+        <option>Play Group to KG</option><option>Nursery</option><option>KG</option><option>Class 1</option><option>Class 2</option><option>Class 3</option><option>Class 4</option><option>Class 5</option><option>Class 6</option><option>Class 7</option><option>Class 8</option><option>Class 9</option><option>Class 10</option>
+      </select>
+      <button onclick="addStudent()" class="bg-blue-800 text-white rounded-lg py-2.5 font-semibold">Add Student</button>
+      <button onclick="addSample()" class="bg-green-600 text-white rounded-lg py-2 text-sm">Add 3 Sample Students</button>
+    </div>
+  </div>
+  <div id="studentList" class="grid gap-3"></div>
 </div>
-<div id="students" class="section active"><div class="card">
-<input id="roll" placeholder="Roll / ID e.g. RGS-1001"><input id="name" placeholder="Student Name"><input id="fname" placeholder="Father Name">
-<select id="sclass"><option>Play Group to KG</option><option>Class 1 to 4</option><option>Class 5 to 6</option><option>Class 7 to 8</option></select>
-<button onclick="addStudent()">Add Student</button></div><div class="card"><div id="studentList"></div><button onclick="addSamples()" style="background:#28a745">Add 3 Sample Students</button></div></div>
-<div id="cards" class="section"><div class="card"><button onclick="generateCards()">Generate All Cards</button><button onclick="window.print()" style="background:#ff9800">Print A4 Sheet - Only Cards</button><div id="cardsArea"></div></div></div>
-<div id="scan" class="section"><div class="card"><div id="reader"></div><div id="msg" style="padding:10px;text-align:center;margin-top:10px"></div><button onclick="startScanner()">Start Camera</button><button onclick="stopScanner()" style="background:#dc3545">Stop Camera</button></div></div>
-<div id="register" class="section"><div class="card"><h3>Daily Register - <span id="todayDate"></span></h3><button onclick="exportCSV()">Export CSV for Excel</button><table width="100%" border="1" style="border-collapse:collapse;background:#fff"><thead><tr><th>Roll / ID</th><th>Student Name</th><th>Father Name</th><th>Class</th><th>Status</th><th>Scan Time</th></tr></thead><tbody id="registerBody"></tbody></table></div></div>
+
+<div id="tab-scan" class="p-3 max-w-3xl mx-auto hidden">
+  <div class="bg-white rounded-xl shadow p-4 mb-3">
+    <h2 class="font-bold mb-2">Scan Student QR for Attendance</h2>
+    <div id="reader" class="w-full rounded-lg overflow-hidden border"></div>
+    <div class="flex gap-2 mt-3">
+      <button onclick="startScan()" id="startBtn" class="bg-blue-800 text-white px-4 py-2 rounded-lg flex-1 font-semibold">Start Camera</button>
+      <button onclick="stopScan()" class="bg-red-600 text-white px-4 py-2 rounded-lg flex-1 font-semibold">Stop</button>
+    </div>
+    <div class="mt-3 flex gap-2">
+      <input id="manualRoll" placeholder="Manual Roll e.g. RGS-1001" class="border rounded-lg p-2.5 text-sm flex-1">
+      <button onclick="manualAttendance()" class="bg-slate-800 text-white px-4 rounded-lg text-sm">Mark Present</button>
+    </div>
+    <p id="scanResult" class="mt-3 text-center font-bold text-green-700"></p>
+  </div>
+  <div class="bg-white rounded-xl shadow p-4">
+    <h3 class="font-bold text-sm mb-2">Today's Present (<span id="todayDate"></span>)</h3>
+    <div id="todayList" class="text-sm"></div>
+  </div>
+</div>
+
+<div id="tab-report" class="p-3 max-w-3xl mx-auto hidden">
+  <div class="bg-white rounded-xl shadow p-4">
+    <h2 class="font-bold mb-3">Attendance Report</h2>
+    <div class="flex gap-2 mb-3">
+      <input type="date" id="reportDate" class="border rounded-lg p-2 text-sm" onchange="renderReport()">
+      <button onclick="exportCSV()" class="bg-green-600 text-white px-3 py-2 rounded-lg text-sm">Export CSV</button>
+      <button onclick="clearAttendance()" class="bg-red-100 text-red-700 px-3 py-2 rounded-lg text-sm">Clear</button>
+    </div>
+    <div id="reportList" class="text-sm"></div>
+  </div>
+</div>
+
 <script>
-let students=JSON.parse(localStorage.getItem('rgs_final')||'[]');
-let todayKey=new Date().toDateString();
-let attendance=JSON.parse(localStorage.getItem('rgs_att_'+todayKey)||'{}');
-let lastScanned={roll:null,time:0};
-function save(){localStorage.setItem('rgs_final',JSON.stringify(students));localStorage.setItem('rgs_att_'+todayKey,JSON.stringify(attendance));}
-function openTab(e,id){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');e.target.classList.add('active');if(id==='register')renderRegister();}
-function addStudent(){let r=roll.value.trim(),n=name.value.trim(),f=fname.value.trim(),c=sclass.value;if(!r||!n)return alert('Required');students.push({roll:r,name:n,fname:f,sclass:c});save();renderStudents();roll.value='';name.value='';fname.value='';}
-function addSamples(){let a=[{roll:'RGS-1001',name:'Muhammad Ali',fname:'Ahmad Ali',sclass:'Class 5'},{roll:'RGS-1002',name:'Fatima Zahra',fname:'Zahoor',sclass:'Class 5'},{roll:'RGS-1003',name:'Usman Ghani',fname:'Ghani',sclass:'Class 6'}];a.forEach(x=>{if(!students.find(y=>y.roll===x.roll))students.push(x)});save();renderStudents();}
-function renderStudents(){let h='<table width=100% border=1><tr><th>Roll</th><th>Name</th><th>Father</th><th>Class</th></tr>';students.forEach(s=>{h+='<tr><td>'+s.roll+'</td><td>'+s.name+'</td><td>'+s.fname+'</td><td>'+s.sclass+'</td></tr>'});h+='</table>';studentList.innerHTML=h;}
-function generateCards(){cardsArea.innerHTML='';students.forEach((s,i)=>{let d=document.createElement('div');d.className='qr-card';d.innerHTML='<div id="qr'+i+'" style=display:flex;justify-content:center></div><b>'+s.name+'</b><br>'+s.fname+'<br>'+s.roll;cardsArea.appendChild(d);setTimeout(()=>{new QRCode(document.getElementById('qr'+i),{text:s.roll,width:110,height:110})},200)})}
-let scanner;function startScanner(){scanner=new Html5Qrcode("reader");scanner.start({facingMode:"environment"},{fps:10,qrbox:250},(decoded)=>{let now=Date.now();let r=decoded.trim();let m=document.getElementById('msg');if(lastScanned.roll===r && (now-lastScanned.time)<3000){m.style.background='#fff3cd';m.innerText='3-sec Cooldown - Wait';return;}lastScanned={roll:r,time:now};let stu=students.find(s=>s.roll===r);if(!stu){m.style.background='#f8d7da';m.innerText='Not Found: '+r;return;}if(attendance[r]){m.style.background='#f8d7da';m.innerText='Already Marked: '+stu.name+' at '+attendance[r];return;}let t=new Date().toLocaleTimeString();attendance[r]=t;save();m.style.background='#d4edda';m.innerText='Present: '+stu.name+' at '+t;renderRegister();},()=>{}).catch(e=>alert('Camera needs HTTPS. Enable Pages: '+e))}
-function stopScanner(){if(scanner){scanner.stop().then(()=>{reader.innerHTML='';}).catch(()=>{reader.innerHTML='';})}}
-function renderRegister(){registerBody.innerHTML='';todayDate.innerText=todayKey;students.forEach(s=>{let t=attendance[s.roll];let st=t?'PRESENT':'ABSENT';registerBody.innerHTML+='<tr><td>'+s.roll+'</td><td>'+s.name+'</td><td>'+(s.fname||'')+'</td><td>'+s.sclass+'</td><td>'+st+'</td><td>'+(t||'--:--')+'</td></tr>'})}
-function exportCSV(){if(students.length===0){alert('No students!');return;}let rows=[];rows.push(['Radiant Grammar School Jallah Jeem - Daily Attendance Register']);rows.push(['Date',todayKey]);rows.push([]);rows.push(['Roll / ID','Student Name','Father Name','Class','Status','Scan Time']);students.forEach(s=>{let t=attendance[s.roll];rows.push([s.roll,s.name,s.fname||'',s.sclass,t?'PRESENT':'ABSENT',t||'--:--'])});let csv="data:text/csv;charset=utf-8,"+rows.map(e=>e.join(",")).join("\n");let l=document.createElement("a");l.setAttribute("href",encodeURI(csv));l.setAttribute("download",'RGS_Attendance_'+todayKey+'.csv');document.body.appendChild(l);l.click();document.body.removeChild(l);}
-renderStudents();renderRegister();
+let students = JSON.parse(localStorage.getItem('rgs_students')||'[]');
+let attendance = JSON.parse(localStorage.getItem('rgs_attendance')||'{}');
+let html5Qrcode;
+function save(){localStorage.setItem('rgs_students',JSON.stringify(students));localStorage.setItem('rgs_attendance',JSON.stringify(attendance));}
+function todayStr(){return new Date().toISOString().split('T')[0];}
+document.getElementById('todayDate').innerText=todayStr();
+document.getElementById('reportDate').value=todayStr();
+function showTab(t){
+document.getElementById('tab-students').classList.add('hidden');
+document.getElementById('tab-scan').classList.add('hidden');
+document.getElementById('tab-report').classList.add('hidden');
+document.getElementById('tab-'+t).classList.remove('hidden');
+document.getElementById('btn-students').className='bg-slate-200 px-4 py-2 rounded-lg font-semibold text-sm';
+document.getElementById('btn-scan').className='bg-slate-200 px-4 py-2 rounded-lg font-semibold text-sm';
+document.getElementById('btn-report').className='bg-slate-200 px-4 py-2 rounded-lg font-semibold text-sm';
+document.getElementById('btn-'+t).className='tab-active px-4 py-2 rounded-lg font-semibold text-sm';
+if(t==='report')renderReport();if(t==='scan')renderToday();
+}
+function addStudent(){
+const roll=document.getElementById('roll').value.trim().toUpperCase();
+const name=document.getElementById('name').value.trim();
+const father=document.getElementById('father').value.trim();
+const cls=document.getElementById('class').value;
+if(!roll||!name){alert('Roll and Name required');return;}
+if(students.find(s=>s.roll===roll)){alert('Roll already exists');return;}
+students.push({roll,name,father,cls});save();renderStudents();
+document.getElementById('roll').value='';document.getElementById('name').value='';document.getElementById('father').value='';
+}
+function addSample(){
+const samples=[{roll:'RGS-1001',name:'Ali Raza',father:'Muhammad Riaz',cls:'Class 3'},{roll:'RGS-1002',name:'Ayesha Khan',father:'Khan Muhammad',cls:'Class 2'},{roll:'RGS-1003',name:'Usman Jutt',father:'Bilal Jutt',cls:'Play Group to KG'}];
+samples.forEach(s=>{if(!students.find(x=>x.roll===s.roll))students.push(s);});save();renderStudents();
+}
+function deleteStudent(roll){if(!confirm('Delete '+roll+' ?'))return;students=students.filter(s=>s.roll!==roll);save();renderStudents();}
+function renderStudents(){
+const div=document.getElementById('studentList');
+if(students.length===0){div.innerHTML='<p class="text-center text-sm text-slate-500">No students yet. Add students.</p>';return;}
+div.innerHTML='';
+students.forEach((s,i)=>{
+const card=document.createElement('div');
+card.className='bg-white rounded-xl shadow p-3 flex gap-3 items-center';
+card.innerHTML=`<div class="flex-1"><p class="font-bold text-sm">${s.roll} - ${s.name}</p><p class="text-xs text-slate-600">Father: ${s.father} | ${s.cls}</p><div class="flex gap-2 mt-2"><button onclick="showQR('${s.roll}')" class="bg-slate-800 text-white px-3 py-1 rounded text-xs">View QR</button><button onclick="deleteStudent('${s.roll}')" class="bg-red-100 text-red-600 px-3 py-1 rounded text-xs">Delete</button></div></div><div id="qr-${i}" class="qr-card w-20 h-20"></div>`;
+div.appendChild(card);
+setTimeout(()=>{const el=document.getElementById(`qr-${i}`);if(el){el.innerHTML='';new QRCode(el,{text:s.roll,width:80,height:80});}},100);
+});
+}
+function showQR(roll){
+const s=students.find(x=>x.roll===roll);
+const w=window.open('','_blank','width=400,height=500');
+w.document.write(`<html><head><title>${roll}</title></head><body style="text-align:center;font-family:sans-serif"><h2>${s.name}</h2><p>${roll} | ${s.cls}</p><div id="q"></div><p>Father: ${s.father}</p><p>Radiant Grammar School Jallah Jeem</p><script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"><\/script><script>new QRCode(document.getElementById("q"),{text:"${roll}",width:200,height:200});window.print();<\/script></body></html>`);
+}
+function markAttendance(roll){
+const s=students.find(x=>x.roll===roll);
+if(!s){document.getElementById('scanResult').innerText='❌ Student not found: '+roll;return false;}
+const date=todayStr();
+if(!attendance[date])attendance[date]=[];
+if(attendance[date].find(a=>a.roll===roll)){document.getElementById('scanResult').innerText='⚠️ Already Present: '+s.name;return true;}
+attendance[date].push({roll,time:new Date().toLocaleTimeString()});save();
+document.getElementById('scanResult').innerText='✅ Present: '+s.name+' ('+roll+') at '+new Date().toLocaleTimeString();
+renderToday();renderReport();if(navigator.vibrate)navigator.vibrate(200);return true;
+}
+function manualAttendance(){const roll=document.getElementById('manualRoll').value.trim().toUpperCase();if(!roll)return;markAttendance(roll);document.getElementById('manualRoll').value='';}
+function startScan(){
+if(html5Qrcode&&html5Qrcode.isScanning)return;
+html5Qrcode=new Html5Qrcode("reader");
+html5Qrcode.start({facingMode:"environment"},{fps:10,qrbox:250},(decoded)=>{markAttendance(decoded.trim().toUpperCase());},(err)=>{}).catch(e=>{alert('Camera error: '+e);});
+}
+function stopScan(){if(html5Qrcode){html5Qrcode.stop().then(()=>{document.getElementById('reader').innerHTML='';}).catch(()=>{});}}
+function renderToday(){
+const date=todayStr();const list=attendance[date]||[];
+document.getElementById('todayList').innerHTML=list.length?list.map(a=>{const s=students.find(x=>x.roll===a.roll);return `<div class="flex justify-between border-b py-1"><span>${a.roll} - ${s?s.name:'Unknown'}</span><span>${a.time}</span></div>`;}).join(''):'<p class="text-slate-500">No attendance yet today.</p>';
+}
+function renderReport(){
+const date=document.getElementById('reportDate').value||todayStr();const list=attendance[date]||[];let presentRolls=list.map(a=>a.roll);let absent=students.filter(s=>!presentRolls.includes(s.roll));
+let html=`<p class="mb-2 font-semibold">Date: ${date} | Present: ${list.length} | Absent: ${absent.length} | Total: ${students.length}</p>`;
+html+=`<div class="mb-3"><b>Present:</b><br>`+(list.map(a=>{const s=students.find(x=>x.roll===a.roll);return `${a.roll} - ${s?s.name:''} (${a.time})`;}).join('<br>')||'None')+`</div>`;
+html+=`<div><b>Absent:</b><br>`+(absent.map(s=>`${s.roll} - ${s.name}`).join('<br>')||'None')+`</div>`;
+document.getElementById('reportList').innerHTML=html;
+}
+function exportCSV(){
+const date=document.getElementById('reportDate').value||todayStr();const list=attendance[date]||[];let csv='Roll,Name,Father,Class,Status,Time,Date\n';
+students.forEach(s=>{const att=list.find(a=>a.roll===s.roll);csv+=`${s.roll},"${s.name}","${s.father}",${s.cls},${att?'Present':'Absent'},${att?att.time:''},${date}\n`;});
+const blob=new Blob([csv],{type:'text/csv'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`Attendance_${date}.csv`;a.click();
+}
+function clearAttendance(){const date=document.getElementById('reportDate').value;if(!confirm('Clear attendance for '+date+' ?'))return;delete attendance[date];save();renderReport();renderToday();}
+renderStudents();renderToday();renderReport();
 </script>
 </body>
-                                                          </html>
+                                                                        </html>
