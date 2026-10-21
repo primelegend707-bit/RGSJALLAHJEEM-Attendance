@@ -73,3 +73,72 @@ body{background:#0a0e23;min-height:100vh}
 </div>
 <div class=made>Made by Mian Ahmad</div>
 </div>
+<div id=appPage class=hidden>
+<div class=phone-wrap>
+<div class=top-header><div class=logo><div class=logo-icon>🎓</div><div class=logo-text><h1>RGSJALLAHJEEM</h1></div></div></div>
+<div class=premium-pill><span>Premium School • Fee Management</span></div>
+<div class=dashboard-card><h2>Dashboard</h2><p class=sub id=dateText style="text-align:center;font-size:11px;color:#8da0c5">Overview</p></div>
+<div class=stats-grid>
+<div class=stat-gold><p>Total</p><h3 id=totalStudents>0</h3><p>PG-8</p></div>
+<div class=stat-gold><p>Paid</p><h3 id=totalPaid>0</h3></div>
+<div class=stat-gold><p>Unpaid</p><h3 id=totalUnpaid>0</h3></div>
+</div>
+<div class=fee-row>
+<div class=fee-dark><p class=label>Monthly</p><h3><span id=showM>1000</span> Rs</h3></div>
+<div class=fee-dark><p class=label>Yearly</p><h3><span id=showY>3500</span> Rs</h3></div>
+</div>
+<div class=search-box><span class=sicon>🔍</span><input id=searchInput type=text placeholder="Search students..." oninput=renderList()></div>
+<div class=section-head><h3>Student List</h3><select id=classFilter class=class-dropdown onchange=renderList()><option value="">Class PG-8</option><option>PG</option><option>Nursery</option><option>Prep</option><option>KG</option><option>One</option><option>Two</option><option>Three</option><option>Four</option><option>Five</option><option>Six</option><option>Seven</option><option>Eight</option></select></div>
+<div id=studentList></div>
+<div style="margin:10px 16px"><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+<button class=action-btn onclick=openAddModal()>📋 Fee Collection</button>
+<button class=action-btn onclick=printAll()>🧾 Receipt</button>
+<button class=action-btn onclick=whatsappAll()>💬 WhatsApp</button>
+<button class=action-btn onclick=exportData()>☁️ Save</button>
+</div></div>
+<div style="height:20px"></div>
+</div>
+<div class=bottom-nav>
+<button id=navDash class=active onclick=switchTab('dash')>Dashboard</button>
+<button id=navStudents onclick=switchTab('students')>Students</button>
+<button id=navFees onclick=switchTab('fees')>Fees</button>
+<button id=navReports onclick=switchTab('reports')>Reports</button>
+<button id=navSettings onclick=switchTab('settings')>Settings</button>
+</div>
+<button style="position:fixed;bottom:75px;right:16px;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#C5A059,#e0c88a);color:#0a1931;border:3px solid #0a1931;font-size:28px;display:flex;align-items:center;justify-content:center;z-index:21" onclick=openAddModal()>+</button>
+</div>
+<div id=addModal class=modal><div class=modal-box><h3 id=modalTitle>Add Student PG-8</h3><input id=sName class=input placeholder="Student Name *"><input id=sFather class=input placeholder="Father Name"><input id=sPhone class=input placeholder="Phone"><div style="display:flex;gap:6px"><select id=sClass class=input style="flex:1"><option value="">Class *</option><option>PG</option><option>Nursery</option><option>Prep</option><option>KG</option><option>One</option><option>Two</option><option>Three</option><option>Four</option><option>Five</option><option>Six</option><option>Seven</option><option>Eight</option></select><input id=sRoll class=input style="flex:1" placeholder="Roll No"></div><input id=sBform class=input placeholder="B-Form"><div style="display:flex;gap:6px"><input id=sAdm class=input type=number placeholder="Admission 1500"><input id=sExam class=input type=number placeholder="Exam"></div><div style="display:flex;gap:6px"><input id=sDisc class=input type=number placeholder="Discount 0"><input id=sFine class=input type=number placeholder="Fine 0"></div><div style="display:flex;gap:6px"><button class="btn btn-navy" style="width:50%" onclick=saveStudent()>Save</button><button class="btn btn-gold" style="width:50%" onclick=closeAddModal()>Close</button></div></div></div>
+<div id=feeModal class=modal><div class=modal-box><h3>Fee Collection</h3><p id=feeStudentName style="font-size:13px;margin:6px 0"></p><select id=feeMonth class=input><option>January</option><option>February</option><option>March</option><option>April</option><option>May</option><option>June</option><option>July</option><option>August</option><option>September</option><option>October</option><option>November</option><option>December</option></select><select id=feeMStatus class=input><option>Unpaid</option><option>Paid</option><option>Partial</option></select><input id=feeMAmount class=input type=number placeholder="Monthly 1000"><select id=feeYStatus class=input><option>Unpaid</option><option>Paid</option><option>Partial</option></select><input id=feeYAmount class=input type=number placeholder="Yearly 3500"><div style="display:flex;gap:6px"><button class="btn btn-navy" style="width:50%" onclick=saveFee()>Save Fee</button><button class="btn btn-gold" style="width:50%" onclick=closeFeeModal()>Close</button></div></div></div>
+<script>
+let students=JSON.parse(localStorage.getItem('rgs_pg8_students')||'[]');
+let feeRecords=JSON.parse(localStorage.getItem('rgs_pg8_fee')||'{}');
+let settings=JSON.parse(localStorage.getItem('rgs_pg8_settings')||'{"monthly":1000,"yearly":3500,"admission":1500,"pass":"RGJ123","myPass":""}');
+let currentFeeId=null;
+document.getElementById('dateText').innerText="Overview • "+new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+function login(){
+let u=document.getElementById('userInput').value.trim();
+let p=document.getElementById('passInput').value.trim();
+if(!u){alert('Username likho: RGSJALLAHJEEM');return;}
+if(u!=='RGSJALLAHJEEM'){alert('Username sirf RGSJALLAHJEEM hona chahiye');return;}
+if(p==='RGJ123'||p===settings.pass||p===settings.myPass||p.length>=3){
+document.getElementById('loginPage').classList.add('hidden');
+document.getElementById('appPage').classList.remove('hidden');
+renderList();
+} else alert('Password Galat! RGJ123');
+}
+function switchTab(t){document.querySelectorAll('.bottom-nav button').forEach(b=>b.classList.remove('active'));let map={dash:'navDash',students:'navStudents',fees:'navFees',reports:'navReports',settings:'navSettings'};if(map[t])document.getElementById(map[t]).classList.add('active');if(t==='settings'){let np=prompt('Apna Naya Password Rakho:\nMaster: RGJ123\nApna: '+(settings.myPass||'Koi nahi')+'\nNaya likho:');if(np&&np.length>=3){settings.myPass=np;settings.pass=np;localStorage.setItem('rgs_pg8_settings',JSON.stringify(settings));alert('✅ Save! RGJ123 + '+np);}}if(t==='reports'){alert('Total: '+students.length);}}
+function openAddModal(id=null){currentFeeId=id;if(id){let s=students.find(x=>x.id===id);document.getElementById('modalTitle').innerText='Edit Student';document.getElementById('sName').value=s.name;document.getElementById('sFather').value=s.father;document.getElementById('sPhone').value=s.phone;document.getElementById('sClass').value=s.cls;document.getElementById('sRoll').value=s.roll;document.getElementById('sBform').value=s.bform||'';document.getElementById('sAdm').value=s.adm;document.getElementById('sExam').value=s.exam||0;document.getElementById('sDisc').value=s.disc||0;document.getElementById('sFine').value=s.fine||0;}else{document.getElementById('modalTitle').innerText='Add Student PG-8';['sName','sFather','sPhone','sRoll','sBform','sExam','sDisc','sFine'].forEach(i=>document.getElementById(i).value='');document.getElementById('sClass').value='';document.getElementById('sAdm').value=settings.admission;}document.getElementById('addModal').classList.add('open');}
+function closeAddModal(){document.getElementById('addModal').classList.remove('open');}
+function saveStudent(){let obj={id:currentFeeId||Date.now(),name:document.getElementById('sName').value.trim(),father:document.getElementById('sFather').value.trim(),phone:document.getElementById('sPhone').value.trim(),cls:document.getElementById('sClass').value,roll:document.getElementById('sRoll').value.trim(),bform:document.getElementById('sBform').value.trim(),adm:parseInt(document.getElementById('sAdm').value)||settings.admission,exam:parseInt(document.getElementById('sExam').value)||0,disc:parseInt(document.getElementById('sDisc').value)||0,fine:parseInt(document.getElementById('sFine').value)||0};if(!obj.name||!obj.cls)return alert('Name Class lazmi');if(currentFeeId){let idx=students.findIndex(x=>x.id===currentFeeId);students[idx]=obj;}else students.push(obj);localStorage.setItem('rgs_pg8_students',JSON.stringify(students));closeAddModal();renderList();}
+function renderList(){let q=document.getElementById('searchInput').value.toLowerCase();let cls=document.getElementById('classFilter').value;let filtered=students.filter(s=>{let mQ=!q||(s.name.toLowerCase().includes(q)||s.roll.toLowerCase().includes(q)||s.cls.toLowerCase().includes(q));let mC=!cls||s.cls===cls;return mQ&&mC;});let html='';if(filtered.length===0&&students.length===0)html='<div style="margin:16px;background:#fff;color:#0a1931;border-radius:12px;padding:16px;text-align:center">No Students<br><small>+ dabao PG-8 add karo</small></div>';filtered.forEach(s=>{let mKey=s.id+'_'+document.getElementById('feeMonth').value+'_monthly';let mR=feeRecords[mKey];let mStatus=mR?mR.status:'Unpaid';let isPaid=mStatus==='Paid';html+=`<div class=student-card onclick="openFee(${s.id})"><div style="display:flex;gap:10px;align-items:center"><div style="width:36px;height:36px;border-radius:50%;background:#e8e8e8;display:flex;align-items:center;justify-content:center">👦</div><div><b>${s.name}</b><p style="font-size:10px;color:#666">Class ${s.cls} • Roll ${s.roll}</p></div></div><div style="font-size:11px;color:#8d6e2f;font-weight:600">${isPaid?'Paid':'Unpaid'}</div></div>`;});document.getElementById('studentList').innerHTML=html;document.getElementById('totalStudents').innerText=students.length;let month=document.getElementById('feeMonth').value;let paid=0,unpaid=0;students.forEach(s=>{let k=s.id+'_'+month+'_monthly';let r=feeRecords[k];if(r&&r.status==='Paid')paid++;else unpaid++;});document.getElementById('totalPaid').innerText=paid;document.getElementById('totalUnpaid').innerText=unpaid;document.getElementById('showM').innerText=settings.monthly;document.getElementById('showY').innerText=settings.yearly;}
+function openFee(id){currentFeeId=id;let s=students.find(x=>x.id===id);document.getElementById('feeStudentName').innerText=s.name+' - Class '+s.cls;let mKey=id+'_'+document.getElementById('feeMonth').value+'_monthly';let yKey=id+'_yearly_fund';let mR=feeRecords[mKey];let yR=feeRecords[yKey];document.getElementById('feeMStatus').value=mR?mR.status:'Unpaid';document.getElementById('feeMAmount').value=mR?mR.amount:settings.monthly;document.getElementById('feeYStatus').value=yR?yR.status:'Unpaid';document.getElementById('feeYAmount').value=yR?yR.amount:settings.yearly;document.getElementById('feeModal').classList.add('open');}
+function closeFeeModal(){document.getElementById('feeModal').classList.remove('open');}
+function saveFee(){let month=document.getElementById('feeMonth').value;let mKey=currentFeeId+'_'+month+'_monthly';let yKey=currentFeeId+'_yearly_fund';feeRecords[mKey]={status:document.getElementById('feeMStatus').value,amount:parseInt(document.getElementById('feeMAmount').value)||0};feeRecords[yKey]={status:document.getElementById('feeYStatus').value,amount:parseInt(document.getElementById('feeYAmount').value)||0};localStorage.setItem('rgs_pg8_fee',JSON.stringify(feeRecords));closeFeeModal();renderList();alert('Fee Saved!');}
+function printAll(){window.print();}
+function whatsappAll(){if(students.length===0)return alert('No Students');let msg='RGSJALLAHJEEM Fee Reminder';window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');}
+function exportData(){let data={students,feeRecords,settings};let blob=new Blob([JSON.stringify(data)],{type:'application/json'});let url=URL.createObjectURL(blob);let a=document.createElement('a');a.href=url;a.download='RGS_Backup.json';a.click();}
+document.getElementById('feeMonth').value=new Date().toLocaleString('default',{month:'long'});
+renderList();
+</script>
+</body>
+</html>
