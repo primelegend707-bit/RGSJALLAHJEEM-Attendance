@@ -1,83 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RGS PG-8</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RGS JALLAH JEEM - Fee Management</title>
+<link rel="icon" href="logo.png">
 <style>
-*{box-sizing:border-box;font-family:Inter}body{margin:0;background:#0f172a;color:#fff;display:flex;justify-content:center}
-#loginPage{width:100%;max-width:400px;padding:20px;min-height:100vh;display:flex;align-items:center}
-.glass{background:rgba(255,255,255,0.08);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.15);border-radius:24px;padding:28px;text-align:center;width:100%}
-.inp{width:100%;padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#fff;margin:8px 0}
-.btn{width:100%;padding:14px;background:#fde68a;color:#000;font-weight:800;border:none;border-radius:12px;cursor:pointer}
-#mainApp{display:none;width:100%;max-width:500px;padding:12px 12px 90px}
-.card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:14px;margin:10px 0}
-.gold{background:#d4b483;color:#000;border-radius:12px;padding:10px;text-align:center;font-weight:700;cursor:pointer}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.botNav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:500px;background:#0f172a;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-around;padding:10px 0;z-index:10}
-.botNav div{font-size:11px;opacity:.6;padding:6px 10px;border-radius:20px;cursor:pointer}.botNav .active{background:#d4b483;color:#000;opacity:1;font-weight:700}
-.fab{position:fixed;bottom:85px;right:18px;width:56px;height:56px;background:#d4b483;color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;cursor:pointer}
-.sItem{background:#fff;color:#000;border-radius:12px;padding:12px;margin:8px 0}.badgeB{background:#38bdf8;color:#000;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700}
-.yearSel{padding:8px 12px;border-radius:20px;background:#d4b483;color:#000;font-weight:700;border:none}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
+body{background:#0f172a;color:#fff;min-height:100vh;position:relative}
+#loginPage{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+.login-box{background:#1e293b;padding:30px;border-radius:20px;width:100%;max-width:380px;text-align:center}
+.login-logo{width:110px;height:110px;margin:0 auto 12px;background:#fff;border-radius:50%;padding:6px}
+.login-logo img{width:100%;height:100%;object-fit:contain;border-radius:50%}
+.login-box h2{color:#d9b88a;margin-bottom:4px}
+.login-box input{width:100%;padding:14px;border-radius:12px;border:1px solid #334155;background:#0f172a;color:#fff;margin-bottom:12px;font-size:16px;text-align:left}
+.login-box button{width:100%;padding:14px;border-radius:12px;border:none;background:#d9b88a;color:#0f172a;font-weight:800;font-size:16px;cursor:pointer}
+#mainApp{display:none;position:relative;min-height:100vh}
+#mainApp::before{
+ content:"";
+ position:fixed;
+ top:50%;left:50%;
+ transform:translate(-50%,-50%);
+ width:80vw;max-width:450px;height:80vw;max-height:450px;
+ background-image:url('logo.png');
+ background-size:contain;background-repeat:no-repeat;background-position:center;
+ opacity:0.07;pointer-events:none;z-index:0;
+}
+.header{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;background:#1e293b;position:relative;z-index:1}
+.header-left{display:flex;align-items:center;gap:10px}
+.header-logo{width:38px;height:38px;background:#fff;border-radius:50%;padding:2px}
+.header-logo img{width:100%;height:100%;object-fit:contain;border-radius:50%}
+.tab{display:none;padding:16px;padding-bottom:80px;position:relative;z-index:1}
+.tab.active{display:block}
+.card{background:rgba(30,41,59,0.96);border-radius:16px;padding:14px;margin-bottom:12px}
+.btn{background:#d9b88a;color:#0f172a;border:none;padding:12px 20px;border-radius:12px;font-weight:700;cursor:pointer}
+.inp{width:100%;padding:12px;border-radius:10px;border:1px solid #334155;background:#0f172a;color:#fff;margin-bottom:10px;font-size:15px}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#1e293b;display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid #334155;z-index:10}
+.bottom-nav button{background:none;border:none;color:#94a3b8;padding:8px 16px;border-radius:20px;font-size:13px}
+.bottom-nav button.active{background:#d9b88a;color:#0f172a;font-weight:700}
+.top-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px}
+.stat{background:#d9b88a;color:#0f172a;border-radius:16px;padding:12px;text-align:center}
+.stat b{font-size:20px;display:block}
+.fab{position:fixed;bottom:80px;right:20px;width:56px;height:56px;border-radius:50%;background:#d9b88a;color:#0f172a;border:none;font-size:28px;font-weight:800;cursor:pointer;z-index:10}
 </style>
 </head>
 <body>
 <div id="loginPage">
-<div class="glass">
-<div style="width:60px;height:60px;background:linear-gradient(135deg,#fde68a,#f59e0b);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:30px">🎓</div>
-<div style="font-size:26px;font-weight:800">RGS JALLAHJEEM</div>
-<div style="opacity:.6;margin-bottom:12px">PG-8 Fee System</div>
-<input id="userInput" class="inp" value="RGSJALLAHJEEM">
-<input id="passInput" class="inp" type="password" placeholder="Password">
-<div id="err" style="color:#fca5a5;display:none;font-size:12px"></div>
-<button id="loginBtn" class="btn" style="margin-top:10px">Login</button>
-<div style="margin-top:18px;font-size:11px;opacity:.6;border-top:1px solid rgba(255,255,255,.1);padding-top:12px">Made by Mian Ahmad</div>
+<div class="login-box">
+<div class="login-logo"><img src="logo.png"></div>
+<h2>RGS JALLAH JEEM</h2>
+<p style="margin:8px 0;color:#94a3b8;font-size:13px">RADIANT GRAMMAR SCHOOL<br>Iman • Ittehad • Nazm</p>
+<p style="text-align:center;margin:10px 0;color:#d9b88a;font-size:12px;background:rgba(217,184,138,.1);padding:6px;border-radius:8px">Secure Login - Har Dafa Password</p>
+<input id="u" placeholder="Username">
+<input id="p" type="password" placeholder="Password">
+<button onclick="doLogin()">Login</button>
+<p id="err" style="color:#f87171;margin-top:10px;display:none;text-align:center"></p>
 </div>
 </div>
 <div id="mainApp">
-<div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">Dashboard</h3><select id="yearFilter" class="yearSel" onchange="render()"></select></div>
-<div id="tab-dashboard">
-<div class="grid3" style="margin-top:12px"><div class="gold"><div>Total</div><div id="tTotal" style="font-size:22px">0</div></div><div class="gold"><div>Paid</div><div id="tPaid" style="font-size:22px">0</div></div><div class="gold"><div>Unpaid</div><div id="tUnpaid" style="font-size:22px">0</div></div></div>
-<div class="card"><input id="search" class="inp" placeholder="Naam / Wald / B-Form" style="margin:0" oninput="render()"></div>
-<div id="list"></div>
-<div class="grid2"><div class="gold" onclick="pdfA4()">📄 A4 PDF</div><div class="gold" onclick="downloadCSV()">📊 CSV</div></div>
+<div class="header">
+<div class="header-left">
+<div class="header-logo"><img src="logo.png"></div>
+<h3 style="color:#d9b88a;font-size:14px">RGS JALLAH JEEM</h3>
 </div>
-<div id="tab-students" style="display:none"><h3>Students</h3><div id="list2"></div></div>
-<div id="tab-fees" style="display:none"><h3>Fees 2026-2030</h3><div class="card">Monthly: <input id="setM" class="inp" style="width:100px;display:inline-block" value="1000"> <button class="gold" style="width:auto;display:inline-block;padding:8px 12px" onclick="saveFee()">Save</button></div><div id="feeList"></div></div>
-<div id="tab-reports" style="display:none"><h3>Reports</h3><div class="card">Paid: <b id="repPaid">0</b><br>Unpaid: <b id="repUn">0</b></div><button class="gold" onclick="pdfA4()">A4 PDF</button></div>
-<div id="tab-settings" style="display:none"><h3>Settings</h3><div class="card"><b>Password Change</b><input id="oldP" class="inp" type="password" placeholder="Old"><input id="newP" class="inp" type="password" placeholder="New"><input id="newP2" class="inp" type="password" placeholder="Confirm"><button class="gold" onclick="changePass()">Change</button><div id="pMsg" style="font-size:12px"></div></div><button class="btn" style="background:#fff" onclick="logout()">Logout</button></div>
+<div style="display:flex;gap:8px">
+<select id="yearSel" onchange="render()" style="background:#d9b88a;color:#0f172a;border:none;padding:6px 10px;border-radius:20px;font-weight:700"><option>2026</option><option>2027</option><option>2028</option><option>2029</option><option>2030</option></select>
+<button onclick="doLogout()" style="background:#334155;color:#fff;border:none;padding:6px 12px;border-radius:20px;font-size:12px">Logout</button>
 </div>
-<div class="fab" id="fab">+</div>
-<div class="botNav"><div id="nDashboard" class="active" onclick="openTab('dashboard')">Dashboard</div><div id="nStudents" onclick="openTab('students')">Students</div><div id="nFees" onclick="openTab('fees')">Fees</div><div id="nReports" onclick="openTab('reports')">Reports</div><div id="nSettings" onclick="openTab('settings')">Settings</div></div>
-<div id="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:20;justify-content:center;align-items:center;padding:15px">
-<div class="glass" style="text-align:left"><h3 id="mTitle">Add Student</h3><input id="fName" class="inp" placeholder="Bachy ka Naam *"><input id="fFName" class="inp" placeholder="Wald ka Naam *"><input id="fClass" class="inp" value="PG-8"><input id="fRoll" class="inp" placeholder="Roll No"><input id="fBform" class="inp" placeholder="B-Form No" style="border:2px solid #38bdf8"><input id="fPhone" class="inp" placeholder="WhatsApp"><select id="fYear" class="inp"></select><select id="fStatus" class="inp"><option value="Unpaid">Unpaid</option><option value="Paid">Paid</option></select><input type="hidden" id="editIndex" value="-1"><div class="grid2"><button class="btn" onclick="saveStud()">Save</button><button class="inp" onclick="closeM()">Cancel</button></div></div>
+</div>
+<div id="tab-dashboard" class="tab active">
+<div class="top-stats">
+<div class="stat"><span>Total</span><b id="tTotal">0</b></div>
+<div class="stat"><span>Paid</span><b id="tPaid">0</b></div>
+<div class="stat"><span>Unpaid</span><b id="tUnpaid">0</b></div>
+</div>
+<div class="card"><input id="search" class="inp" placeholder="Naam / Wald / B-Form..." oninput="render()"></div>
+<div id="dashList"></div>
+</div>
+<div id="tab-students" class="tab">
+<div class="card"><h4>Add Student</h4>
+<input id="sName" class="inp" placeholder="Bachy ka Naam">
+<input id="sFather" class="inp" placeholder="Wald ka Naam (Bold)">
+<input id="sBform" class="inp" placeholder="B-Form Number">
+<input id="sClass" class="inp" placeholder="Class">
+<button class="btn" onclick="addStudent()" style="width:100%">Save</button>
+</div>
+<div id="studentList"></div>
+</div>
+<div id="tab-fees" class="tab"><div id="feeList"></div></div>
+<div id="tab-reports" class="tab"><div class="card"><h4>Reports</h4><p id="reportText"></p></div></div>
+<div id="tab-settings" class="tab">
+<div class="card">
+<div style="text-align:center"><img src="logo.png" style="width:80px;height:80px;background:#fff;border-radius:50%;padding:4px"><h4 style="margin-top:8px">RGS JALLAH JEEM</h4><p style="color:#d9b88a;font-size:12px">Iman • Ittehad • Nazm</p></div>
+<p style="margin:10px 0;color:#94a3b8;font-size:13px">Secure Login - Har dafa password lagega, Privacy mehfooz</p>
+<button class="btn" onclick="doLogout()" style="width:100%;background:#f87171;color:#fff">🔒 Logout</button>
+</div>
+</div>
+<button class="fab" onclick="openTab('students')">+</button>
+<div class="bottom-nav">
+<button id="b-dashboard" class="active" onclick="openTab('dashboard')">Dashboard</button>
+<button id="b-students" onclick="openTab('students')">Students</button>
+<button id="b-fees" onclick="openTab('fees')">Fees</button>
+<button id="b-reports" onclick="openTab('reports')">Reports</button>
+<button id="b-settings" onclick="openTab('settings')">Settings</button>
+</div>
 </div>
 <script>
-const DEF_USER="RGSJALLAHJEEM"; let students=JSON.parse(localStorage.getItem('rgs_pg8_final')||'[]'); let mFee=localStorage.getItem('mFee_final')||1000;
-function getPass(){return localStorage.getItem('rgs_pass')||'RGJ123';} function getUser(){return localStorage.getItem('rgs_user')||DEF_USER;}
-document.getElementById('passInput').value=getPass(); document.getElementById('userInput').value=getUser();
-let years=[]; for(let y=2026;y<=2030;y++) years.push(y);
-function fillYears(){let yf=document.getElementById('yearFilter'); yf.innerHTML=''; years.forEach(y=>{let o=document.createElement('option');o.value=y;o.text=y;yf.appendChild(o);}); let fy=document.getElementById('fYear'); fy.innerHTML=''; years.forEach(y=>{let o=document.createElement('option');o.value=y;o.text='Year '+y;fy.appendChild(o);}); yf.value='2026';}
-fillYears();
-function doLogin(){let u=document.getElementById('userInput').value.trim().toUpperCase(); let p=document.getElementById('passInput').value.trim(); if(u===getUser().toUpperCase() && p===getPass()){localStorage.setItem('rgs_auth','true');showApp();}else{let e=document.getElementById('err');e.style.display='block';e.innerText='Invalid';}}
-function showApp(){document.getElementById('loginPage').style.display='none';document.getElementById('mainApp').style.display='block';render();}
-function check(){if(localStorage.getItem('rgs_auth')==='true')showApp();} document.getElementById('loginBtn').addEventListener('click',doLogin);
-function openTab(t){document.querySelectorAll('[id^="tab-"]').forEach(d=>d.style.display='none');document.getElementById('tab-'+t).style.display='block';document.querySelectorAll('.botNav div').forEach(d=>d.classList.remove('active'));let id='n'+t.charAt(0).toUpperCase()+t.slice(1); if(document.getElementById(id)) document.getElementById(id).classList.add('active'); render();}
-document.getElementById('fab').onclick=()=>{document.getElementById('editIndex').value='-1';document.getElementById('modal').style.display='flex';}
-function closeM(){document.getElementById('modal').style.display='none';}
-function openEdit(i){let s=students[i];document.getElementById('editIndex').value=i;document.getElementById('fName').value=s.name;document.getElementById('fFName').value=s.fname;document.getElementById('fClass').value=s.class;document.getElementById('fRoll').value=s.roll;document.getElementById('fBform').value=s.bform;document.getElementById('fPhone').value=s.phone;document.getElementById('fYear').value=s.year;document.getElementById('fStatus').value=s.status;document.getElementById('modal').style.display='flex';}
-function saveStud(){let idx=document.getElementById('editIndex').value; let s={name:document.getElementById('fName').value.trim(), fname:document.getElementById('fFName').value.trim(), class:document.getElementById('fClass').value, roll:document.getElementById('fRoll').value.trim(), bform:document.getElementById('fBform').value.trim(), phone:document.getElementById('fPhone').value.trim(), year:document.getElementById('fYear').value, status:document.getElementById('fStatus').value}; if(!s.name||!s.fname) return alert('Bacha + Wald naam zaroori'); if(idx==='-1') students.push(s); else students[idx]=s; localStorage.setItem('rgs_pg8_final',JSON.stringify(students)); closeM(); render();}
-function render(){let year=document.getElementById('yearFilter').value; let q=(document.getElementById('search').value||'').toLowerCase(); let filtered=students.filter(s=>s.year==year && (s.name+s.fname+s.bform).toLowerCase().includes(q)); let yearStudents=students.filter(s=>s.year==year); let html=''; if(filtered.length===0) html=`<div class="sItem" style="text-align:center">No Students in ${year}</div>`; else filtered.forEach((s)=>{let realIdx=students.indexOf(s); html+=`<div class="sItem"><b>👦 ${s.name}</b> <span style="float:right;background:${s.status==='Paid'?'#22c55e':'#ef4444'};color:#fff;padding:2px 8px;border-radius:6px;font-size:11px">${s.status}</span><br><b>👨 Wald: ${s.fname}</b><br><small>Roll: ${s.roll} | ${s.class} | Year: ${s.year}</small><br><span class="badgeB">🆔 ${s.bform||'No B-Form'}</span><br><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><button onclick="openEdit(${realIdx})" style="padding:6px 10px;border-radius:6px;background:#d4b483;border:none;font-weight:700">Edit</button><button onclick="thermalReceipt(${realIdx})" style="padding:6px 10px;border-radius:6px;background:#000;color:#fff">🧾 Thermal</button><button onclick="del(${realIdx})">Del</button><button onclick="whats(${realIdx})" style="background:#25D366;color:#fff;border:none;padding:6px 10px;border-radius:6px">WhatsApp</button></div></div>`;}); document.getElementById('list').innerHTML=html; document.getElementById('list2').innerHTML=html; document.getElementById('feeList').innerHTML=html; document.getElementById('tTotal').innerText=yearStudents.length; document.getElementById('tPaid').innerText=yearStudents.filter(s=>s.status==='Paid').length; document.getElementById('tUnpaid').innerText=yearStudents.filter(s=>s.status!=='Paid').length; document.getElementById('repPaid').innerText=(yearStudents.filter(s=>s.status==='Paid').length*mFee)+' Rs'; document.getElementById('repUn').innerText=(yearStudents.filter(s=>s.status!=='Paid').length*mFee)+' Rs';}
-function del(i){if(confirm('Delete?')){students.splice(i,1);localStorage.setItem('rgs_pg8_final',JSON.stringify(students));render();}}
-function saveFee(){mFee=document.getElementById('setM').value;localStorage.setItem('mFee_final',mFee);render();}
-function logout(){localStorage.removeItem('rgs_auth');location.reload();}
-function changePass(){let oldP=document.getElementById('oldP').value; let np=document.getElementById('newP').value; let np2=document.getElementById('newP2').value; if(oldP!==getPass()) return document.getElementById('pMsg').innerText='Old galat'; if(np!==np2) return document.getElementById('pMsg').innerText='Match nahi'; localStorage.setItem('rgs_pass',np); document.getElementById('pMsg').innerText='✅ Done: '+np;}
-function downloadCSV(){let csv='Name,Father,Roll,B-Form,Phone,Year,Status\n'+students.map(s=>`"${s.name}","${s.fname}","${s.roll}","${s.bform}","${s.phone}","${s.year}","${s.status}"`).join('\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv]));a.download='RGS.csv';a.click();}
-function pdfA4(){const {jsPDF}=window.jspdf; const doc=new jsPDF('p','mm','a4'); let y=document.getElementById('yearFilter').value; doc.text('RGS PG-8 Year '+y,10,15); let sy=25; students.filter(s=>s.year==y).forEach((s,i)=>{if(sy>270){doc.addPage();sy=15;} doc.text(`${i+1}. ${s.name} - Wald: ${s.fname} - B-Form: ${s.bform} - ${s.status}`,10,sy); sy+=7;}); doc.save('RGS_A4_'+y+'.pdf');}
-function thermalReceipt(i){const {jsPDF}=window.jspdf; let s=students[i]; const doc=new jsPDF({unit:'mm',format:[80,150]}); doc.setFontSize(10); doc.text('RGS JALLAHJEEM',5,10); doc.text('Bacha: '+s.name,5,16); doc.text('Wald: '+s.fname,5,21); doc.text('B-Form: '+s.bform,5,26); doc.text('Year: '+s.year+' Fee: '+mFee,5,31); doc.text('Status: '+s.status,5,36); doc.save('Thermal_'+s.name+'.pdf');}
-function whats(i){let s=students[i]; window.open('https://wa.me/'+(s.phone||'')+'?text='+encodeURIComponent(s.name+' Wald '+s.fname+' Fee '+mFee));}
-check();
-</script>
-</body>
-                                                          </html>
+let students=JSON.parse(localStorage.getItem('rgs_students')||'[]');
+let fees=JSON.parse(localStorage.getItem('rgs_fees')||'[]');
+function doLogin(){
+ let u=document.getElementById('u').value.trim();
+ let p=document.getElementById('p').value.trim();
+ if(u==='RGSJALLAHJEEM' && p==='RGJ123'){
+   document.getElementById('loginPage').style.display='none';
+   document.getElementById('mainApp').style.display='block';
+   document.getElementById('u').value='';document.getElementById('p').value='';
+   render();
+ } else {
+   let e=document.getElementById('err');e.style.display='block';e.innerText='Ghalat Username ya Password!';
+ }
+}
+function doLogout(){
+ document.getElementById('mainApp').style.display='none';
+ document.getElementById('loginPage').style.display='flex';
+}
+function openTab(t){
+ document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+ document.querySelectorAll('.bottom-nav button').forEach(x=>x.classList.remove('active'));
+ document.getElementById('tab-'+t).classList.add('active');
+ document.getElementById('b-'+t).classList.add('active');
+ render();
+}
+function addStudent(){
+ let n=document.getElementById('sName').value.trim();
+ let f=document.getElementById('sFather').value
