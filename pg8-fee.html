@@ -6,139 +6,93 @@
 <title>RGS - Made by Mian Ahmad</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
-body{background:#0a0e23;min-height:100vh}
-.login-page{height:100vh;display:flex;align-items:center;justify-content:center;background:radial-gradient(120% 120% at 20% 10%,#1a1740 0%,#0a0e23 45%,#0a1931 100%);position:relative;overflow:hidden;padding:18px;flex-direction:column}
-.blob{position:absolute;border-radius:50%;filter:blur(32px);opacity:.9}
-.b1{width:220px;height:220px;background:radial-gradient(circle,#e0c88a 0%,#C5A059 40%,transparent 70%);top:-20px;left:-30px;animation:float 6s ease-in-out infinite}
-.b2{width:180px;height:160px;background:radial-gradient(circle,#c9ab6a 0%,transparent 70%);top:18%;right:8%;animation:float 7s ease-in-out infinite reverse}
-.b3{width:200px;height:200px;background:radial-gradient(circle,#C5A059 0%,transparent 70%);bottom:5%;right:-20px;animation:float 8s ease-in-out infinite}
-.b4{width:140px;height:140px;background:radial-gradient(circle,#e0c88a 0%,transparent 70%);bottom:22%;left:10%;animation:float 6.5s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-18px) scale(1.05)}}
-.glass-card{position:relative;z-index:2;width:100%;max-width:360px;background:linear-gradient(180deg,rgba(255,255,255,.08) 0%,rgba(255,255,255,.03) 100%);backdrop-filter:blur(22px);border:1.5px solid rgba(224,200,138,.5);border-radius:32px;padding:30px 22px}
-.top-icon{width:52px;height:52px;margin:0 auto 18px;background:linear-gradient(135deg,#e0c88a,#C5A059);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px}
-.title{font-size:30px;font-weight:800;color:#fff;text-align:center}
-.subtitle{font-size:13px;color:#a9a6c8;text-align:center;margin:8px 0 22px}
-.label{font-size:12px;color:#e0c88a;font-weight:600;text-align:center;margin:18px 0 8px}
-.input-glass{width:100%;padding:15px 16px 15px 46px;border-radius:18px;border:1.2px solid rgba(224,200,138,.35);background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.06));color:#fff;font-size:14px;font-weight:600;outline:none}
-.wrap{position:relative}
-.wrap .ico{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:18px;color:#e0c88a}
-.wrap .eye{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:16px;color:#e0c88a;cursor:pointer}
-.btn-gold{width:100%;margin-top:26px;padding:16px;border-radius:28px;border:none;background:linear-gradient(90deg,#e0c88a 0%,#C5A059 100%);color:#1a1400;font-size:17px;font-weight:800;cursor:pointer}
-.made{margin-top:28px;text-align:center;font-size:12px;color:#c9b896}
-.phone-wrap{max-width:420px;margin:0 auto;background:#122149;min-height:100vh;position:relative;padding-bottom:80px}
-.top-header{background:#0a1931;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(197,160,89,.3)}
-.logo{display:flex;align-items:center;gap:10px}
-.logo-icon{width:38px;height:38px;background:linear-gradient(135deg,#C5A059,#e0c88a);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;color:#0a1931;font-weight:800}
-.logo-text h1{font-size:15px;color:#e0c88a;font-weight:800}
-.premium-pill{text-align:center;margin:10px 16px}
-.premium-pill span{border:1px solid #C5A059;color:#C5A059;padding:4px 14px;border-radius:20px;font-size:11px}
-.dashboard-card{background:#0a1931;margin:10px 16px;border-radius:14px;padding:14px;border:1px solid rgba(197,160,89,.25)}
-.dashboard-card h2{text-align:center;color:#e0c88a;font-size:22px;font-weight:800}
-.stats-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:12px 16px}
-.stat-gold{background:linear-gradient(135deg,#C5A059,#d9b77a);border-radius:12px;padding:10px 6px;text-align:center;color:#0a1931;border:1px solid #e0c88a}
-.fee-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 16px 12px}
-.fee-dark{background:#0a1931;border-radius:12px;padding:12px;text-align:center;border:1px solid rgba(197,160,89,.25)}
-.search-box{margin:0 16px 14px;position:relative}
-.search-box input{width:100%;padding:12px 12px 12px 40px;border-radius:12px;border:1.5px solid #C5A059;background:#0a1931;color:#e0c88a;font-size:13px;outline:none}
-.search-box .sicon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#C5A059}
-.section-head{display:flex;justify-content:space-between;align-items:center;margin:0 16px 8px}
-.class-dropdown{background:#e0c88a;color:#0a1931;padding:5px 10px;border-radius:20px;font-size:11px;font-weight:700;border:none}
-.student-card{background:#fff;margin:0 16px 8px;border-radius:12px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;color:#0a1931}
-.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:420px;background:#0a1931;border-top:2px solid #C5A059;display:flex;justify-content:space-around;padding:8px 0;z-index:20}
-.bottom-nav button{background:none;border:none;color:#8da0c5;font-size:10px;padding:6px 12px;border-radius:20px}
-.bottom-nav button.active{background:#C5A059;color:#0a1931;font-weight:800}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:100;padding:16px}
-.modal.open{display:flex}
-.modal-box{background:#fff;width:100%;max-width:400px;border-radius:16px;padding:16px;color:#0a1931;border:3px solid #C5A059;max-height:90vh;overflow-y:auto}
-.hidden{display:none!important}
-.input{width:100%;padding:11px;border:2px solid #ddd;border-radius:10px;margin:6px 0;font-size:13px}
-.btn{width:100%;padding:11px;border-radius:10px;font-weight:800;border:none;cursor:pointer;margin-top:6px}
-.btn-navy{background:#0a1931;color:#C5A059} .btn-gold{background:#C5A059;color:#0a1931}
-.action-btn{background:linear-gradient(135deg,#C5A059,#d9b77a);color:#0a1931;border:none;padding:8px;border-radius:8px;font-size:10px;font-weight:700;display:flex;align-items:center;gap:5px;justify-content:center;cursor:pointer}
-.bform-btn{background:#0a1931;color:#C5A059;border:1px solid #C5A059;padding:6px 10px;border-radius:20px;font-size:10px;font-weight:700}
+*{box-sizing:border-box;font-family:Inter,system-ui}
+body{margin:0;min-height:100vh;background:#0f172a;display:flex;justify-content:center;align-items:center}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:0.6}
+.login-page{width:100%;max-width:400px;padding:20px}
+.glass-card{background:rgba(255,255,255,0.08);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.18);padding:30px;border-radius:20px;text-align:center}
+.logo-icon{width:60px;height:60px;background:linear-gradient(135deg,#fde68a,#f59e0b);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 15px;font-size:30px}
+.title{font-size:30px;font-weight:800;color:#fff}
+.input{width:100%;padding:14px 15px;margin:8px 0;border-radius:12px;border:1px solid rgba(255,255,255,0.3);background:rgba(0,0,0,0.3);color:#fff;font-size:15px}
+.btn-gold{width:100%;padding:14px;background:#fde68a;color:#000;font-weight:700;border:none;border-radius:12px;font-size:18px;cursor:pointer;margin-top:10px}
+.made{margin-top:15px;font-size:12px;opacity:0.6;color:#fff}
+#mainApp{display:none;width:95%;max-width:1100px;padding:20px;color:#fff;align-self:flex-start}
+table{width:100%;border-collapse:collapse;margin-top:15px;background:rgba(255,255,255,0.05)}
+th,td{padding:10px;border-bottom:1px solid rgba(255,255,255,0.1);text-align:left}
+.bform{background:#38bdf8;color:#000;padding:5px 10px;border-radius:8px;font-size:12px}
 </style>
 </head>
 <body>
-<div id=loginPage class=login-page>
-<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div>
-<div class=glass-card>
-<div class=top-icon>🎓</div>
-<div class=title>Welcome Back</div>
-<div class=subtitle>Sign in to continue</div>
-<div class=label>Username</div>
-<div class=wrap><span class=ico>👤</span><input id=userInput class=input-glass type=text placeholder="RGSJALLAHJEEM"></div>
-<div class=label>Password</div>
-<div class=wrap><span class=ico>🔒</span><input id=passInput class=input-glass type=password placeholder="••••••"><span class=eye onclick="let i=document.getElementById('passInput');i.type=i.type==='password'?'text':'password'">👁️</span></div>
-<button class=btn-gold onclick=login()>Login</button>
+<div id="loginPage" class="login-page">
+<div class="glass-card">
+<div class="logo-icon">🎓</div>
+<div class="title">Welcome Back</div>
+<div style="color:#94a3b8;margin-bottom:20px">Sign in to continue</div>
+<input id="userInput" class="input" type="text" value="RGSJALLAHJEEM" placeholder="Username">
+<div style="position:relative">
+<input id="passInput" class="input" type="password" value="RGJ123" placeholder="Password">
+<span onclick="let i=document.getElementById('passInput');i.type=i.type==='password'?'text':'password'" style="position:absolute;right:15px;top:50%;transform:translateY(-50%);cursor:pointer">👁️</span>
 </div>
-<div class=made>Made by Mian Ahmad</div>
+<div id="errMsg" style="color:#fca5a5;display:none;margin-top:8px;font-size:13px"></div>
+<button id="loginBtn" class="btn-gold">Login</button>
+<div class="made">Made by Mian Ahmad<br>Username: RGSJALLAHJEEM | Password: RGJ123</div>
 </div>
-<div id=appPage class=hidden>
-<div class=phone-wrap>
-<div class=top-header><div class=logo><div class=logo-icon>🎓</div><div class=logo-text><h1>RGSJALLAHJEEM</h1></div></div></div>
-<div class=premium-pill><span>Premium School • Fee Management</span></div>
-<div class=dashboard-card><h2>Dashboard</h2><p class=sub id=dateText style="text-align:center;font-size:11px;color:#8da0c5">Overview</p></div>
-<div class=stats-grid>
-<div class=stat-gold><p>Total</p><h3 id=totalStudents>0</h3><p>PG-8</p></div>
-<div class=stat-gold><p>Paid</p><h3 id=totalPaid>0</h3></div>
-<div class=stat-gold><p>Unpaid</p><h3 id=totalUnpaid>0</h3></div>
-</div>
-<div class=fee-row>
-<div class=fee-dark><p class=label>Monthly</p><h3><span id=showM>1000</span> Rs</h3></div>
-<div class=fee-dark><p class=label>Yearly</p><h3><span id=showY>3500</span> Rs</h3></div>
-</div>
-<div class=search-box><span class=sicon>🔍</span><input id=searchInput type=text placeholder="Search students, father, B-Form..." oninput=renderList()></div>
-<div class=section-head><h3>Student List</h3><select id=classFilter class=class-dropdown onchange=renderList()><option value="">Class PG-8</option><option>PG</option><option>Nursery</option><option>Prep</option><option>KG</option><option>One</option><option>Two</option><option>Three</option><option>Four</option><option>Five</option><option>Six</option><option>Seven</option><option>Eight</option></select></div>
-<div id=studentList></div>
-<div style="margin:10px 16px"><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-<button class=action-btn onclick=openAddModal()>📋 Fee Collection</button>
-<button class=action-btn onclick=printAll()>🧾 Receipt</button>
-<button class=action-btn onclick=whatsappAll()>💬 WhatsApp</button>
-<button class=action-btn onclick=exportData()>☁️ Save</button>
-</div></div>
-<div style="height:20px"></div>
-</div>
-<div class=bottom-nav>
-<button id=navDash class=active onclick=switchTab('dash')>Dashboard</button>
-<button id=navStudents onclick=switchTab('students')>Students</button>
-<button id=navFees onclick=switchTab('fees')>Fees</button>
-<button id=navReports onclick=switchTab('reports')>Reports</button>
-<button id=navSettings onclick=switchTab('settings')>Settings</button>
-</div>
-<button style="position:fixed;bottom:75px;right:16px;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#C5A059,#e0c88a);color:#0a1931;border:3px solid #0a1931;font-size:28px;display:flex;align-items:center;justify-content:center;z-index:21" onclick=openAddModal()>+</button>
 </div>
 
-<div id=addModal class=modal><div class=modal-box><h3 id=modalTitle>Add Student PG-8</h3><input id=sName class=input placeholder="Student Name *"><input id=sFather class=input placeholder="Father Name"><input id=sPhone class=input placeholder="Phone"><div style="display:flex;gap:6px"><select id=sClass class=input style="flex:1"><option value="">Class *</option><option>PG</option><option>Nursery</option><option>Prep</option><option>KG</option><option>One</option><option>Two</option><option>Three</option><option>Four</option><option>Five</option><option>Six</option><option>Seven</option><option>Eight</option></select><input id=sRoll class=input style="flex:1" placeholder="Roll No"></div><input id=sBform class=input placeholder="B-Form"><div style="display:flex;gap:6px"><input id=sAdm class=input type=number placeholder="Admission 1500"><input id=sExam class=input type=number placeholder="Exam"></div><div style="display:flex;gap:6px"><input id=sDisc class=input type=number placeholder="Discount 0"><input id=sFine class=input type=number placeholder="Fine 0"></div><div style="display:flex;gap:6px"><button class="btn btn-navy" style="width:50%" onclick=saveStudent()>Save</button><button class="btn btn-gold" style="width:50%" onclick=closeAddModal()>Close</button></div></div></div>
-
-<div id=feeModal class=modal><div class=modal-box><h3>💰 Fee Collection (Alag Safe)</h3><div id=feeStudentName style="font-size:13px;margin:8px 0;background:#f6f1e1;padding:10px;border-radius:10px;border:1px solid #C5A059;line-height:1.6"></div><select id=feeMonth class=input><option>January</option><option>February</option><option>March</option><option>April</option><option>May</option><option>June</option><option>July</option><option>August</option><option>September</option><option>October</option><option>November</option><option>December</option></select><select id=feeMStatus class=input><option>Unpaid</option><option>Paid</option><option>Partial</option></select><input id=feeMAmount class=input type=number placeholder="Monthly 1000"><select id=feeYStatus class=input><option>Unpaid</option><option>Paid</option><option>Partial</option></select><input id=feeYAmount class=input type=number placeholder="Yearly 3500"><div style="display:flex;gap:6px"><button class="btn btn-navy" style="width:50%" onclick=saveFee()>Save Fee</button><button class="btn btn-gold" style="width:50%" onclick=closeFeeModal()>Close</button></div></div></div>
-
-<div id=bformModal class=modal><div class=modal-box><h3>🆔 B-Form Data (Alag Safe)</h3><p style="font-size:11px;color:#666;margin:4px 0">Ye data alag save rahega, Fee se alag</p><div id=bformStudentName style="font-size:13px;margin:8px 0;background:#eef2ff;padding:10px;border-radius:10px;border:1px solid #0a1931;line-height:1.6"></div><label style="font-size:11px;font-weight:700">Father Name</label><input id=bfFather class=input placeholder="Father Name"><label style="font-size:11px;font-weight:700">B-Form Number</label><input id=bfBform class=input placeholder="B-Form e.g 35202-1234567-8"><label style="font-size:11px;font-weight:700">Phone</label><input id=bfPhone class=input placeholder="Phone"><label style="font-size:11px;font-weight:700">Roll No</label><input id=bfRoll class=input placeholder="Roll No"><div style="display:flex;gap:6px"><button class="btn btn-navy" style="width:50%" onclick=saveBform()>Save B-Form Data</button><button class="btn btn-gold" style="width:50%" onclick=closeBformModal()>Close</button></div></div></div>
+<div id="mainApp">
+<h1>✅ RGS JALLAHJEEM - Fee System</h1>
+<p>Login ho gaya! Ab Fee System chal raha hai. B-Form feature ready hai.</p>
+<div style="margin:15px 0">
+<input id="sName" class="input" placeholder="Student Name" style="width:180px;display:inline-block">
+<input id="sClass" class="input" placeholder="Class" style="width:100px;display:inline-block">
+<input id="sBform" class="input" placeholder="B-Form Number" style="width:200px;display:inline-block">
+<button class="btn-gold" style="width:auto;padding:10px 15px" onclick="addStudent()">Add</button>
+<button style="background:#fff" onclick="localStorage.removeItem('rgs_auth');location.reload()">Logout</button>
+</div>
+<table><thead><tr><th>Name</th><th>Class</th><th>B-Form 🆔</th><th>Fee</th><th>Delete</th></tr></thead><tbody id="tbody"></tbody></table>
+</div>
 
 <script>
-let students=JSON.parse(localStorage.getItem('rgs_pg8_students')||'[]');
-let feeRecords=JSON.parse(localStorage.getItem('rgs_pg8_fee')||'{}');
-let settings=JSON.parse(localStorage.getItem('rgs_pg8_settings')||'{"monthly":1000,"yearly":3500,"admission":1500,"pass":"RGJ123","myPass":""}');
-let currentFeeId=null;
-document.getElementById('dateText').innerText="Overview • "+new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
-function login(){
-let u=document.getElementById('userInput').value.trim();
-let p=document.getElementById('passInput').value.trim();
-if(!u){alert('Username likho: RGSJALLAHJEEM');return;}
-if(u!=='RGSJALLAHJEEM'){alert('Username sirf RGSJALLAHJEEM hona chahiye');return;}
-if(p==='RGJ123'||p===settings.pass||p===settings.myPass||p.length>=3){
-document.getElementById('loginPage').classList.add('hidden');
-document.getElementById('appPage').classList.remove('hidden');
-renderList();
-} else alert('Password Galat! RGJ123');
+const USER="RGSJALLAHJEEM"; const PASS="RGJ123";
+let students = JSON.parse(localStorage.getItem('rgs_students')||'[]');
+function doLogin(){
+  let u=document.getElementById('userInput').value.trim();
+  let p=document.getElementById('passInput').value.trim();
+  if(u.toUpperCase()===USER && p.toUpperCase()===PASS){
+    localStorage.setItem('rgs_auth','true');
+    showApp();
+  }else{
+    let e=document.getElementById('errMsg');
+    e.style.display='block';
+    e.innerText='Invalid! Sahi hai: RGSJALLAHJEEM / RGJ123';
+  }
 }
-function switchTab(t){document.querySelectorAll('.bottom-nav button').forEach(b=>b.classList.remove('active'));let map={dash:'navDash',students:'navStudents',fees:'navFees',reports:'navReports',settings:'navSettings'};if(map[t])document.getElementById(map[t]).classList.add('active');if(t==='settings'){let np=prompt('Apna Naya Password Rakho:\nMaster: RGJ123\nApna: '+(settings.myPass||'Koi nahi')+'\nNaya likho:');if(np&&np.length>=3){settings.myPass=np;settings.pass=np;localStorage.setItem('rgs_pg8_settings',JSON.stringify(settings));alert('✅ Save! RGJ123 + '+np);}}if(t==='reports'){alert('Total: '+students.length+'\nB-Form Complete: '+students.filter(s=>s.bform).length);}}
-function openAddModal(id=null){currentFeeId=id;if(id){let s=students.find(x=>x.id===id);document.getElementById('modalTitle').innerText='Edit Student';document.getElementById('sName').value=s.name;document.getElementById('sFather').value=s.father;document.getElementById('sPhone').value=s.phone;document.getElementById('sClass').value=s.cls;document.getElementById('sRoll').value=s.roll;document.getElementById('sBform').value=s.bform||'';document.getElementById('sAdm').value=s.adm;document.getElementById('sExam').value=s.exam||0;document.getElementById('sDisc').value=s.disc||0;document.getElementById('sFine').value=s.fine||0;}else{document.getElementById('modalTitle').innerText='Add Student PG-8';['sName','sFather','sPhone','sRoll','sBform','sExam','sDisc','sFine'].forEach(i=>document.getElementById(i).value='');document.getElementById('sClass').value='';document.getElementById('sAdm').value=settings.admission;}document.getElementById('addModal').classList.add('open');}
-function closeAddModal(){document.getElementById('addModal').classList.remove('open');}
-function saveStudent(){let obj={id:currentFeeId||Date.now(),name:document.getElementById('sName').value.trim(),father:document.getElementById('sFather').value.trim(),phone:document.getElementById('sPhone').value.trim(),cls:document.getElementById('sClass').value,roll:document.getElementById('sRoll').value.trim(),bform:document.getElementById('sBform').value.trim(),adm:parseInt(document.getElementById('sAdm').value)||settings.admission,exam:parseInt(document.getElementById('sExam').value)||0,disc:parseInt(document.getElementById('sDisc').value)||0,fine:parseInt(document.getElementById('sFine').value)||0};if(!obj.name||!obj.cls)return alert('Name Class lazmi');if(currentFeeId){let idx=students.findIndex(x=>x.id===currentFeeId);students[idx]=obj;}else students.push(obj);localStorage.setItem('rgs_pg8_students',JSON.stringify(students));closeAddModal();renderList();}
-
-function renderList(){let q=document.getElementById('searchInput').value.toLowerCase();let cls=document.getElementById('classFilter').value;let filtered=students.filter(s=>{let mQ=!q||(s.name.toLowerCase().includes(q)||s.roll.toLowerCase().includes(q)||s.cls.toLowerCase().includes(q)||(s.father&&s.father.toLowerCase().includes(q))||(s.bform&&s.bform.toLowerCase().includes(q)));let mC=!cls||s.cls===cls;return mQ&&mC;});let html='';if(filtered.length===0&&students.length===0)html='<div style="margin:16px;background:#fff;color:#0a1931;border-radius:12px;padding:16px;text-align:center">No Students<br><small>+ dabao PG-8 add karo</small></div>';filtered.forEach(s=>{let mKey=s.id+'_'+document.getElementById('feeMonth').value+'_monthly';let mR=feeRecords[mKey];let mStatus=mR?mR.status:'Unpaid';let bformBadge=s.bform?`✅ B-Form`:`❌ B-Form`;html+=`<div class=student-card><div style="display:flex;gap:10px;align-items:center;flex:1" onclick="openFee(${s.id})"><div style="width:36px;height:36px;border-radius:50%;background:#e8e8e8;display:flex;align-items:center;justify-content:center">👦</div><div><b>${s.name}</b><p style="font-size:10px;color:#666">Father: ${s.father||'-'} • Roll: ${s.roll} • ${bformBadge}</p><p style="font-size:9px;color:#0a1931">${s.bform? 'B-Form: '+s.bform : 'B-Form nahi'}</p></div></div><div style="display:flex;flex-direction:column;gap:4px;align-items:center"><div style="font-size:10px;color:#8d6e2f;font-weight:600">${mStatus}</div><button class=bform-btn onclick="openBform(${s.id})">🆔 B-Form</button></div></div>`;});document.getElementById('studentList').innerHTML=html;document.getElementById('totalStudents').innerText=students.length;let month=document.getElementById('feeMonth').value;let paid=0,unpaid=0;students.forEach(s=>{let k=s.id+'_'+month+'_monthly';let r=feeRecords[k];if(r&&r.status==='Paid')paid++;else unpaid++;});document.getElementById('totalPaid').innerText=paid;document.getElementById('totalUnpaid').innerText=unpaid;document.getElementById('showM').innerText=settings.monthly;document.getElementById('showY').innerText=settings.yearly;}
-
-function openFee(id){currentFeeId=id;let s=students.find(x=>x.id===id);document.getElementById('feeStudentName').innerHTML=`<b>Student:</b> ${s.name}<br><b>Father:</b> ${s.father||'N/A'}<br><b>Class:</b> ${s.cls} • <b>Roll:</b> ${s.roll}<br><b>B-Form:</b> ${s.bform||'N/A (B-Form button se add karen)'}`;let mKey=id+'_'+document.getElementById('feeMonth').value+'_monthly';let yKey=id+'_yearly_fund';let mR=feeRecords[mKey];let yR=feeRecords[yKey];document.getElementById('feeMStatus').value=mR?mR.status:'Unpaid';document.getElementById('feeMAmount').value=mR?mR.amount:settings.monthly;document.getElementById('feeYStatus').value=yR?yR.status:'Unpaid';document.getElementById('feeYAmount').value=yR?yR.amount:settings.yearly;document.getElementById('feeModal').classList.add('open');}
-function closeFeeModal(){document.getElementById('feeModal').classList.remove('open');}
-function saveFee(){let month=document.getElementById('feeMonth').value;let mKey=currentFeeId+'_'+month+'_mo
+function showApp(){
+  document.getElementById('loginPage').style.display='none';
+  document.getElementById('mainApp').style.display='block';
+  document.body.style.alignItems='flex-start';
+  render();
+}
+function checkAuth(){ if(localStorage.getItem('rgs_auth')==='true') showApp(); }
+document.getElementById('loginBtn').addEventListener('click',doLogin);
+document.getElementById('passInput').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
+document.getElementById('userInput').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
+function addStudent(){
+  let n=document.getElementById('sName').value;
+  let c=document.getElementById('sClass').value;
+  let b=document.getElementById('sBform').value;
+  if(!n) return alert('Name likhen');
+  students.push({name:n,class:c,bform:b,fee:'Pending'});
+  localStorage.setItem('rgs_students',JSON.stringify(students));
+  render();
+}
+function render(){
+  let tb=document.getElementById('tbody'); tb.innerHTML='';
+  students.forEach((s,i)=>{
+    tb.innerHTML+=`<tr><td>${s.name}</td><td>${s.class}</td><td><span class="bform">🆔 ${s.bform||'No B-Form'}</span></td><td>${s.fee}</td><td><button onclick="students.splice(${i},1);localStorage.setItem('rgs_students',JSON.stringify(students));render()">Del</button></td></tr>`;
+  });
+}
+checkAuth();
+</script>
+</body>
+</html
