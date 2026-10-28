@@ -1,86 +1,142 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RGS Jallah Jeem VIP</title>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0f172a">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<link rel="apple-touch-icon" href="logo.png">
+<title>RGS Jallah Jeem - Royal Dashboard</title>
+<link rel="icon" href="logo.png">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-body{background:linear-gradient(180deg,#020617,#1e3a8a);min-height:100vh;color:gold;text-align:center}
-#topBar{display:flex;justify-content:space-between;background:#020617;color:#facc15;padding:10px 15px;font-size:11px;border-bottom:1px solid gold}
-.logo{width:110px;height:110px;background:white;border-radius:50%;margin:25px auto 10px;border:3px solid gold;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.logo img{width:100%}
-.card{width:88%;max-width:360px;background:rgba(255,255,255,0.08);border:2px solid gold;border-radius:22px;padding:20px;margin:15px auto}
-input{width:88%;padding:12px;margin:8px;border-radius:10px;border:1px solid gold;background:rgba(255,255,255,0.12);color:white}
-.btn{width:90%;padding:14px;background:linear-gradient(90deg,#facc15,#f59e0b);border:none;border-radius:12px;font-weight:bold;color:#0f172a;margin-top:12px}
-#dash{display:none;padding:15px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:15px}
-.box{background:#1e293b;border:1px solid gold;padding:14px;border-radius:12px;font-size:13px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{background:linear-gradient(180deg,#0a1a4a 0%,#102b7a 100%);min-height:100vh;color:#fff;padding-bottom:20px}
+.time-row{display:flex;justify-content:space-between;font-size:12px;color:#FFD700;padding:5px 15px}
+.logo-wrap{width:110px;height:110px;margin:10px auto;background:#fff;border-radius:50%;border:4px solid #FFD700;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.logo-wrap img{width:100%;height:100%;object-fit:cover}
+h1{color:#FFD700;font-size:24px;text-align:center}
+.subtitle{font-size:13px;color:#ccc;text-align:center;margin-bottom:15px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 15px}
+.card{background:rgba(0,0,0,0.35);border:1.5px solid #FFD700;border-radius:14px;padding:16px 8px;text-align:center;cursor:pointer}
+.card .label{color:#FFD700;font-weight:600;margin-top:6px}
+.logout{display:block;margin:22px auto;background:#ff2d2d;color:#fff;border:none;padding:10px 28px;border-radius:8px;font-weight:bold}
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:999;padding:15px;overflow-y:auto}
+.modal.active{display:block}
+.modal-box{background:#0f245e;border:2px solid #FFD700;border-radius:15px;padding:15px;margin:20px auto;max-width:500px}
+.modal-head{display:flex;justify-content:space-between;color:#FFD700;font-weight:bold;font-size:18px;margin-bottom:12px}
+.close-btn{background:#FFD700;color:#000;border:none;width:30px;height:30px;border-radius:50%;font-weight:bold}
+input,select{width:100%;padding:10px;margin:6px 0;border-radius:8px;border:1px solid #FFD700;background:#0a1a4a;color:#fff}
+.btn-gold{background:#FFD700;color:#0a1a4a;border:none;padding:11px;width:100%;border-radius:8px;font-weight:bold;margin-top:8px}
+.list-item{background:rgba(255,255,255,0.07);border:1px solid rgba(255,215,0,0.4);padding:10px;border-radius:8px;margin:6px 0;font-size:13px;display:flex;justify-content:space-between}
+.small{font-size:11px;color:#aaa}
 </style>
 </head>
 <body>
-
-<div id="topBar">
-<span id="liveTime">Loading...</span>
-<span>RGS 0307-8134467</span>
+<div class="time-row"><span id="liveTime"></span><span>RGS 0307-8134467</span></div>
+<div style="text-align:center;padding:10px">
+<div class="logo-wrap"><img src="logo.png"></div>
+<h1>ROYAL DASHBOARD</h1>
+<div class="subtitle" id="liveDate"></div>
 </div>
-
-<div id="login">
-<div class="logo"><img src="logo.png"></div>
-<h2>RGS JALLAH JEEM</h2>
-<p style="font-size:11px;color:#ddd">VIP ROYAL EDITION</p>
-
-<div class="card">
-<input id="uid" value="RGSJALLAHJEEM">
-<div>
-<input id="pwd" type="password" value="RGS123" style="width:70%">
-<button onclick="let p=document.getElementById('pwd');p.type=p.type=='password'?'text':'password'" style="padding:10px;border-radius:8px">👁️</button>
-</div>
-<button class="btn" onclick="document.getElementById('login').style.display='none';document.getElementById('dash').style.display='block'">SIGN IN - 10 ICONS VIP</button>
-<p style="font-size:10px;color:#94a3b8;margin-top:10px">Made by Mian Ahmad 03000-799035</p>
-</div>
-</div>
-
-<div id="dash">
-<div class="logo" style="width:70px;height:70px;margin:10px auto"><img src="logo.png"></div>
-<h3>ROYAL DASHBOARD</h3>
-<p id="dashTime" style="font-size:11px;color:#cbd5e1"></p>
-
 <div class="grid">
-<div class="box">👨‍🎓<br>Student VIP</div>
-<div class="box">🧾<br>Fee</div>
-<div class="box">📅<br>Attendance</div>
-<div class="box">👩‍🏫<br>Teacher</div>
-<div class="box">📈<br>Profit/Loss</div>
-<div class="box">📝<br>Exam</div>
-<div class="box">🗓️<br>Timetable</div>
-<div class="box">💬<br>WA 0307</div>
-<div class="box">📊<br>Reports</div>
-<div class="box">🔢<br>Calculator</div>
+<div class="card" onclick="openModal('studentModal')"><div>🎖️</div><div class="label">Student VIP</div></div>
+<div class="card" onclick="location.href='pg8-fee.html'"><div>🧾</div><div class="label">Fee</div></div>
+<div class="card" onclick="openModal('attModal')"><div>📅</div><div class="label">Attendance</div></div>
+<div class="card" onclick="openModal('teacherModal')"><div>👨‍🏫</div><div class="label">Teacher</div></div>
+<div class="card" onclick="openModal('profitModal')"><div>📈</div><div class="label">Profit/Loss</div></div>
+<div class="card" onclick="openModal('examModal')"><div>📝</div><div class="label">Exam</div></div>
+<div class="card" onclick="openModal('ttModal')"><div>🗓️</div><div class="label">Timetable</div></div>
+<div class="card" onclick="window.open('https://wa.me/923078134467','_blank')"><div>💬</div><div class="label">WA 0307</div></div>
+<div class="card" onclick="openModal('reportModal')"><div>📊</div><div class="label">Reports</div></div>
+<div class="card" onclick="openModal('calcModal')"><div>🔢</div><div class="label">Calculator</div></div>
 </div>
-<br>
-<button onclick="location.reload()" style="padding:8px 18px;border-radius:8px;background:#ef4444;color:white">Logout</button>
+<button class="logout" onclick="location.reload()">Logout</button>
+
+<div id="studentModal" class="modal"><div class="modal-box">
+<div class="modal-head">Student VIP <button class="close-btn" onclick="closeModal('studentModal')">X</button></div>
+<input id="stName" placeholder="Student Name">
+<input id="stClass" placeholder="Class">
+<input id="stRoll" placeholder="Roll No">
+<input id="stPhone" placeholder="Parent Phone">
+<button class="btn-gold" onclick="addStudent()">Add Student</button>
+<div id="stList"></div>
+</div></div>
+
+<div id="attModal" class="modal"><div class="modal-box">
+<div class="modal-head">Attendance <button class="close-btn" onclick="closeModal('attModal')">X</button></div>
+<div id="attList"></div>
+<button class="btn-gold" onclick="saveAtt()">Save Today</button>
+</div></div>
+
+<div id="teacherModal" class="modal"><div class="modal-box">
+<div class="modal-head">Teacher <button class="close-btn" onclick="closeModal('teacherModal')">X</button></div>
+<input id="tName" placeholder="Teacher Name"><input id="tSub" placeholder="Subject"><input id="tSal" placeholder="Salary" type="number">
+<button class="btn-gold" onclick="addTeacher()">Add Teacher</button><div id="tList"></div>
+</div></div>
+
+<div id="profitModal" class="modal"><div class="modal-box">
+<div class="modal-head">Profit/Loss <button class="close-btn" onclick="closeModal('profitModal')">X</button></div>
+<div style="text-align:center;padding:10px;background:rgba(255,215,0,0.1);border-radius:10px"><div>Fee: <b id="pFee">0</b></div><div>Salary+Exp: <b id="pSal">0</b></div><div style="font-size:20px;color:#FFD700">Net: <b id="pNet">0</b></div></div>
+<input id="expTitle" placeholder="Expense Title"><input id="expAmt" placeholder="Amount" type="number">
+<button class="btn-gold" onclick="addExp()">Add Expense</button><div id="expList"></div>
+</div></div>
+
+<div id="examModal" class="modal"><div class="modal-box">
+<div class="modal-head">Exam <button class="close-btn" onclick="closeModal('examModal')">X</button></div>
+<input id="exName" placeholder="Student"><input id="exSub" placeholder="Subject"><input id="exMarks" placeholder="Marks" type="number"><input id="exTotal" placeholder="Total" value="100" type="number">
+<button class="btn-gold" onclick="addExam()">Save</button><div id="exList"></div>
+</div></div>
+
+<div id="ttModal" class="modal"><div class="modal-box">
+<div class="modal-head">Timetable <button class="close-btn" onclick="closeModal('ttModal')">X</button></div>
+<select id="ttDay"><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option></select>
+<input id="ttTime" placeholder="Time"><input id="ttSub" placeholder="Subject/Class">
+<button class="btn-gold" onclick="addTT()">Add</button><div id="ttList"></div>
+</div></div>
+
+<div id="reportModal" class="modal"><div class="modal-box">
+<div class="modal-head">Reports <button class="close-btn" onclick="closeModal('reportModal')">X</button></div>
+<div style="font-size:14px;line-height:2">Students: <b id="rSt">0</b><br>Teachers: <b id="rT">0</b><br>Today Present: <b id="rA">0</b></div>
+<button class="btn-gold" onclick="window.print()">Print</button>
+</div></div>
+
+<div id="calcModal" class="modal"><div class="modal-box">
+<div class="modal-head">Calculator <button class="close-btn" onclick="closeModal('calcModal')">X</button></div>
+<input id="calcDisplay" placeholder="0" style="font-size:22px;text-align:right">
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-top:10px">
+<button class="btn-gold" onclick="calcIn('7')">7</button><button class="btn-gold" onclick="calcIn('8')">8</button><button class="btn-gold" onclick="calcIn('9')">9</button><button class="btn-gold" onclick="calcIn('/')">/</button>
+<button class="btn-gold" onclick="calcIn('4')">4</button><button class="btn-gold" onclick="calcIn('5')">5</button><button class="btn-gold" onclick="calcIn('6')">6</button><button class="btn-gold" onclick="calcIn('*')">x</button>
+<button class="btn-gold" onclick="calcIn('1')">1</button><button class="btn-gold" onclick="calcIn('2')">2</button><button class="btn-gold" onclick="calcIn('3')">3</button><button class="btn-gold" onclick="calcIn('-')">-</button>
+<button class="btn-gold" onclick="calcIn('0')">0</button><button class="btn-gold" onclick="calcIn('.')">.</button><button class="btn-gold" onclick="calcEq()">=</button><button class="btn-gold" onclick="calcIn('+')">+</button>
+<button class="btn-gold" style="grid-column:span 4;background:#ff4444;color:#fff" onclick="calcClear()">Clear</button>
 </div>
+</div></div>
 
 <script>
-function tick(){
-let d=new Date();
-let h=d.getHours()%12||12;
-let m=d.getMinutes().toString().padStart(2,'0');
-let s=d.getSeconds().toString().padStart(2,'0');
-let ap=d.getHours()>=12?'PM':'AM';
-let t=h+':'+m+':'+s+' '+ap+' | '+d.toLocaleDateString();
-document.getElementById('liveTime').innerText=t;
-let dt=document.getElementById('dashTime');
-if(dt) dt.innerText=t;
+function tick(){let d=new Date();document.getElementById('liveTime').innerText=d.toLocaleTimeString();document.getElementById('liveDate').innerText=d.toLocaleString();}
+setInterval(tick,1000);tick();
+function openModal(id){document.getElementById(id).classList.add('active');loadAll();}
+function closeModal(id){document.getElementById(id).classList.remove('active');}
+let db=JSON.parse(localStorage.getItem('rgs_db')||'{"students":[],"teachers":[],"att":{},"exams":[],"tt":[],"exp":[],"fees":0}');
+function saveDB(){localStorage.setItem('rgs_db',JSON.stringify(db));loadAll();}
+function addStudent(){if(!stName.value)return;db.students.push({name:stName.value,cls:stClass.value,roll:stRoll.value,phone:stPhone.value});stName.value=stClass.value=stRoll.value=stPhone.value='';saveDB();}
+function addTeacher(){if(!tName.value)return;db.teachers.push({name:tName.value,sub:tSub.value,sal:+tSal.value||0});tName.value=tSub.value=tSal.value='';saveDB();}
+function addExp(){if(!expTitle.value)return;db.exp.push({title:expTitle.value,amt:+expAmt.value||0});expTitle.value=expAmt.value='';saveDB();}
+function addExam(){if(!exName.value)return;db.exams.push({name:exName.value,sub:exSub.value,marks:exMarks.value,total:exTotal.value});exName.value=exSub.value=exMarks.value='';saveDB();}
+function addTT(){if(!ttTime.value)return;db.tt.push({day:ttDay.value,time:ttTime.value,sub:ttSub.value});ttTime.value=ttSub.value='';saveDB();}
+function saveAtt(){let d=new Date().toDateString();db.att[d]=document.querySelectorAll('#attList input:checked').length;alert('Saved '+db.att[d]+' Present');saveDB();}
+function loadAll(){
+document.getElementById('stList').innerHTML=db.students.map((s,i)=>`<div class="list-item"><span>${s.name} - ${s.cls}<br><span class="small">${s.roll} | ${s.phone}</span></span><button onclick="db.students.splice(${i},1);saveDB()" style="background:red;color:#fff;border:none;border-radius:4px;padding:2px 6px">X</button></div>`).join('')||'<div class="small">No students</div>';
+document.getElementById('tList').innerHTML=db.teachers.map((t,i)=>`<div class="list-item"><span>${t.name} - ${t.sub}<br><span class="small">${t.sal}</span></span><button onclick="db.teachers.splice(${i},1);saveDB()" style="background:red;color:#fff;border:none;border-radius:4px;padding:2px 6px">X</button></div>`).join('');
+document.getElementById('exList').innerHTML=db.exams.map(e=>`<div class="list-item">${e.name} - ${e.sub}: ${e.marks}/${e.total}</div>`).join('');
+document.getElementById('ttList').innerHTML=db.tt.map((t,i)=>`<div class="list-item">${t.day} ${t.time} - ${t.sub} <button onclick="db.tt.splice(${i},1);saveDB()" style="background:red;color:#fff;border:none;padding:2px 6px;border-radius:4px">X</button></div>`).join('');
+document.getElementById('expList').innerHTML=db.exp.map((e,i)=>`<div class="list-item">${e.title}: ${e.amt} <button onclick="db.exp.splice(${i},1);saveDB()" style="background:red;color:#fff;border:none;padding:2px 6px;border-radius:4px">X</button></div>`).join('');
+document.getElementById('attList').innerHTML=db.students.map(s=>`<label class="list-item"><span>${s.name} (${s.cls})</span><input type="checkbox" checked></label>`).join('')||'<div class="small">Add students first</div>';
+let totalSal=db.teachers.reduce((a,b)=>a+b.sal,0)+db.exp.reduce((a,b)=>a+b.amt,0);
+document.getElementById('pSal').innerText=totalSal;document.getElementById('pFee').innerText=db.fees||0;document.getElementById('pNet').innerText=(db.fees||0)-totalSal;
+document.getElementById('rSt').innerText=db.students.length;document.getElementById('rT').innerText=db.teachers.length;document.getElementById('rA').innerText=Object.values(db.att).slice(-1)[0]||0;
 }
-setInterval(tick,1000);
-tick();
+loadAll();
+function calcIn(v){calcDisplay.value+=v;}
+function calcEq(){try{calcDisplay.value=eval(calcDisplay.value)}catch{calcDisplay.value='Error'}}
+function calcClear(){calcDisplay.value=''}
 </script>
-
 </body>
 </html>
