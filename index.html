@@ -2,206 +2,85 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>RGS FINAL 10 ICONS - 208 LINES 365 FIXED</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RGS Jallah Jeem VIP</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f172a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="logo.png">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-body{background:#f2f7ff;display:flex;justify-content:center}
-.phone{width:100%;max-width:420px;background:#fff;min-height:100vh}
-.status{padding:12px 20px;display:flex;justify-content:space-between;background:#0d2252;color:#fff;font-size:12px;font-weight:700}
-.top{height:320px;background:linear-gradient(180deg,#5ec8ff,#3ab5ff);border-radius:0 0 48% 48%/0 0 22% 22%;padding-top:10px}
-.title{color:#0d2252;text-align:center;font-size:20px;font-weight:800}
-.circle{border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 28px rgba(0,0,0,.22)}
-.circle.blue{background:linear-gradient(135deg,#2aa7ff,#1565ff)}
-.circle.big{width:176px;height:176px}
-.section{padding:12px 14px;text-align:center}
-.detail{background:#f7fbff;border:1.8px solid #cfe6ff;border-radius:14px;padding:11px;margin-top:11px;text-align:left;display:none}
-.detail h3{color:#0d2252;font-size:12px;margin-bottom:7px}
-.detail input,.detail select,.detail textarea{width:100%;padding:10px;border-radius:10px;border:1.4px solid #b9d9ff;margin-top:6px;font-size:11px}
-.btnSmall{background:linear-gradient(90deg,#2a9bff,#1565ff);border:none;border-radius:9px;padding:9px 11px;color:#fff;font-weight:700;font-size:10px;margin-top:6px;cursor:pointer}
-.btnSmall.orange{background:linear-gradient(90deg,#ff8f00,#ffb300)}
-.btnSmall.red{background:linear-gradient(90deg,#ff3b3b,#d12d2d)}
-.btnSmall.green{background:linear-gradient(90deg,#0ea54c,#0b7a38)}
-.btnSmall.purple{background:linear-gradient(90deg,#6c5ce7,#4834d4)}
-.loginBox{padding:16px 18px}
-.passWrap{position:relative;margin-top:6px}
-.eyeBtn{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:#e8f4ff;border:1.2px solid #b9d9ff;width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer}
-.loginBtn{width:100%;padding:12px;border-radius:12px;border:none;background:linear-gradient(90deg,#2a9bff,#ff8f00);color:#fff;font-weight:800;font-size:14px;margin-top:12px;cursor:pointer}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.moduleGrid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}
-.modBtn{background:#fff;border:1.5px solid #d6e6ff;border-radius:11px;padding:10px 6px;text-align:center;cursor:pointer}
-.modBtn b{font-size:9px;color:#0d2252;display:block;margin-top:3px}
-.urdu{font-family:'Noto Nastaliq Urdu',Arial;direction:rtl;text-align:right}
-.schoolBox{background:linear-gradient(135deg,#e8f4ff,#fff8e8);border:1.8px dashed #ff7a00;padding:10px;border-radius:11px;margin-top:8px}
-table{width:100%;border-collapse:collapse;font-size:10px;background:#fff;border-radius:8px;overflow:hidden}
-th{color:#fff;background:#1565ff;text-align:left;padding:6px 4px;font-size:9px}
-td{padding:5px 4px;border-bottom:1px solid #e3f0ff}
+body{background:linear-gradient(180deg,#020617,#1e3a8a);min-height:100vh;color:gold;text-align:center}
+#topBar{display:flex;justify-content:space-between;background:#020617;color:#facc15;padding:10px 15px;font-size:11px;border-bottom:1px solid gold}
+.logo{width:110px;height:110px;background:white;border-radius:50%;margin:25px auto 10px;border:3px solid gold;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.logo img{width:100%}
+.card{width:88%;max-width:360px;background:rgba(255,255,255,0.08);border:2px solid gold;border-radius:22px;padding:20px;margin:15px auto}
+input{width:88%;padding:12px;margin:8px;border-radius:10px;border:1px solid gold;background:rgba(255,255,255,0.12);color:white}
+.btn{width:90%;padding:14px;background:linear-gradient(90deg,#facc15,#f59e0b);border:none;border-radius:12px;font-weight:bold;color:#0f172a;margin-top:12px}
+#dash{display:none;padding:15px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:15px}
+.box{background:#1e293b;border:1px solid gold;padding:14px;border-radius:12px;font-size:13px}
 </style>
 </head>
 <body>
-<div class="phone">
-<div class="status"><span>12:00</span><span>RGS 0307-8134467</span></div>
-<div id="loginPart">
-<div class="top" style="height:280px">
-<div class="title" style="margin-top:20px">School Management<br><span style="font-size:11px">RGS Jallah Jeem VIP 208 LINES FINAL</span></div>
-<div style="display:flex;justify-content:center;margin-top:18px"><div class="circle blue big">🎓</div></div>
+
+<div id="topBar">
+<span id="liveTime">Loading...</span>
+<span>RGS 0307-8134467</span>
 </div>
-<div class="loginBox">
-<input id="user" value="RGSJALLAHJEEM">
-<div class="passWrap"><input id="pass" type="password" value="RGS123"><div class="eyeBtn" onclick="togglePass('pass','eyeLogin')" id="eyeLogin">👁️</div></div>
-<button class="loginBtn" onclick="doLogin()">SIGN IN - 10 ICONS VIP - 365 FIXED</button>
-<div style="margin-top:10px;text-align:center;font-size:10px">Made by Mian Ahmad 03000-799035<br>School No 0307-8134467 WA me - 208 LINES 365 FIXED</div>
+
+<div id="login">
+<div class="logo"><img src="logo.png"></div>
+<h2>RGS JALLAH JEEM</h2>
+<p style="font-size:11px;color:#ddd">VIP ROYAL EDITION</p>
+
+<div class="card">
+<input id="uid" value="RGSJALLAHJEEM">
+<div>
+<input id="pwd" type="password" value="RGS123" style="width:70%">
+<button onclick="let p=document.getElementById('pwd');p.type=p.type=='password'?'text':'password'" style="padding:10px;border-radius:8px">👁️</button>
 </div>
-</div>
-<div id="dashPart" style="display:none">
-<div class="top"><div class="title">School Management<br><span style="font-size:10px">10 ICONS VIP - 208 LINES - 365 ERROR KHATAM</span></div></div>
-<div class="section">
-<div class="moduleGrid">
-<div class="modBtn" onclick="openSec('m1')"><div>🎓</div><b>1: Student VIP</b></div>
-<div class="modBtn" onclick="openSec('m2')"><div>💰</div><b>2: Fee 80mm/A4</b></div>
-<div class="modBtn" onclick="openSec('m3')"><div>📋</div><b>3: Attendance</b></div>
-<div class="modBtn" onclick="openSec('m4')"><div>👨‍🏫</div><b>4: Teacher</b></div>
-<div class="modBtn" onclick="openSec('m5')"><div>📈</div><b>5: Profit/Loss</b></div>
-<div class="modBtn" onclick="openSec('m6')"><div>📝</div><b>6: Exam</b></div>
-<div class="modBtn" onclick="openSec('m7')"><div>🏫</div><b>7: Timetable+Next</b></div>
-<div class="modBtn" onclick="openSec('m8')"><div>💬</div><b>8: WA 0307-8134467</b></div>
-<div class="modBtn" onclick="openSec('m9')"><div>📊</div><b>9: Reports</b></div>
-<div class="modBtn" onclick="openSec('m10')"><div>🧮</div><b>10: Calculator</b></div>
-</div>
-<div id="m1" class="detail" style="display:block">
-<h3>1: Student VIP No Bag Eng+Urdu</h3>
-<div class="grid2"><input id="roll" placeholder="Roll *"><input id="sname" placeholder="Name Eng *"></div>
-<input id="fname" placeholder="Father Eng *">
-<div class="grid2"><input id="rollUr" placeholder="رول *" class="urdu"><input id="snameUr" placeholder="طالب علم *" class="urdu"></div>
-<input id="fnameUr" placeholder="والد *" class="urdu">
-<div class="grid2"><input id="contact" placeholder="Contact"><input id="dob" type="date"></div>
-<div class="grid2"><select id="sclass"><option>Play Group</option><option>Nursery</option><option>KG</option><option>Class-1</option><option>Class-2</option><option>Class-3</option></select><select id="status"><option>Active</option><option>Left</option><option>Struck</option></select></div>
-<div class="grid2"><input id="fee" type="number" placeholder="Fee"><input id="jama" type="number" placeholder="Jama"></div>
-<button class="btnSmall" onclick="addStu()">Add Student VIP No Bag</button>
-<input id="search" placeholder="Search Roll/Name/Father..." oninput="render()">
-<div id="tbl"></div>
-</div>
-<div id="m2" class="detail"><h3>2: Fee 80mm + A4 + Urdu + Father + School No</h3><select id="feeMonth"><option>Jan 2026</option><option>Dec 2030</option></select><div id="feeList"></div><button class="btnSmall orange" onclick="printFee80()">Print 80mm</button><button class="btnSmall" onclick="printFeeA4()">Print A4</button></div>
-<div id="m3" class="detail"><h3>3: Attendance QR + Daily</h3><input id="qrInput" placeholder="Roll No"><input id="repDate" type="date"><button class="btnSmall green" onclick="mark('Present')">Present</button><button class="btnSmall red" onclick="mark('Absent')">Absent</button><div id="todayList"></div></div>
-<div id="m4" class="detail"><h3>4: Teacher</h3><input id="tname" placeholder="Teacher Name"><input id="tnameUr" placeholder="اردو نام" class="urdu"><input id="tcontact" placeholder="Contact"><input id="tsalary" type="number" placeholder="Salary"><button class="btnSmall" onclick="addTeacher()">Add Teacher</button><div id="teacherList"></div></div>
-<div id="m5" class="detail"><h3>5: Profit/Loss</h3><input id="expDate" type="date"><select id="expType"><option>Income - Fee</option><option>Expense - Salary</option><option>Expense - Bills</option></select><input id="expTitle" placeholder="Title"><input id="expAmount" type="number" placeholder="Amount"><button class="btnSmall green" onclick="addExpense()">Add</button><div id="profitBox"></div><div id="expList"></div></div>
-<div id="m6" class="detail"><h3>6: Exam</h3><input id="examRoll" placeholder="Roll"><input id="examSubject" placeholder="Subject"><input id="examMarks" type="number" placeholder="Obtained"><input id="examTotal" type="number" placeholder="Total 100"><button class="btnSmall" onclick="addResult()">Add Result</button><div id="resultList"></div></div>
-<div id="m7" class="detail"><h3>7: Timetable + Next Class Prompt</h3><input id="ttTime" placeholder="Time e.g. 8:00-9:00"><input id="ttSubject" placeholder="Subject"><input id="ttTeacher" placeholder="Teacher"><button class="btnSmall" onclick="addTimetable()">Add Period</button><div id="ttList"></div><div style="margin-top:10px;padding:10px;background:#fff8e8;border-radius:10px;border:1.8px dashed #ff7a00"><h3 style="font-size:11px;color:#ff7a00">Next Class Prompt</h3><div class="grid2"><select id="promoteFrom"><option>Play Group</option><option>Nursery</option><option>KG</option><option>Class-1</option></select><select id="promoteTo"><option>Nursery</option><option>KG</option><option>Class-1</option><option>Class-2</option></select></div><button class="btnSmall purple" onclick="promoteClass()">Promote Next Class</button><button class="btnSmall orange" onclick="promoteAll()">Promote All</button><div id="promoteOut"></div></div></div>
-<div id="m8" class="detail"><h3>8: Parents WA 0307-8134467</h3><div class="schoolBox">School WhatsApp No: <span id="displaySchoolNo">0307-8134467</span> - Fee slip pe ayega</div><input id="waNumber" placeholder="Parent Number"><textarea id="waMsg">Fee Reminder {name} Father {father} Fee {fee} School {schoolNumber}</textarea><button class="btnSmall green" onclick="sendWhatsApp()">Single WA</button><button class="btnSmall orange" onclick="sendWhatsAppAll()">WA All</button></div>
-<div id="m9" class="detail"><h3>9: Reports + Birthday</h3><div id="repOut"></div><button class="btnSmall" onclick="showDaily()">Daily</button><button class="btnSmall red" onclick="dueReport()">Baqaya</button><button class="btnSmall purple" onclick="showClassWise()">Class Wise</button><button class="btnSmall green" onclick="showBirthdays()">Birthday</button><div id="bdayOut"></div></div>
-<div id="m10" class="detail"><h3>10: Calculator + Settings</h3><select id="famCount" onchange="calcFam()"><option value="1">1 Bacha 0%</option><option value="2">2 Bache 10%</option><option value="3" selected>3 Bache 20%</option><option value="4">4 30%</option><option value="5">5 40%</option><option value="6">6 50%</option><option value="7">7 60%</option><option value="8">8 65%</option></select><input id="baseFee" type="number" value="1000" oninput="calcFam()"><input id="famName" placeholder="Family Name"><input id="famNameUr" placeholder="اردو" class="urdu"><input id="schoolNumberSet" value="0307-8134467"><div id="famRes"></div><button class="btnSmall orange" onclick="saveFamily()">Save Family</button><button class="btnSmall green" onclick="applyFamilyFee()">Apply Fee Auto</button><div id="savedFamilies"></div></div>
-<div id="m11" class="detail" style="border:2.2px solid #ff7a00;display:block"><h3>Password Change Eye Icon</h3><input id="curUserShow" disabled><div class="passWrap"><input id="curPassShow" disabled><div class="eyeBtn" onclick="togglePass('curPassShow','eyeCur')" id="eyeCur">👁️</div></div><div class="passWrap"><input id="oldPass" type="password" placeholder="Old"><div class="eyeBtn" onclick="togglePass('oldPass','eyeOld')" id="eyeOld">👁️</div></div><input id="newUser" placeholder="New Username"><div class="passWrap"><input id="newPass" type="password" placeholder="New Password"><div class="eyeBtn" onclick="togglePass('newPass','eyeNew')" id="eyeNew">👁️</div></div><button class="btnSmall green" onclick="changeCreds()">Save New Login</button><button class="btnSmall" onclick="logout()">Logout</button><p id="passMsg"></p></div>
+<button class="btn" onclick="document.getElementById('login').style.display='none';document.getElementById('dash').style.display='block'">SIGN IN - 10 ICONS VIP</button>
+<p style="font-size:10px;color:#94a3b8;margin-top:10px">Made by Mian Ahmad 03000-799035</p>
 </div>
 </div>
+
+<div id="dash">
+<div class="logo" style="width:70px;height:70px;margin:10px auto"><img src="logo.png"></div>
+<h3>ROYAL DASHBOARD</h3>
+<p id="dashTime" style="font-size:11px;color:#cbd5e1"></p>
+
+<div class="grid">
+<div class="box">👨‍🎓<br>Student VIP</div>
+<div class="box">🧾<br>Fee</div>
+<div class="box">📅<br>Attendance</div>
+<div class="box">👩‍🏫<br>Teacher</div>
+<div class="box">📈<br>Profit/Loss</div>
+<div class="box">📝<br>Exam</div>
+<div class="box">🗓️<br>Timetable</div>
+<div class="box">💬<br>WA 0307</div>
+<div class="box">📊<br>Reports</div>
+<div class="box">🔢<br>Calculator</div>
 </div>
+<br>
+<button onclick="location.reload()" style="padding:8px 18px;border-radius:8px;background:#ef4444;color:white">Logout</button>
+</div>
+
 <script>
-function togglePass(i,e){let a=document.getElementById(i),b=document.getElementById(e);if(!a)return;if(a.type=='password'){a.type='text';if(b)b.innerText='🙈'}else{a.type='password';if(b)b.innerText='👁️'}}
-let students=JSON.parse(localStorage.getItem('rgs_10_icons_final')||'[]');
-let teachers=JSON.parse(localStorage.getItem('rgs_teachers_10_final')||'[]');
-let families=JSON.parse(localStorage.getItem('rgs_families_10_final')||'[]');
-let att=JSON.parse(localStorage.getItem('rgs_att_10_final')||'{}');
-let expenses=JSON.parse(localStorage.getItem('rgs_exp_10_final')||'[]');
-let results=JSON.parse(localStorage.getItem('rgs_results_10_final')||'[]');
-let timetable=JSON.parse(localStorage.getItem('rgs_tt_10_final')||'[]');
-let schoolNo=localStorage.getItem('rgs_school_no_final')||'0307-8134467';
-function getCreds(){
-let c=JSON.parse(localStorage.getItem('rgs_creds_10_final')||'null');
-if(!c){c={user:'RGSJALLAHJEEM',pass:'RGS123'};localStorage.setItem('rgs_creds_10_final',JSON.stringify(c));}
-return c;
+function tick(){
+let d=new Date();
+let h=d.getHours()%12||12;
+let m=d.getMinutes().toString().padStart(2,'0');
+let s=d.getSeconds().toString().padStart(2,'0');
+let ap=d.getHours()>=12?'PM':'AM';
+let t=h+':'+m+':'+s+' '+ap+' | '+d.toLocaleDateString();
+document.getElementById('liveTime').innerText=t;
+let dt=document.getElementById('dashTime');
+if(dt) dt.innerText=t;
 }
-function saveCreds(c){localStorage.setItem('rgs_creds_10_final',JSON.stringify(c));}
-function doLogin(){
-let u=document.getElementById('user').value.trim();
-let p=document.getElementById('pass').value.trim();
-let cred=getCreds();
-if(u===cred.user&&p===cred.pass){
-localStorage.setItem('rgs_logged_10_final','yes');
-document.getElementById('loginPart').style.display='none';
-document.getElementById('dashPart').style.display='block';
-document.getElementById('repDate').valueAsDate=new Date();
-document.getElementById('expDate').valueAsDate=new Date();
-let c=getCreds();
-document.getElementById('curUserShow').value='User: '+c.user;
-document.getElementById('curPassShow').value=c.pass;
-document.getElementById('newUser').value=c.user;
-document.getElementById('schoolNumberSet').value=schoolNo;
-document.getElementById('displaySchoolNo').innerText=schoolNo;
-render();calcFam();calcProfit();
-}else{alert('Wrong! '+cred.user+' / '+cred.pass);}
-}
-function saveAll(){
-localStorage.setItem('rgs_10_icons_final',JSON.stringify(students));
-localStorage.setItem('rgs_teachers_10_final',JSON.stringify(teachers));
-localStorage.setItem('rgs_families_10_final',JSON.stringify(families));
-localStorage.setItem('rgs_att_10_final',JSON.stringify(att));
-localStorage.setItem('rgs_exp_10_final',JSON.stringify(expenses));
-localStorage.setItem('rgs_results_10_final',JSON.stringify(results));
-localStorage.setItem('rgs_tt_10_final',JSON.stringify(timetable));
-localStorage.setItem('rgs_school_no_final',schoolNo);
-}
-function openSec(id){
-document.querySelectorAll('.detail').forEach(d=>{d.style.display='none';});
-let el=document.getElementById(id);
-if(el)el.style.display='block';
-}
-  function addStu(){
-let r=document.getElementById('roll').value.trim()||document.getElementById('rollUr').value.trim();
-let n=document.getElementById('sname').value.trim()||document.getElementById('snameUr').value.trim();
-let f=document.getElementById('fname').value.trim()||document.getElementById('fnameUr').value.trim();
-let nu=document.getElementById('snameUr').value.trim();
-let fu=document.getElementById('fnameUr').value.trim();
-if(!r||!n){alert('Roll Name likho');return;}
-let o={roll:r,name:n,fnameEn:document.getElementById('fname').value,fnameUr:fu,nameEn:document.getElementById('sname').value,nameUr:nu,father:f,contact:document.getElementById('contact').value,dob:document.getElementById('dob').value,cls:document.getElementById('sclass').value,status:document.getElementById('status').value,fee:document.getElementById('fee').value||'1000',jama:document.getElementById('jama').value||'0'};
-students.push(o);saveAll();render();
-}
-function render(){
-let tbl=document.getElementById('tbl');
-let fl=document.getElementById('feeList');
-let sf=(document.getElementById('search').value||'').toLowerCase();
-let h='<table><tr><th>Roll</th><th>Name</th><th>Father</th><th>Fee</th></tr>';
-let fh='<table><tr><th>Roll</th><th>Name</th><th>Father</th><th>Fee</th></tr>';
-students.forEach(s=>{
-if(sf&&!(s.roll.toLowerCase().includes(sf)||s.name.toLowerCase().includes(sf)))return;
-h+=`<tr><td>${s.roll}</td><td>${s.nameEn||s.name}</td><td>${s.fnameEn||s.father||''}</td><td>${s.fee}</td></tr>`;
-fh+=`<tr><td>${s.roll}</td><td>${s.name}</td><td>${s.father}</td><td>${s.fee}/${s.jama}</td></tr>`;
-});
-h+='</table>';
-  function addTimetable(){
-let t=document.getElementById('ttTime').value.trim();
-let s=document.getElementById('ttSubject').value.trim();
-if(!t||!s){alert('Time Subject likho');return;}
-timetable.push({time:t,subject:s,teacher:document.getElementById('ttTeacher').value});
-saveAll();renderTT();
-}
-function renderTT(){
-let d=document.getElementById('ttList'),h='<table><tr><th>Time</th><th>Subject</th><th>Teacher</th></tr>';
-timetable.slice(-30).reverse().forEach(t=>{h+=`<tr><td>${t.time}</td><td>${t.subject}</td><td>${t.teacher||''}</td></tr>`});
-h+='</table>';d.innerHTML=h;
-}
-function mark(st){
-let id=document.getElementById('qrInput').value.trim();
-if(!id){alert('Roll likho');return;}
-let today=document.getElementById('repDate').value||new Date().toISOString().slice(0,10);
-if(!att[today])att[today]={};att[today][id]=st;saveAll();
-document.getElementById('todayList').innerHTML=`<b>${today}</b> : Roll ${id} = ${st}`;
-}
-function showDaily(){
-let d=document.getElementById('repDate').value||new Date().toISOString().slice(0,10);
-let list=att[d]||{};
-let present=Object.values(list).filter(v=>v==='Present').length;
-let out=`<b>Daily ${d}</b> Present: ${present} / Total: ${students.length}<br><table><tr><th>Roll</th><th>Name</th><th>Status</th></tr>`;
-students.forEach(s=>{
-let st=list[s.roll]||'Absent';
-out+=`<tr><td>${s.roll}</td><td>${s.name}</td><td>${st}</td></tr>`;
-});
-out+='</table>';document.getElementById('repOut').innerHTML=out;openSec('m9');
-}
-function showClassWise(){
-let map={};students.forEach(s=>{let c=s.cls||'Unknown';if(!map[c])map[c]=[];map[c].push(s);});
-let out=`<b>Class Wise - School No ${schoolNo}</b><br>`;
-for(let cls in map){
-out+=`<div>${cls} - ${map[cls].length} Students</div><table><tr><th>Roll</th><th>Name</th><th>Father</th><th>Jama</th><th>Baqaya</th></tr>`;
-map[cls].forEach(s=>{
-let baqaya=(parseInt(s.fee||0)-parseInt(s.jama||0));
-out+=
-  
+setInterval(tick,1000);
+tick();
+</script>
+
+</body>
+</html>
