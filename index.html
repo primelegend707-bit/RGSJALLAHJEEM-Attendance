@@ -2,165 +2,137 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Radiant Grammar School Jallah Jeem - QR Attendance</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>RGS JALLAHJEEM - Radiant Grammar School VIP</title>
 <style>
-body{font-family:'Poppins',sans-serif}
-.tab-active{background:#1e40af;color:white}
-.qr-card canvas, .qr-card img{margin:auto}
+:root{--blue:#0A1931;--blue2:#12264a;--gold:#D4AF37;--gold2:#FFD700;--red:#FF3B30;--yellow:#FFCC00;--green:#00C851;--bg:#060e22}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
+body{background:radial-gradient(120% 120% at 20% 10%,var(--blue2),var(--bg));color:#fff;min-height:100vh;overflow-x:hidden}
+.glass{background:linear-gradient(145deg,rgba(255,255,255,0.09),rgba(255,255,255,0.03));backdrop-filter:blur(22px);border:1px solid rgba(212,175,55,0.35);border-radius:22px;box-shadow:0 12px 40px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.12)}
+.logo{width:72px;height:72px;background:linear-gradient(145deg,var(--gold),var(--gold2));border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:34px;color:var(--blue);box-shadow:0 0 30px rgba(212,175,55,0.6)}
+.card{margin:12px;padding:18px;transition:0.3s}
+.card:hover{transform:translateY(-2px);box-shadow:0 0 25px rgba(212,175,55,0.25)}
+.btn{border:none;padding:13px 20px;border-radius:13px;font-weight:800;cursor:pointer;width:100%;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;transition:0.2s}
+.btn-gold{background:linear-gradient(145deg,var(--gold),var(--gold2));color:var(--blue);box-shadow:0 6px 18px rgba(212,175,55,0.45)}
+.btn-green{background:linear-gradient(145deg,#25D366,#128C7E);color:#fff}
+.btn:active{transform:scale(0.97)}
+input,select,textarea{width:100%;padding:13px;background:rgba(0,0,0,0.35);border:1px solid rgba(212,175,55,0.28);border-radius:12px;color:#fff;margin:7px 0;outline:none}
+input:focus{border-color:var(--gold);box-shadow:0 0 12px rgba(212,175,55,0.3)}
+.badge{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:800;display:inline-block;margin:2px}
+.bg-green{background:var(--green)} .bg-red{background:var(--red)} .bg-yellow{background:var(--yellow);color:#000} .bg-gold{background:rgba(212,175,55,0.2);color:var(--gold)}
+table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px}
+th{background:rgba(212,175,55,0.18);padding:11px;color:var(--gold);text-align:left} td{padding:11px;border-bottom:1px solid rgba(212,175,55,0.1)}
+.hidden{display:none!important}
+.login-wrap{max-width:420px;margin:40px auto 20px;padding:28px}
+.nav{position:fixed;bottom:14px;left:14px;right:14px;background:linear-gradient(145deg,rgba(10,25,49,0.97),rgba(18,38,74,0.97));backdrop-filter:blur(22px);border:1px solid rgba(212,175,55,0.45);border-radius:26px;display:flex;justify-content:space-around;padding:10px 6px;z-index:999;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+.nav-i{flex:1;text-align:center;color:var(--gold);cursor:pointer;padding:8px 4px;border-radius:16px;opacity:0.8}
+.nav-i.active{background:rgba(212,175,55,0.22);box-shadow:0 0 18px rgba(212,175,55,0.35);opacity:1}
+.nav-i i{font-size:22px;display:block;margin-bottom:3px}
+.month-chip{padding:6px 10px;border-radius:10px;background:rgba(0,0,0,0.3);border:1px solid rgba(212,175,55,0.2);font-size:11px;margin:3px;display:inline-block}
+.month-paid{border-color:var(--green);background:rgba(0,200,81,0.15);color:var(--green)}
+.month-due{border-color:var(--red);background:rgba(255,59,48,0.15);color:var(--red)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media print{.nav,.no-print{display:none} body{background:#fff;color:#000}}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body class="bg-slate-100 min-h-screen">
-<header class="bg-blue-800 text-white p-4 text-center shadow-lg">
-<h1 class="text-xl md:text-2xl font-bold">Radiant Grammar School Jallah Jeem</h1>
-<p class="text-sm opacity-90">Daily Attendance Register - QR System</p>
-</header>
+<body>
 
-<nav class="flex justify-center gap-2 p-3 bg-white shadow sticky top-0 z-10">
-<button onclick="showTab('students')" id="btn-students" class="tab-active px-4 py-2 rounded-lg font-semibold text-sm">Students</button>
-<button onclick="showTab('scan')" id="btn-scan" class="bg-slate-200 px-4 py-2 rounded-lg font-semibold text-sm">Scan QR</button>
-<button onclick="showTab('report')" id="btn-report" class="bg-slate-200 px-4 py-2 rounded-lg font-semibold text-sm">Report</button>
-</nav>
-
-<div id="tab-students" class="p-3 max-w-3xl mx-auto">
-  <div class="bg-white rounded-xl shadow p-4 mb-4">
-    <h2 class="font-bold mb-3">Add New Student</h2>
-    <div class="grid gap-2">
-      <input id="roll" placeholder="Roll / ID e.g. RGS-1001" class="border rounded-lg p-2.5 text-sm">
-      <input id="name" placeholder="Student Name" class="border rounded-lg p-2.5 text-sm">
-      <input id="father" placeholder="Father Name" class="border rounded-lg p-2.5 text-sm">
-      <select id="class" class="border rounded-lg p-2.5 text-sm">
-        <option>Play Group to KG</option><option>Nursery</option><option>KG</option><option>Class 1</option><option>Class 2</option><option>Class 3</option><option>Class 4</option><option>Class 5</option><option>Class 6</option><option>Class 7</option><option>Class 8</option><option>Class 9</option><option>Class 10</option>
-      </select>
-      <button onclick="addStudent()" class="bg-blue-800 text-white rounded-lg py-2.5 font-semibold">Add Student</button>
-      <button onclick="addSample()" class="bg-green-600 text-white rounded-lg py-2 text-sm">Add 3 Sample Students</button>
-    </div>
+<!-- LOGIN PAGE -->
+<div id="loginPage" class="login-wrap glass">
+  <div style="text-align:center;margin-bottom:18px">
+    <div class="logo" style="margin:0 auto 14px"><i class="fas fa-shield-alt"></i></div>
+    <h1 style="color:var(--gold);font-size:24px">RADIANT GRAMMAR SCHOOL</h1>
+    <h3 style="color:var(--gold);opacity:0.9">JALLAH JEEM</h3>
+    <small style="opacity:0.7">VIP Dashboard 2026 - 2030</small>
   </div>
-  <div id="studentList" class="grid gap-3"></div>
-</div>
+  <label><i class="fas fa-user" style="color:var(--gold)"></i> Username</label>
+  <input id="user" value="RGSJALLAHJEEM" placeholder="RGSJALLAHJEEM">
+  <label><i class="fas fa-lock" style="color:var(--gold)"></i> Password</label>
+  <div style="position:relative"><input id="pass" type="password" value="RGS123"><i class="fas fa-eye" style="position:absolute;right:14px;top:19px;color:var(--gold);cursor:pointer" onclick="let p=document.getElementById('pass');p.type=p.type==='password'?'text':'password'"></i></div>
+  <button class="btn btn-gold" onclick="login()">SIGN IN <i class="fas fa-arrow-right"></i></button>
 
-<div id="tab-scan" class="p-3 max-w-3xl mx-auto hidden">
-  <div class="bg-white rounded-xl shadow p-4 mb-3">
-    <h2 class="font-bold mb-2">Scan Student QR for Attendance</h2>
-    <div id="reader" class="w-full rounded-lg overflow-hidden border"></div>
-    <div class="flex gap-2 mt-3">
-      <button onclick="startScan()" id="startBtn" class="bg-blue-800 text-white px-4 py-2 rounded-lg flex-1 font-semibold">Start Camera</button>
-      <button onclick="stopScan()" class="bg-red-600 text-white px-4 py-2 rounded-lg flex-1 font-semibold">Stop</button>
-    </div>
-    <div class="mt-3 flex gap-2">
-      <input id="manualRoll" placeholder="Manual Roll e.g. RGS-1001" class="border rounded-lg p-2.5 text-sm flex-1">
-      <button onclick="manualAttendance()" class="bg-slate-800 text-white px-4 rounded-lg text-sm">Mark Present</button>
-    </div>
-    <p id="scanResult" class="mt-3 text-center font-bold text-green-700"></p>
-  </div>
-  <div class="bg-white rounded-xl shadow p-4">
-    <h3 class="font-bold text-sm mb-2">Today's Present (<span id="todayDate"></span>)</h3>
-    <div id="todayList" class="text-sm"></div>
+  <!-- YAHAN APKA NAAM AAYEGA - JO OPEN KAREGA USKO NAZAR AAYEGA -->
+  <div style="text-align:center;margin-top:22px;padding-top:16px;border-top:1.5px solid rgba(212,175,55,0.3);background:linear-gradient(145deg,rgba(212,175,55,0.08),transparent);border-radius:0 0 12px 12px">
+    <div style="color:var(--gold);font-weight:900;font-size:15px;letter-spacing:0.8px"><i class="fas fa-code"></i> Made by Mian Ahmad</div>
+    <div style="color:var(--gold);font-size:14px;margin-top:5px;font-weight:700;letter-spacing:0.5px"><i class="fas fa-phone"></i> 0300-7990350</div>
+    <div style="font-size:10px;opacity:0.5;margin-top:6px">Jallah Jeem • RGS VIP System</div>
   </div>
 </div>
 
-<div id="tab-report" class="p-3 max-w-3xl mx-auto hidden">
-  <div class="bg-white rounded-xl shadow p-4">
-    <h2 class="font-bold mb-3">Attendance Report</h2>
-    <div class="flex gap-2 mb-3">
-      <input type="date" id="reportDate" class="border rounded-lg p-2 text-sm" onchange="renderReport()">
-      <button onclick="exportCSV()" class="bg-green-600 text-white px-3 py-2 rounded-lg text-sm">Export CSV</button>
-      <button onclick="clearAttendance()" class="bg-red-100 text-red-700 px-3 py-2 rounded-lg text-sm">Clear</button>
+<!-- MAIN APP -->
+<div id="appPage" class="hidden">
+  <div class="card glass" style="margin:14px;display:flex;justify-content:space-between;align-items:center">
+    <div style="display:flex;align-items:center;gap:12px"><div class="logo" style="width:56px;height:56px;font-size:26px"><i class="fas fa-book-open"></i></div><div><h3 style="color:var(--gold)">Radiant Grammar School</h3><small>Good Evening, Admin • Today Overview</small></div></div>
+    <div style="display:flex;gap:14px"><i class="fas fa-bell" style="color:var(--gold);font-size:20px"></i><i class="fas fa-cog" style="color:var(--gold);font-size:20px"></i></div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="p-dash" class="page">
+    <div class="grid2" style="padding:0 12px">
+      <div class="card glass"><div style="display:flex;justify-content:space-between"><small>March 2024</small><i class="fas fa-check-circle" style="color:var(--green)"></i></div><h2 style="color:var(--gold)">Paid: Rs 1,250</h2><small>Due: Rs 200 • Due by Mar 30</small><div style="background:rgba(0,0,0,0.35);height:8px;border-radius:10px;margin:10px 0"><div style="width:90%;height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:10px;box-shadow:0 0 12px var(--gold)"></div></div><small>90% Paid • <b>2030 Tak Graph Available</b></small></div>
+      <div class="card glass" style="text-align:center"><i class="fas fa-calculator" style="font-size:38px;color:var(--gold);filter:drop-shadow(0 0 10px var(--gold))"></i><h4 style="margin:8px 0">Family Calculator</h4><small>7 Bachon ka hisab ek sath</small><button class="btn btn-gold" onclick="showP('p-family')">Calculate Now →</button></div>
     </div>
-    <div id="reportList" class="text-sm"></div>
+    <div style="padding:8px 18px"><h3 style="color:var(--gold)"><i class="fas fa-bolt"></i> Quick Actions - Sab Alag Alag</h3></div>
+    <div class="grid2" style="padding:0 12px">
+      <div class="card glass" style="text-align:center" onclick="showP('p-att')"><i class="fas fa-calendar-check" style="font-size:32px;color:var(--gold)"></i><h4>Attendance</h4><small>Student Alag • Teacher Alag</small><div style="margin-top:6px"><span class="badge bg-green">Student</span><span class="badge bg-gold">Teacher</span></div></div>
+      <div class="card glass" style="text-align:center" onclick="showP('p-adm')"><i class="fas fa-user-graduate" style="font-size:32px;color:var(--gold)"></i><h4>Admission</h4><small>Admission Alag</small><small style="display:block;margin-top:4px">Year 2030 Tak</small></div>
+      <div class="card glass" style="text-align:center" onclick="showP('p-contacts')"><i class="fas fa-address-book" style="font-size:32px;color:var(--gold)"></i><h4>Contact List</h4><small>Name + Number Print</small><small style="display:block;color:var(--green)">A4 / 80mm</small></div>
+      <div class="card glass" style="text-align:center" onclick="showP('p-bday')"><i class="fas fa-birthday-cake" style="font-size:32px;color:var(--gold)"></i><h4>Birthday</h4><small>Student + Teacher</small><small style="display:block">Auto WhatsApp Wish</small></div>
+    </div>
+    <div class="card glass" style="margin-bottom:110px">
+      <h3 style="color:var(--gold)"><i class="fas fa-chart-bar"></i> Jan-Dec Fee + Teacher Salary + Status</h3>
+      <div style="margin:10px 0"><span class="badge bg-green">Active 320</span><span class="badge bg-red">🔴 Chor Gaya 15</span><span class="badge bg-yellow">🟡 Principal Nikala 12</span></div>
+      <div class="grid2">
+        <button class="btn btn-gold" onclick="generateClassPDF()"><i class="fas fa-file-pdf"></i> Class Wise Fee PDF 1 Click</button>
+        <button class="btn btn-green" onclick="showP('p-contacts')"><i class="fas fa-print"></i> Name + Number Print</button>
+      </div>
+      <div style="margin-top:12px;background:rgba(0,0,0,0.3);padding:12px;border-radius:12px"><small>Teacher Birthday: 15 March - Sir Ahmad | Student Birthday: Today 2 Students</small></div>
+    </div>
+  </div>
+
+  <!-- FAMILY CALCULATOR 7 BACHE -->
+  <div id="p-family" class="page hidden" style="padding:0 0 110px">
+    <div class="card glass"><h2 style="color:var(--gold)"><i class="fas fa-users"></i> Family Calculator - 7 Bache</h2><small>1 Father - 7 Bache - Ek Sath Hisab - 15% Discount</small><hr style="margin:12px 0;border-color:rgba(212,175,55,0.2)"><div id="familyList"></div><button class="btn btn-gold" onclick="addChild()">+ Bacha Add Karo (7 Tak)</button><div style="margin-top:18px;background:rgba(0,0,0,0.35);padding:16px;border-radius:14px;border:1px solid rgba(212,175,55,0.25)"><div style="display:flex;justify-content:space-between;margin:6px 0"><span>Total Fee:</span><b id="tot">Rs 35,000</b></div><div style="display:flex;justify-content:space-between;margin:6px 0"><span>Family Discount 15%:</span><b id="disc" style="color:var(--green)">-Rs 5,250</b></div><div style="display:flex;justify-content:space-between;margin:10px 0 0;padding-top:10px;border-top:1px solid rgba(212,175,55,0.2);font-size:20px"><span>Net Payable:</span><b id="net" style="color:var(--gold)">Rs 29,750</b></div></div><button class="btn btn-gold" onclick="printFamily()"><i class="fas fa-print"></i> 80mm Slip + A4 Print</button><button class="btn btn-green" onclick="waFamily()"><i class="fab fa-whatsapp"></i> WhatsApp School No 0307-8134467</button></div>
+    <div class="card glass"><h4 style="color:var(--gold)">Jan to Dec Hisab - Bache + Teacher</h4><div id="janDec"></div></div>
+  </div>
+
+  <!-- CONTACT LIST -->
+  <div id="p-contacts" class="page hidden" style="padding:0 0 110px">
+    <div class="card glass"><h2 style="color:var(--gold)"><i class="fas fa-phone"></i> Contact Number - Student + Teacher</h2><p style="font-size:12px;opacity:0.7">Bachy ka Name + Father Name + Number Print Asani Se</p><input id="searchContact" placeholder="🔍 Name / Father / Class se Search..." onkeyup="renderContacts()"><select id="classFilter" onchange="renderContacts()"><option value="">All Classes</option><option>Class 1</option><option>Class 2</option><option>Class 3</option><option>Class 4</option><option>Class 5</option><option>Teachers</option></select><table><thead><tr><th>No</th><th>Name / Father / Class</th><th>Number</th><th>Action</th></tr></thead><tbody id="contactTable"></tbody></table><div class="grid2"><button class="btn btn-gold" onclick="window.print()"><i class="fas fa-print"></i> Name + Number Print</button><button class="btn btn-green" onclick="generateClassPDF()"><i class="fas fa-file-pdf"></i> Father Name + Jama + Baqaya Class Wise PDF 1 Click</button></div><small style="display:block;margin-top:10px;opacity:0.6">Har bache ko alag se direct WhatsApp bhej sakte hain</small></div>
+  </div>
+
+  <!-- ATTENDANCE ALAG ALAG -->
+  <div id="p-att" class="page hidden" style="padding:0 0 110px">
+    <div class="card glass"><h2 style="color:var(--gold)">Hazri Alag Alag</h2><div class="grid2"><div class="card glass" style="margin:0"><h4>Student Hazri</h4><small>Class Wise - Rozana</small><p style="margin-top:8px">Class 1: 30 Present</p><p>Class 5: 28 Present</p><button class="btn btn-gold" style="padding:8px">Student Hazri Lagao</button></div><div class="card glass" style="margin:0"><h4>Teacher Hazri</h4><small>Time Wise - Subah 8 to 2</small><p style="margin-top:8px">Late: 2 | Absent: 1</p><button class="btn btn-gold" style="padding:8px">Teacher Hazri Lagao</button></div></div></div>
+    <div class="card glass"><h4>Admission Wala Hissa Alag | Fee Wala Hissa Alag</h4><p>Admission: New Admission Form | Fee: Fee Counter Rozana</p></div>
+  </div>
+
+  <div id="p-adm" class="page hidden" style="padding:0 0 110px"><div class="card glass"><h2 style="color:var(--gold)">Admission Alag</h2><input placeholder="Student Name"><input placeholder="Father Name"><input placeholder="Contact 0307-xxxxxxx"><select><option>Class 1</option><option>Class 5</option></select><button class="btn btn-gold">Admission Save Karo</button><p style="margin-top:10px"><span class="badge bg-red">Red = Khud Chor Gaya</span> <span class="badge bg-yellow">Yellow = Principal ne Nikala</span></p></div></div>
+  <div id="p-fee" class="page hidden" style="padding:0 0 110px"><div class="card glass"><h2 style="color:var(--gold)">Fee Alag - Jan to Dec 2030 Tak</h2><p>Teacher Salary + Student Fee Jan-Dec</p></div></div>
+  <div id="p-bday" class="page hidden" style="padding:0 0 110px"><div class="card glass"><h2 style="color:var(--gold)">Birthday 🎂 Student + Teacher</h2><div class="card glass" style="margin:8px 0"><h4>🎂 Aaj ka Birthday - 2 Students</h4><p>Ahmad Khan - Class 5 | Fatima - Class 3</p><button class="btn btn-green"><i class="fab fa-whatsapp"></i> Auto Wish WhatsApp</button></div><div class="card glass" style="margin:8px 0"><h4>🎂 Teacher Birthday - Sir Ahmad - 15 March</h4><button class="btn btn-green">Teacher ko Wish Bhejo</button></div></div></div>
+
+  <div style="text-align:center;padding:20px;margin-bottom:100px;opacity:0.4;font-size:11px">RGS Jallah Jeem VIP System - Year 2030 Tak Supported</div>
+
+  <div class="nav no-print">
+    <div class="nav-i active" onclick="showP('p-dash')"><i class="fas fa-home"></i><small>Home</small></div>
+    <div class="nav-i" onclick="showP('p-att')"><i class="fas fa-th-large"></i><small>Dash</small></div>
+    <div class="nav-i" onclick="showP('p-family')"><i class="fas fa-calculator"></i><small>Calc</small></div>
+    <div class="nav-i" onclick="showP('p-contacts')"><i class="fas fa-wallet"></i><small>Fees</small></div>
+    <div class="nav-i" onclick="showP('p-contacts')"><i class="fas fa-user"></i><small>Profile</small></div>
   </div>
 </div>
 
 <script>
-let students = JSON.parse(localStorage.getItem('rgs_students')||'[]');
-let attendance = JSON.parse(localStorage.getItem('rgs_attendance')||'{}');
-let html5Qrcode;
-function save(){localStorage.setItem('rgs_students',JSON.stringify(students));localStorage.setItem('rgs_attendance',JSON.stringify(attendance));}
-function todayStr(){return new Date().toISOString().split('T')[0];}
-document.getElementById('todayDate').innerText=todayStr();
-document.getElementById('reportDate').value=todayStr();
-function showTab(t){
-document.getElementById('tab-students').classList.add('hidden');
-document.getElementById('tab-scan').classList.add('hidden');
-document.getElementById('tab-report').classList.add('hidden');
-document.getElementById('tab-'+t).classList.remove('hidden');
-document.getElementById('btn-students').className='bg-slate-200 px-4 py-2 rounded-lg font-semibold text-sm';
-document.getElementById('btn-scan').className='bg-slate-200 px-4 py-2 rounded-lg font-semibold text-sm';
-document.getElementById('btn-report').className='bg-slate-200 px-4 py-2 rounded-lg font-semibold text-sm';
-document.getElementById('btn-'+t).className='tab-active px-4 py-2 rounded-lg font-semibold text-sm';
-if(t==='report')renderReport();if(t==='scan')renderToday();
-}
-function addStudent(){
-const roll=document.getElementById('roll').value.trim().toUpperCase();
-const name=document.getElementById('name').value.trim();
-const father=document.getElementById('father').value.trim();
-const cls=document.getElementById('class').value;
-if(!roll||!name){alert('Roll and Name required');return;}
-if(students.find(s=>s.roll===roll)){alert('Roll already exists');return;}
-students.push({roll,name,father,cls});save();renderStudents();
-document.getElementById('roll').value='';document.getElementById('name').value='';document.getElementById('father').value='';
-}
-function addSample(){
-const samples=[{roll:'RGS-1001',name:'Ali Raza',father:'Muhammad Riaz',cls:'Class 3'},{roll:'RGS-1002',name:'Ayesha Khan',father:'Khan Muhammad',cls:'Class 2'},{roll:'RGS-1003',name:'Usman Jutt',father:'Bilal Jutt',cls:'Play Group to KG'}];
-samples.forEach(s=>{if(!students.find(x=>x.roll===s.roll))students.push(s);});save();renderStudents();
-}
-function deleteStudent(roll){if(!confirm('Delete '+roll+' ?'))return;students=students.filter(s=>s.roll!==roll);save();renderStudents();}
-function renderStudents(){
-const div=document.getElementById('studentList');
-if(students.length===0){div.innerHTML='<p class="text-center text-sm text-slate-500">No students yet. Add students.</p>';return;}
-div.innerHTML='';
-students.forEach((s,i)=>{
-const card=document.createElement('div');
-card.className='bg-white rounded-xl shadow p-3 flex gap-3 items-center';
-card.innerHTML=`<div class="flex-1"><p class="font-bold text-sm">${s.roll} - ${s.name}</p><p class="text-xs text-slate-600">Father: ${s.father} | ${s.cls}</p><div class="flex gap-2 mt-2"><button onclick="showQR('${s.roll}')" class="bg-slate-800 text-white px-3 py-1 rounded text-xs">View QR</button><button onclick="deleteStudent('${s.roll}')" class="bg-red-100 text-red-600 px-3 py-1 rounded text-xs">Delete</button></div></div><div id="qr-${i}" class="qr-card w-20 h-20"></div>`;
-div.appendChild(card);
-setTimeout(()=>{const el=document.getElementById(`qr-${i}`);if(el){el.innerHTML='';new QRCode(el,{text:s.roll,width:80,height:80});}},100);
-});
-}
-function showQR(roll){
-const s=students.find(x=>x.roll===roll);
-const w=window.open('','_blank','width=400,height=500');
-w.document.write(`<html><head><title>${roll}</title></head><body style="text-align:center;font-family:sans-serif"><h2>${s.name}</h2><p>${roll} | ${s.cls}</p><div id="q"></div><p>Father: ${s.father}</p><p>Radiant Grammar School Jallah Jeem</p><script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"><\/script><script>new QRCode(document.getElementById("q"),{text:"${roll}",width:200,height:200});window.print();<\/script></body></html>`);
-}
-function markAttendance(roll){
-const s=students.find(x=>x.roll===roll);
-if(!s){document.getElementById('scanResult').innerText='❌ Student not found: '+roll;return false;}
-const date=todayStr();
-if(!attendance[date])attendance[date]=[];
-if(attendance[date].find(a=>a.roll===roll)){document.getElementById('scanResult').innerText='⚠️ Already Present: '+s.name;return true;}
-attendance[date].push({roll,time:new Date().toLocaleTimeString()});save();
-document.getElementById('scanResult').innerText='✅ Present: '+s.name+' ('+roll+') at '+new Date().toLocaleTimeString();
-renderToday();renderReport();if(navigator.vibrate)navigator.vibrate(200);return true;
-}
-function manualAttendance(){const roll=document.getElementById('manualRoll').value.trim().toUpperCase();if(!roll)return;markAttendance(roll);document.getElementById('manualRoll').value='';}
-function startScan(){
-if(html5Qrcode&&html5Qrcode.isScanning)return;
-html5Qrcode=new Html5Qrcode("reader");
-html5Qrcode.start({facingMode:"environment"},{fps:10,qrbox:250},(decoded)=>{markAttendance(decoded.trim().toUpperCase());},(err)=>{}).catch(e=>{alert('Camera error: '+e);});
-}
-function stopScan(){if(html5Qrcode){html5Qrcode.stop().then(()=>{document.getElementById('reader').innerHTML='';}).catch(()=>{});}}
-function renderToday(){
-const date=todayStr();const list=attendance[date]||[];
-document.getElementById('todayList').innerHTML=list.length?list.map(a=>{const s=students.find(x=>x.roll===a.roll);return `<div class="flex justify-between border-b py-1"><span>${a.roll} - ${s?s.name:'Unknown'}</span><span>${a.time}</span></div>`;}).join(''):'<p class="text-slate-500">No attendance yet today.</p>';
-}
-function renderReport(){
-const date=document.getElementById('reportDate').value||todayStr();const list=attendance[date]||[];let presentRolls=list.map(a=>a.roll);let absent=students.filter(s=>!presentRolls.includes(s.roll));
-let html=`<p class="mb-2 font-semibold">Date: ${date} | Present: ${list.length} | Absent: ${absent.length} | Total: ${students.length}</p>`;
-html+=`<div class="mb-3"><b>Present:</b><br>`+(list.map(a=>{const s=students.find(x=>x.roll===a.roll);return `${a.roll} - ${s?s.name:''} (${a.time})`;}).join('<br>')||'None')+`</div>`;
-html+=`<div><b>Absent:</b><br>`+(absent.map(s=>`${s.roll} - ${s.name}`).join('<br>')||'None')+`</div>`;
-document.getElementById('reportList').innerHTML=html;
-}
-function exportCSV(){
-const date=document.getElementById('reportDate').value||todayStr();const list=attendance[date]||[];let csv='Roll,Name,Father,Class,Status,Time,Date\n';
-students.forEach(s=>{const att=list.find(a=>a.roll===s.roll);csv+=`${s.roll},"${s.name}","${s.father}",${s.cls},${att?'Present':'Absent'},${att?att.time:''},${date}\n`;});
-const blob=new Blob([csv],{type:'text/csv'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`Attendance_${date}.csv`;a.click();
-}
-function clearAttendance(){const date=document.getElementById('reportDate').value;if(!confirm('Clear attendance for '+date+' ?'))return;delete attendance[date];save();renderReport();renderToday();}
-renderStudents();renderToday();renderReport();
-</script>
-</body>
-                                                                        </html>
+let students=[{id:1,name:"Ahmad Khan",father:"Muhammad Khan",phone:"03078134467",class:"Class 5",fee:5000,paid:3000,status:"active",bday:"12 Dec"},{id:2,name:"Ali Raza",father:"Raza Ali",phone:"03001234567",class:"Class 5",fee:5000,paid:5000,status:"active",bday:"05 Jan"},{id:3,name:"Fatima Zahra",father:"Ahmed Ali",phone:"03007813467",class:"Class 3",fee:4000,paid:0,status:"left",bday:"Today"},{id:4,name:"Usman Ghani",father:"Ghani Khan",phone:"03009876543",class:"Class 5",fee:5000,paid:2000,status:"kharij",bday:"15 Mar"},{id:5,name:"Sir Ahmad",father:"Teacher",phone:"03001112222",class:"Teachers",fee:25000,paid:25000,status:"active",bday:"15 Mar"}];
+let family=[{name:"Bacha 1 - Ahmad",fee:5000},{name:"Bacha 2 - Ali",fee:5000},{name:"Bacha 3 - Fatima",fee:4000},{name:"Bacha 4 - Usman",fee:5000},{name:"Bacha 5 - Zain",fee:5000},{name:"Bacha 6 - Ayesha",fee:4000},{name:"Bacha 7 - Bilal",fee:5000}];
+function login(){let u=document.getElementById("user").value,p=document.getElementById("pass").value;if(u==="RGSJALLAHJEEM" && p==="RGS123"){document.getElementById("loginPage").classList.add("hidden");document.getElementById("appPage").classList.remove("hidden");renderContacts();renderFamily();renderJanDec();}else alert("Username: RGSJALLAHJEEM Password: RGS123");}
+function showP(id){document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));document.getElementById(id).classList.remove("hidden");document.querySelectorAll(".nav-i").forEach(n=>n.classList.remove("active"));}
+function renderContacts(){let tb=document.getElementById("contactTable");let s=(document.getElementById("searchContact").value||"").toLowerCase();let cf=document.getElementById("classFilter").value;tb.innerHTML="";students.filter(x=>{let ok=true;if(s) ok=(x.name.toLowerCase().includes(s)||x.father.toLowerCase().includes(s)||x.class.toLowerCase().includes(s));if(cf) ok=ok && x.class===cf;return ok;}).forEach((st,i)=>{let b=st.status==="active"?"bg-green":st.status==="left"?"bg-red":"bg-yellow";let lbl=st.status==="active"?"Active":st.status==="left"?"Chor Gaya":"Principal Nikala";tb.innerHTML+=`<tr><td>${i+1}</td><td><b>${st.name}</b><br><small>${st.father} • ${st.class}</small><br><span class="badge ${b}">${lbl}</span></td><td style="font-weight:700">${st.phone}</td><td><button class="btn btn-green" style="padding:7px 10px;font-size:11px" onclick="waDirect('${st.phone}','${st.name}')"><i class="fab fa-whatsapp"></i> WhatsApp</button></td></tr>`;});}
+function renderFamily(){let d=document.getElementById("familyList");d.innerHTML="";family.forEach((c,i)=>{d.innerHTML+=`<div style="display:flex;gap:8px;margin:6px 0"><input value="${c.name}" onchange="family[${i}].name=this.value" style="flex:1"><input type="number" value="${c.fee}" onchange="family[${i}].fee=parseInt(this.value)||0;calcF()" style="width:110px"></div>`;});calcF();}
+function addChild(){if(family.length>=10){alert("Max 10 bache");return} family.push({name:`Bacha ${family.length+1}`,fee:5000});renderFamily();}
+function calcF(){let t=family.reduce((a,b)=>a+b.fee,0);let dis=Math.round(t*0.15);let net=t-dis;document.getElementById("tot").innerText="Rs "+t.toLocaleString();document.getElementById("disc").innerText="-Rs "+dis.toLocaleString();document.getElementById("net").innerText="Rs "+net.toLocaleString();}
+function renderJanDec(){let d=document.getElementById("janDec");let months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];d.innerHTML=`<div style="margin:10px 0"><b>Bachon ki Fee Jan-Dec:</b><br>${months.map((m,i)=>`<span class="month-chip ${i<2?'month-paid':'month-due'}">${m}: ${i<2?'Paid':'Due'} Rs 5k</span>`).join("")}</div><div><b>Teacher Salary Jan-Dec:</b><br>${months.map((m,i)=>`<span class="month-chip ${i<2?'month-paid':'month-due'}">${m}: ${i<2?'25k Paid':'Due'}</span>`).join("")}</div><small style="opacity:0.6;display:block;margin-top:8px">Year 2030 Tak Supported - Graph Har Jagah</small>`;}
+function printFamily(){let w=window.open("","","width=350,height=700");w.document.write(`<pre style="width:80mm;font-family:monospace;font-size:13px">Radiant Grammar School Jallah Jeem\nFamily Fee Slip - 7 Bache\nDate: ${new Date().toLocaleDateString()}\n------------------------------\n${family.map(c=>`${c.name}: Rs ${c.fee}`).join("\n")}\n------------------------------\n${document.getElementById("tot").innerText}\n${document.getElementById("disc").innerText}\n${document.getElementById("net").innerText}\n------------------------------\nSchool WhatsApp: 0307-8134467\n</pre>`);w.document.close();w.print();}
+function waFamily(){let msg=`Radiant Grammar School Jallah Jeem - Family Fee\n${family.map(c=>c.name+": Rs "+c.fee).join("\n")}\n${document.getElementById("net").innerText}\nSchool: 0307-8134467`;window.open(`https://wa.me/923078134467?text=${encodeURIComponent(msg)}`);}
+function waDirect(phone,name){let st=students.find(s=>s.phone===phone);let baq=st.fee-st.paid;let msg=`As-salamu Alaikum ${name} Walid ${st.father} - ${st.class}\nFee Baqaya: Rs ${baq}\nJama: ${st.paid} | Total: ${st.fee}\nRadiant Grammar School Jallah Je
