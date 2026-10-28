@@ -1,101 +1,138 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RGS JALLAH JEEM - Complete Fee System</title>
-<link rel="icon" href="logo.png">
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>RGS JALLAHJEEM - Radiant Grammar School VIP</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
-body{background:#0f172a;color:#fff;min-height:100vh}
-#loginPage{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
-.login-box{background:#1e293b;padding:32px;border-radius:22px;width:100%;max-width:380px;text-align:center}
-.login-logo{width:110px;height:110px;margin:0 auto 12px;background:#fff;border-radius:50%;padding:5px}
-.login-logo img{width:100%;height:100%;object-fit:contain;border-radius:50%}
-h2{color:#d9b88a} .sub{color:#94a3b8;font-size:12px;margin:6px 0 12px}
-.badge{background:rgba(217,184,138,.15);color:#d9b88a;padding:7px;border-radius:10px;font-size:12px;margin-bottom:12px}
-.input-wrap{position:relative;margin-bottom:12px}
-.input-wrap input{width:100%;padding:14px 42px 14px 16px;border-radius:12px;border:1px solid #334155;background:#0f172a;color:#fff;font-size:16px;outline:none}
-.eye{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;font-size:20px;cursor:pointer}
-button.login-btn{width:100%;padding:14px;border-radius:12px;border:none;background:#d9b88a;color:#0f172a;font-weight:800;font-size:16px;cursor:pointer}
-#err{color:#f87171;margin-top:10px;font-size:13px;display:none}
-#mainApp{display:none;min-height:100vh}
-.header{padding:10px 14px;display:flex;justify-content:space-between;align-items:center;background:#1e293b;position:sticky;top:0;z-index:5}
-.hleft{display:flex;align-items:center;gap:8px}
-.hlogo{width:36px;height:36px;background:#fff;border-radius:50%;padding:3px}
-.hlogo img{width:100%;height:100%;object-fit:contain;border-radius:50%}
-.tab{display:none;padding:12px;padding-bottom:90px} .tab.active{display:block}
-.card{background:#1e293b;border-radius:14px;padding:14px;margin-bottom:10px}
-.stat{background:#d9b88a;color:#0f172a;border-radius:14px;padding:12px;text-align:center}
-.stat.loss{background:#f87171;color:#fff} .stat.profit{background:#4ade80;color:#0f172a}
-.top4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:12px}
-.top3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}
-.btn{background:#d9b88a;color:#0f172a;border:none;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer;font-size:13px}
-.btn-sm{padding:5px 10px;font-size:11px;border-radius:7px;margin:2px}
-.inp{width:100%;padding:11px;border-radius:9px;border:1px solid #334155;background:#0f172a;color:#fff;margin-bottom:8px;font-size:14px}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:#1e293b;display:flex;justify-content:space-around;padding:8px 0;border-top:1px solid #334155;z-index:10}
-.bottom button{background:none;border:none;color:#94a3b8;padding:6px 8px;border-radius:16px;font-size:10px}
-.bottom button.active{background:#d9b88a;color:#0f172a;font-weight:700}
-.fab{position:fixed;bottom:75px;right:14px;width:52px;height:52px;border-radius:50%;background:#d9b88a;color:#0f172a;border:none;font-size:26px;font-weight:800;z-index:10}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:20;align-items:center;justify-content:center;padding:16px}
-.modal.show{display:flex} .modal-box{background:#1e293b;border-radius:16px;padding:16px;width:100%;max-width:420px;max-height:92vh;overflow:auto}
-.m-title{color:#d9b88a;font-weight:800;margin-bottom:10px} .lbl{color:#94a3b8;font-size:11px;margin:6px 0 3px;display:block}
-.month-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:8px 0}
-.month-btn{padding:8px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#fff;font-size:11px;cursor:pointer;text-align:center}
-.month-btn.paid{background:#4ade80;color:#0f172a;font-weight:700;border-color:#4ade80}
-.month-btn.unpaid{background:#1e293b;color:#f87171}
-@media print{ body *{visibility:hidden} #slipArea, #slipArea *{visibility:visible} #slipArea{position:absolute;left:0;top:0;width:80mm;padding:5mm;font-family:monospace;color:#000;background:#fff} }
-#slipArea{display:none}
-</style></head><body>
-<div id="loginPage"><div class="login-box"><div class="login-logo"><img src="logo.png"></div><h2>RGS JALLAH JEEM</h2><p class="sub">RADIANT GRAMMAR SCHOOL<br>Iman • Ittehad • Nazm</p><div class="badge">Secure Login</div><input id="u" class="inp" value="RGSJALLAHJEEM"><div class="input-wrap"><input id="p" type="password" placeholder="Password"><button class="eye" onclick="toggleEye('p',this)">👁️</button></div><button class="login-btn" onclick="doLogin()">Login</button><p id="err"></p></div></div>
-<div id="mainApp">
-<div class="header"><div class="hleft"><div class="hlogo"><img src="logo.png"></div><b style="color:#d9b88a;font-size:13px">RGS JALLAH JEEM</b></div><div style="display:flex;gap:6px"><select id="yearSel" onchange="render()" style="background:#d9b88a;color:#0f172a;border:none;padding:5px 10px;border-radius:16px;font-weight:700;font-size:12px"><option>2026</option><option>2027</option><option>2028</option><option>2029</option><option>2030</option></select><button onclick="doLogout()" style="background:#334155;color:#fff;border:none;padding:5px 10px;border-radius:16px;font-size:11px">Logout</button></div></div>
-<div id="tab-dashboard" class="tab active">
-<div class="top4"><div class="stat"><span>Total</span><b id="tTotal">0</b></div><div class="stat"><span>Collected</span><b id="tCollected">0</b></div><div class="stat loss"><span>Loss</span><b id="tLoss">0</b></div><div class="stat profit"><span>Profit</span><b id="tProfit">0</b></div></div>
-<div class="top3"><div class="stat"><span>Students</span><b id="tStu">0</b></div><div class="stat"><span>Paid Months</span><b id="tPaidM">0</b></div><div class="stat"><span>Unpaid</span><b id="tUnpaidM">0</b></div></div>
-<div class="card"><input id="search" class="inp" placeholder="Search Roll No / Name / Father / Class..." oninput="render()"><select id="classFilter" class="inp" onchange="render()"><option value="">All Classes</option><option>PG</option><option>Nursery</option><option>Prep</option><option>One</option><option>Two</option><option>Three</option><option>Four</option><option>Five</option><option>Six</option><option>Seven</option><option>Eight</option></select></div>
-<div id="dashList"></div>
+:root{--blue:#0A1931;--blue2:#12264a;--gold:#D4AF37;--gold2:#FFD700;--red:#FF3B30;--yellow:#FFCC00;--green:#00C851;--bg:#060e22}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
+body{background:radial-gradient(120% 120% at 20% 10%,var(--blue2),var(--bg));color:#fff;min-height:100vh;overflow-x:hidden}
+.glass{background:linear-gradient(145deg,rgba(255,255,255,0.09),rgba(255,255,255,0.03));backdrop-filter:blur(22px);border:1px solid rgba(212,175,55,0.35);border-radius:22px;box-shadow:0 12px 40px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.12)}
+.logo{width:72px;height:72px;background:linear-gradient(145deg,var(--gold),var(--gold2));border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:34px;color:var(--blue);box-shadow:0 0 30px rgba(212,175,55,0.6)}
+.card{margin:12px;padding:18px;transition:0.3s}
+.card:hover{transform:translateY(-2px);box-shadow:0 0 25px rgba(212,175,55,0.25)}
+.btn{border:none;padding:13px 20px;border-radius:13px;font-weight:800;cursor:pointer;width:100%;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;transition:0.2s}
+.btn-gold{background:linear-gradient(145deg,var(--gold),var(--gold2));color:var(--blue);box-shadow:0 6px 18px rgba(212,175,55,0.45)}
+.btn-green{background:linear-gradient(145deg,#25D366,#128C7E);color:#fff}
+.btn:active{transform:scale(0.97)}
+input,select,textarea{width:100%;padding:13px;background:rgba(0,0,0,0.35);border:1px solid rgba(212,175,55,0.28);border-radius:12px;color:#fff;margin:7px 0;outline:none}
+input:focus{border-color:var(--gold);box-shadow:0 0 12px rgba(212,175,55,0.3)}
+.badge{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:800;display:inline-block;margin:2px}
+.bg-green{background:var(--green)} .bg-red{background:var(--red)} .bg-yellow{background:var(--yellow);color:#000} .bg-gold{background:rgba(212,175,55,0.2);color:var(--gold)}
+table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px}
+th{background:rgba(212,175,55,0.18);padding:11px;color:var(--gold);text-align:left} td{padding:11px;border-bottom:1px solid rgba(212,175,55,0.1)}
+.hidden{display:none!important}
+.login-wrap{max-width:420px;margin:40px auto 20px;padding:28px}
+.nav{position:fixed;bottom:14px;left:14px;right:14px;background:linear-gradient(145deg,rgba(10,25,49,0.97),rgba(18,38,74,0.97));backdrop-filter:blur(22px);border:1px solid rgba(212,175,55,0.45);border-radius:26px;display:flex;justify-content:space-around;padding:10px 6px;z-index:999;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+.nav-i{flex:1;text-align:center;color:var(--gold);cursor:pointer;padding:8px 4px;border-radius:16px;opacity:0.8}
+.nav-i.active{background:rgba(212,175,55,0.22);box-shadow:0 0 18px rgba(212,175,55,0.35);opacity:1}
+.nav-i i{font-size:22px;display:block;margin-bottom:3px}
+.month-chip{padding:6px 10px;border-radius:10px;background:rgba(0,0,0,0.3);border:1px solid rgba(212,175,55,0.2);font-size:11px;margin:3px;display:inline-block}
+.month-paid{border-color:var(--green);background:rgba(0,200,81,0.15);color:var(--green)}
+.month-due{border-color:var(--red);background:rgba(255,59,48,0.15);color:var(--red)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media print{.nav,.no-print{display:none} body{background:#fff;color:#000}}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<!-- LOGIN PAGE -->
+<div id="loginPage" class="login-wrap glass">
+  <div style="text-align:center;margin-bottom:18px">
+    <div class="logo" style="margin:0 auto 14px"><i class="fas fa-shield-alt"></i></div>
+    <h1 style="color:var(--gold);font-size:24px">RADIANT GRAMMAR SCHOOL</h1>
+    <h3 style="color:var(--gold);opacity:0.9">JALLAH JEEM</h3>
+    <small style="opacity:0.7">VIP Dashboard 2026 - 2030</small>
+  </div>
+  <label><i class="fas fa-user" style="color:var(--gold)"></i> Username</label>
+  <input id="user" value="RGSJALLAHJEEM" placeholder="RGSJALLAHJEEM">
+  <label><i class="fas fa-lock" style="color:var(--gold)"></i> Password</label>
+  <div style="position:relative"><input id="pass" type="password" value="RGS123"><i class="fas fa-eye" style="position:absolute;right:14px;top:19px;color:var(--gold);cursor:pointer" onclick="let p=document.getElementById('pass');p.type=p.type==='password'?'text':'password'"></i></div>
+  <button class="btn btn-gold" onclick="login()">SIGN IN <i class="fas fa-arrow-right"></i></button>
+
+  <!-- YAHAN APKA NAAM AAYEGA - JO OPEN KAREGA USKO NAZAR AAYEGA -->
+  <div style="text-align:center;margin-top:22px;padding-top:16px;border-top:1.5px solid rgba(212,175,55,0.3);background:linear-gradient(145deg,rgba(212,175,55,0.08),transparent);border-radius:0 0 12px 12px">
+    <div style="color:var(--gold);font-weight:900;font-size:15px;letter-spacing:0.8px"><i class="fas fa-code"></i> Made by Mian Ahmad</div>
+    <div style="color:var(--gold);font-size:14px;margin-top:5px;font-weight:700;letter-spacing:0.5px"><i class="fas fa-phone"></i> 0300-7990350</div>
+    <div style="font-size:10px;opacity:0.5;margin-top:6px">Jallah Jeem • RGS VIP System</div>
+  </div>
 </div>
-<div id="tab-students" class="tab">
-<div class="card"><h4 style="color:#d9b88a;margin-bottom:8px">Add Student</h4>
-<label class="lbl">Roll No</label><input id="sRoll" class="inp" type="number">
-<label class="lbl">Name</label><input id="sName" class="inp" placeholder="Name">
-<label class="lbl">Father Name</label><input id="sFather" class="inp" placeholder="Father Name">
-<label class="lbl">Class</label><select id="sClass" class="inp"><option value="">Select Class</option><option>PG</option><option>Nursery</option><option>Prep</option><option>One</option><option>Two</option><option>Three</option><option>Four</option><option>Five</option><option>Six</option><option>Seven</option><option>Eight</option></select>
-<label class="lbl">Monthly Fee Kitni (Rs)</label><input id="sFee" class="inp" type="number" value="1000">
-<button class="btn" style="width:100%;margin-top:6px" onclick="addStudent()">Save Student</button>
-</div><div id="studentList"></div>
+
+<!-- MAIN APP -->
+<div id="appPage" class="hidden">
+  <div class="card glass" style="margin:14px;display:flex;justify-content:space-between;align-items:center">
+    <div style="display:flex;align-items:center;gap:12px"><div class="logo" style="width:56px;height:56px;font-size:26px"><i class="fas fa-book-open"></i></div><div><h3 style="color:var(--gold)">Radiant Grammar School</h3><small>Good Evening, Admin • Today Overview</small></div></div>
+    <div style="display:flex;gap:14px"><i class="fas fa-bell" style="color:var(--gold);font-size:20px"></i><i class="fas fa-cog" style="color:var(--gold);font-size:20px"></i></div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="p-dash" class="page">
+    <div class="grid2" style="padding:0 12px">
+      <div class="card glass"><div style="display:flex;justify-content:space-between"><small>March 2024</small><i class="fas fa-check-circle" style="color:var(--green)"></i></div><h2 style="color:var(--gold)">Paid: Rs 1,250</h2><small>Due: Rs 200 • Due by Mar 30</small><div style="background:rgba(0,0,0,0.35);height:8px;border-radius:10px;margin:10px 0"><div style="width:90%;height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:10px;box-shadow:0 0 12px var(--gold)"></div></div><small>90% Paid • <b>2030 Tak Graph Available</b></small></div>
+      <div class="card glass" style="text-align:center"><i class="fas fa-calculator" style="font-size:38px;color:var(--gold);filter:drop-shadow(0 0 10px var(--gold))"></i><h4 style="margin:8px 0">Family Calculator</h4><small>7 Bachon ka hisab ek sath</small><button class="btn btn-gold" onclick="showP('p-family')">Calculate Now →</button></div>
+    </div>
+    <div style="padding:8px 18px"><h3 style="color:var(--gold)"><i class="fas fa-bolt"></i> Quick Actions - Sab Alag Alag</h3></div>
+    <div class="grid2" style="padding:0 12px">
+      <div class="card glass" style="text-align:center" onclick="showP('p-att')"><i class="fas fa-calendar-check" style="font-size:32px;color:var(--gold)"></i><h4>Attendance</h4><small>Student Alag • Teacher Alag</small><div style="margin-top:6px"><span class="badge bg-green">Student</span><span class="badge bg-gold">Teacher</span></div></div>
+      <div class="card glass" style="text-align:center" onclick="showP('p-adm')"><i class="fas fa-user-graduate" style="font-size:32px;color:var(--gold)"></i><h4>Admission</h4><small>Admission Alag</small><small style="display:block;margin-top:4px">Year 2030 Tak</small></div>
+      <div class="card glass" style="text-align:center" onclick="showP('p-contacts')"><i class="fas fa-address-book" style="font-size:32px;color:var(--gold)"></i><h4>Contact List</h4><small>Name + Number Print</small><small style="display:block;color:var(--green)">A4 / 80mm</small></div>
+      <div class="card glass" style="text-align:center" onclick="showP('p-bday')"><i class="fas fa-birthday-cake" style="font-size:32px;color:var(--gold)"></i><h4>Birthday</h4><small>Student + Teacher</small><small style="display:block">Auto WhatsApp Wish</small></div>
+    </div>
+    <div class="card glass" style="margin-bottom:110px">
+      <h3 style="color:var(--gold)"><i class="fas fa-chart-bar"></i> Jan-Dec Fee + Teacher Salary + Status</h3>
+      <div style="margin:10px 0"><span class="badge bg-green">Active 320</span><span class="badge bg-red">🔴 Chor Gaya 15</span><span class="badge bg-yellow">🟡 Principal Nikala 12</span></div>
+      <div class="grid2">
+        <button class="btn btn-gold" onclick="generateClassPDF()"><i class="fas fa-file-pdf"></i> Class Wise Fee PDF 1 Click</button>
+        <button class="btn btn-green" onclick="showP('p-contacts')"><i class="fas fa-print"></i> Name + Number Print</button>
+      </div>
+      <div style="margin-top:12px;background:rgba(0,0,0,0.3);padding:12px;border-radius:12px"><small>Teacher Birthday: 15 March - Sir Ahmad | Student Birthday: Today 2 Students</small></div>
+    </div>
+  </div>
+
+  <!-- FAMILY CALCULATOR 7 BACHE -->
+  <div id="p-family" class="page hidden" style="padding:0 0 110px">
+    <div class="card glass"><h2 style="color:var(--gold)"><i class="fas fa-users"></i> Family Calculator - 7 Bache</h2><small>1 Father - 7 Bache - Ek Sath Hisab - 15% Discount</small><hr style="margin:12px 0;border-color:rgba(212,175,55,0.2)"><div id="familyList"></div><button class="btn btn-gold" onclick="addChild()">+ Bacha Add Karo (7 Tak)</button><div style="margin-top:18px;background:rgba(0,0,0,0.35);padding:16px;border-radius:14px;border:1px solid rgba(212,175,55,0.25)"><div style="display:flex;justify-content:space-between;margin:6px 0"><span>Total Fee:</span><b id="tot">Rs 35,000</b></div><div style="display:flex;justify-content:space-between;margin:6px 0"><span>Family Discount 15%:</span><b id="disc" style="color:var(--green)">-Rs 5,250</b></div><div style="display:flex;justify-content:space-between;margin:10px 0 0;padding-top:10px;border-top:1px solid rgba(212,175,55,0.2);font-size:20px"><span>Net Payable:</span><b id="net" style="color:var(--gold)">Rs 29,750</b></div></div><button class="btn btn-gold" onclick="printFamily()"><i class="fas fa-print"></i> 80mm Slip + A4 Print</button><button class="btn btn-green" onclick="waFamily()"><i class="fab fa-whatsapp"></i> WhatsApp School No 0307-8134467</button></div>
+    <div class="card glass"><h4 style="color:var(--gold)">Jan to Dec Hisab - Bache + Teacher</h4><div id="janDec"></div></div>
+  </div>
+
+  <!-- CONTACT LIST -->
+  <div id="p-contacts" class="page hidden" style="padding:0 0 110px">
+    <div class="card glass"><h2 style="color:var(--gold)"><i class="fas fa-phone"></i> Contact Number - Student + Teacher</h2><p style="font-size:12px;opacity:0.7">Bachy ka Name + Father Name + Number Print Asani Se</p><input id="searchContact" placeholder="🔍 Name / Father / Class se Search..." onkeyup="renderContacts()"><select id="classFilter" onchange="renderContacts()"><option value="">All Classes</option><option>Class 1</option><option>Class 2</option><option>Class 3</option><option>Class 4</option><option>Class 5</option><option>Teachers</option></select><table><thead><tr><th>No</th><th>Name / Father / Class</th><th>Number</th><th>Action</th></tr></thead><tbody id="contactTable"></tbody></table><div class="grid2"><button class="btn btn-gold" onclick="window.print()"><i class="fas fa-print"></i> Name + Number Print</button><button class="btn btn-green" onclick="generateClassPDF()"><i class="fas fa-file-pdf"></i> Father Name + Jama + Baqaya Class Wise PDF 1 Click</button></div><small style="display:block;margin-top:10px;opacity:0.6">Har bache ko alag se direct WhatsApp bhej sakte hain</small></div>
+  </div>
+
+  <!-- ATTENDANCE ALAG ALAG -->
+  <div id="p-att" class="page hidden" style="padding:0 0 110px">
+    <div class="card glass"><h2 style="color:var(--gold)">Hazri Alag Alag</h2><div class="grid2"><div class="card glass" style="margin:0"><h4>Student Hazri</h4><small>Class Wise - Rozana</small><p style="margin-top:8px">Class 1: 30 Present</p><p>Class 5: 28 Present</p><button class="btn btn-gold" style="padding:8px">Student Hazri Lagao</button></div><div class="card glass" style="margin:0"><h4>Teacher Hazri</h4><small>Time Wise - Subah 8 to 2</small><p style="margin-top:8px">Late: 2 | Absent: 1</p><button class="btn btn-gold" style="padding:8px">Teacher Hazri Lagao</button></div></div></div>
+    <div class="card glass"><h4>Admission Wala Hissa Alag | Fee Wala Hissa Alag</h4><p>Admission: New Admission Form | Fee: Fee Counter Rozana</p></div>
+  </div>
+
+  <div id="p-adm" class="page hidden" style="padding:0 0 110px"><div class="card glass"><h2 style="color:var(--gold)">Admission Alag</h2><input placeholder="Student Name"><input placeholder="Father Name"><input placeholder="Contact 0307-xxxxxxx"><select><option>Class 1</option><option>Class 5</option></select><button class="btn btn-gold">Admission Save Karo</button><p style="margin-top:10px"><span class="badge bg-red">Red = Khud Chor Gaya</span> <span class="badge bg-yellow">Yellow = Principal ne Nikala</span></p></div></div>
+  <div id="p-fee" class="page hidden" style="padding:0 0 110px"><div class="card glass"><h2 style="color:var(--gold)">Fee Alag - Jan to Dec 2030 Tak</h2><p>Teacher Salary + Student Fee Jan-Dec</p></div></div>
+  <div id="p-bday" class="page hidden" style="padding:0 0 110px"><div class="card glass"><h2 style="color:var(--gold)">Birthday 🎂 Student + Teacher</h2><div class="card glass" style="margin:8px 0"><h4>🎂 Aaj ka Birthday - 2 Students</h4><p>Ahmad Khan - Class 5 | Fatima - Class 3</p><button class="btn btn-green"><i class="fab fa-whatsapp"></i> Auto Wish WhatsApp</button></div><div class="card glass" style="margin:8px 0"><h4>🎂 Teacher Birthday - Sir Ahmad - 15 March</h4><button class="btn btn-green">Teacher ko Wish Bhejo</button></div></div></div>
+
+  <div style="text-align:center;padding:20px;margin-bottom:100px;opacity:0.4;font-size:11px">RGS Jallah Jeem VIP System - Year 2030 Tak Supported</div>
+
+  <div class="nav no-print">
+    <div class="nav-i active" onclick="showP('p-dash')"><i class="fas fa-home"></i><small>Home</small></div>
+    <div class="nav-i" onclick="showP('p-att')"><i class="fas fa-th-large"></i><small>Dash</small></div>
+    <div class="nav-i" onclick="showP('p-family')"><i class="fas fa-calculator"></i><small>Calc</small></div>
+    <div class="nav-i" onclick="showP('p-contacts')"><i class="fas fa-wallet"></i><small>Fees</small></div>
+    <div class="nav-i" onclick="showP('p-contacts')"><i class="fas fa-user"></i><small>Profile</small></div>
+  </div>
 </div>
-<div id="tab-fees" class="tab"><div class="card"><h4 style="color:#d9b88a">Monthly Fee - Har Month Paid/Unpaid</h4></div><div id="feeList"></div></div>
-<div id="tab-more" class="tab"><div class="card"><h4 style="color:#d9b88a">More Details - B-Form & Extra</h4><div id="moreList"></div></div></div>
-<div id="tab-reports" class="tab"><div class="card"><h4 style="color:#d9b88a">Profit / Loss Report</h4><label class="lbl">Monthly Kharcha / Expense (Rs)</label><input id="expense" class="inp" type="number" value="0" oninput="render()"><div id="reportBox" style="margin-top:10px"></div><p id="reportText" style="margin-top:10px;color:#94a3b8;font-size:12px"></p></div></div>
-<div id="tab-settings" class="tab"><div class="card" style="text-align:center"><div class="login-logo" style="width:70px;height:70px;margin:0 auto 8px"><img src="logo.png"></div><h4>RGS JALLAH JEEM</h4><p style="color:#94a3b8;font-size:11px;margin:6px 0">Thermal Slip: 80mm</p><button class="btn" style="width:100%;background:#f87171;color:#fff;margin-top:8px" onclick="doLogout()">Logout</button></div></div>
-<button class="fab" onclick="openTab('students')">+</button>
-<div class="bottom"><button id="b-dashboard" class="active" onclick="openTab('dashboard')">Dashboard</button><button id="b-students" onclick="openTab('students')">Students</button><button id="b-fees" onclick="openTab('fees')">Fees</button><button id="b-more" onclick="openTab('more')">More</button><button id="b-reports" onclick="openTab('reports')">Profit</button><button id="b-settings" onclick="openTab('settings')">Settings</button></div>
-</div>
-<div id="detailsModal" class="modal" onclick="if(event.target===this) closeModal()"><div class="modal-box"><div class="m-title" id="modalTitle">More Details</div><label class="lbl">Roll No</label><input id="mRoll" class="inp"><label class="lbl">Name</label><input id="mName" class="inp"><label class="lbl">Father Name</label><input id="mFather" class="inp"><label class="lbl">Class</label><select id="mClass" class="inp"><option>PG</option><option>Nursery</option><option>Prep</option><option>One</option><option>Two</option><option>Three</option><option>Four</option><option>Five</option><option>Six</option><option>Seven</option><option>Eight</option></select><label class="lbl">Monthly Fee</label><input id="mFee" class="inp" type="number"><label class="lbl">B-Form Number</label><input id="mBform" class="inp"><label class="lbl">Birth Date</label><input id="mDob" type="date" class="inp"><label class="lbl">ID Card</label><input id="mIdCard" class="inp"><label class="lbl">Address</label><input id="mAddress" class="inp"><div style="display:flex;gap:8px;margin-top:10px"><button class="btn" style="flex:1" onclick="saveMore()">Save</button><button class="btn" style="flex:1;background:#334155;color:#fff" onclick="closeModal()">Cancel</button></div></div></div>
-<div id="feeModal" class="modal" onclick="if(event.target===this) closeFeeModal()"><div class="modal-box"><div class="m-title" id="feeModalTitle">Monthly Fee</div><div id="feeModalInfo" style="color:#94a3b8;font-size:12px;margin-bottom:8px"></div><div class="month-grid" id="monthGrid"></div><div style="display:flex;gap:8px;margin-top:12px"><button class="btn" style="flex:1" onclick="closeFeeModal()">Close</button><button class="btn" style="flex:1;background:#4ade80;color:#0f172a" onclick="printLastSlip()">Print Slip</button></div></div></div>
-<div id="slipArea"></div>
+
 <script>
-var students=JSON.parse(localStorage.getItem('rgs_students_v2')||localStorage.getItem('rgs_students')||'[]');
-var fees=JSON.parse(localStorage.getItem('rgs_fees_v2')||localStorage.getItem('rgs_fees')||'[]');
-var currentMoreId=null,currentFeeId=null,lastSlip={};
-var months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-function toggleEye(id,btn){var el=document.getElementById(id);el.type=el.type==='password'?'text':'password';btn.textContent=el.type==='text'?'🙈':'👁️';}
-function doLogin(){var u=document.getElementById('u').value.trim(),p=document.getElementById('p').value.trim();var err=document.getElementById('err');if(u==='RGSJALLAHJEEM'&&p==='RGJ123'){document.getElementById('loginPage').style.display='none';document.getElementById('mainApp').style.display='block';err.style.display='none';render();}else{err.style.display='block';err.innerText='Ghalat Password';}}
-function doLogout(){document.getElementById('mainApp').style.display='none';document.getElementById('loginPage').style.display='flex';document.getElementById('p').value='';}
-function openTab(t){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.bottom button').forEach(x=>x.classList.remove('active'));document.getElementById('tab-'+t).classList.add('active');var b=document.getElementById('b-'+t);if(b) b.classList.add('active');render();}
-function getNextRoll(){if(students.length===0) return 1;return Math.max.apply(null,students.map(s=>parseInt(s.roll||0)||0))+1;}
-function addStudent(){var roll=document.getElementById('sRoll').value.trim()||getNextRoll();var n=document.getElementById('sName').value.trim();var f=document.getElementById('sFather').value.trim();var c=document.getElementById('sClass').value;var fee=parseInt(document.getElementById('sFee').value)||0;if(!n){alert('Name');return;}if(!f){alert('Father Name');return;}if(!c){alert('Class');return;}if(students.some(s=>String(s.roll)===String(roll))){alert('Roll exists!');return;}var yr=document.getElementById('yearSel').value;students.push({id:Date.now(),roll:roll,name:n,father:f,class:c,monthlyFee:fee,year:yr,bform:'',dob:'',idcard:'',address:''});localStorage.setItem('rgs_students_v2',JSON.stringify(students));document.getElementById('sRoll').value=getNextRoll();document.getElementById('sName').value='';document.getElementById('sFather').value='';document.getElementById('sClass').value='';alert('Saved Roll:'+roll);openTab('dashboard');}
-function openMore(id){var s=students.find(x=>x.id===id);if(!s) return;currentMoreId=id;document.getElementById('mRoll').value=s.roll||'';document.getElementById('mName').value=s.name||'';document.getElementById('mFather').value=s.father||'';document.getElementById('mClass').value=s.class||'One';document.getElementById('mFee').value=s.monthlyFee||0;document.getElementById('mBform').value=s.bform||'';document.getElementById('mDob').value=s.dob||'';document.getElementById('mIdCard').value=s.idcard||'';document.getElementById('mAddress').value=s.address||'';document.getElementById('modalTitle').innerText='Edit - '+s.name+' (Roll '+s.roll+')';document.getElementById('detailsModal').classList.add('show');}
-function closeModal(){document.getElementById('detailsModal').classList.remove('show');currentMoreId=null;}
-function saveMore(){var s=students.find(x=>x.id===currentMoreId);if(!s) return;s.roll=document.getElementById('mRoll').value.trim();s.name=document.getElementById('mName').value.trim();s.father=document.getElementById('mFather').value.trim();s.class=document.getElementById('mClass').value;s.monthlyFee=parseInt(document.getElementById('mFee').value)||0;s.bform=document.getElementById('mBform').value.trim();s.dob=document.getElementById('mDob').value;s.idcard=document.getElementById('mIdCard').value.trim();s.address=document.getElementById('mAddress').value.trim();localStorage.setItem('rgs_students_v2',JSON.stringify(students));closeModal();render();alert('Saved!');}
-function openFeeModal(id){var s=students.find(x=>x.id===id);if(!s) return;currentFeeId=id;document.getElementById('feeModalTitle').innerText=s.name+' - Roll '+s.roll+' - Fee '+s.monthlyFee;var yr=document.getElementById('yearSel').value;var grid=document.getElementById('monthGrid');grid.innerHTML='';months.forEach((m,i)=>{var paid=fees.some(f=>f.sid===id&&f.year===yr&&f.month===i&&f.paid);var btn=document.createElement('div');btn.className='month-btn '+(paid?'paid':'unpaid');btn.innerText=m+' '+(paid?'✓':'✗');btn.onclick=()=>toggleMonth(id,yr,i);grid.appendChild(btn);});document.getElementById('feeModalInfo').innerText='Class: '+s.class+' | Father: '+s.father+' | Year: '+yr;document.getElementById('feeModal').classList.add('show');}
-function closeFeeModal(){document.getElementById('feeModal').classList.remove('show');currentFeeId=null;}
- function toggleMonth(sid,year,month){var ex=fees.find(f=>f.sid===sid&&f.year===year&&f.month===month);if(ex){ex.paid=!ex.paid;ex.date=new Date().toISOString();}else{fees.push({sid:sid,year:year,month:month,paid:true,date:new Date().toISOString()});}localStorage.setItem('rgs_fees_v2',JSON.stringify(fees));var s=students.find(x=>x.id===sid);lastSlip={sid:sid,year:year,month:month,student:s};openFeeModal(sid);render();if(!ex||ex.paid){printSlip(sid,year,month);}}
-function printSlip(sid,year,month){var s=students.find(x=>x.id===sid);if(!s) return;var fee=s.monthlyFee||0;var mName=months[month];var now=new Date().toLocaleString();var slip=`<div style="width:80mm;padding:4mm;font-family:monospace;color:#000;background:#fff;font-size:12px;line-height:1.4"><center><img src="logo.png" style="width:50px;height:50px"><br><b>RGS JALLAH JEEM</b><br><span style="font-size:10px">RADIANT GRAMMAR SCHOOL</span><br>------------------------------<br><b>FEE RECEIPT</b></center>------------------------------<br>Roll No: <b>${s.roll}</b><br>Name: ${s.name}<br>Father: ${s.father}<br>Class: ${s.class}<br>Month: <b>${mName} ${year}</b><br>Fee: <b>Rs ${fee}</b><br>Status: <b>PAID</b><br>Date: ${now}<br>------------------------------<br><center>Thank You!</center></div>`;document.getElementById('slipArea').innerHTML=slip;document.getElementById('slipArea').style.display='block';setTimeout(()=>{window.print();document.getElementById('slipArea').style.display='none';},200);}
-function printLastSlip(){if(!lastSlip.sid) return;printSlip(lastSlip.sid,lastSlip.year,lastSlip.month);}
-function render(){var yr=document.getElementById('yearSel').value;var q=(document.getElementById('search')?document.getElementById('search').value:'').toLowerCase();var cf=document.getElementById('classFilter')?document.getElementById('classFilter').value:'';var list=students.filter(s=>s.year===yr && (cf==''||s.class===cf) && (String(s.roll).toLowerCase().includes(q)||s.name.toLowerCase().includes(q)||s.father.toLowerCase().includes(q)));var paidMonths=fees.filter(f=>f.year===yr&&f.paid).length;var totalMonths=list.length*12;var unpaid=totalMonths-paidMonths;var collected=0;fees.forEach(f=>{if(f.year===yr&&f.paid){var stu=students.find(s=>s.id===f.sid);if(stu) collected+=parseInt(stu.monthlyFee)||0;}});var expected=list.reduce((a,s)=>a+((parseInt(s.monthlyFee)||0)*12),0);var loss=expected-collected;var exp=parseInt(document.getElementById('expense')?document.getElementById('expense').value:0)||0;localStorage.setItem('rgs_expense',exp);var profit=collected-exp;document.getElementById('tTotal').innerText=list.length;document.getElementById('tStu').innerText=list.length;document.getElementById('tCollected').innerText='Rs '+collected;document.getElementById('tLoss').innerText='Rs '+loss;document.getElementById('tProfit').innerText='Rs '+profit;document.getElementById('tPaidM').innerText=paidMonths;document.getElementById('tUnpaidM').innerText=unpaid;var html='';if(list.length===0) html='<div class="card" style="text-align:center;color:#94a3b8">No Students</div>';else list.forEach(s=>{var sc=fees.filter(f=>f.sid===s.id&&f.year===yr&&f.paid).length;html+='<div class="card" style="text-align:left"><b>Roll '+s.roll+'</b> - <b>'+s.name+'</b><br><span style="color:#d9b88a">'+s.father+'</span> - <b style="color:#4ade80">'+s.class+'</b> - Rs '+(s.monthlyFee||0)+'<br><small style="color:#94a3b8">'+sc+'/12 paid</small><div style="margin-top:6px"><button class="btn btn-sm" onclick="openFeeModal('+s.id+')">Months</button><button class="btn btn-sm" style="background:#334155;color:#fff" onclick="openMore('+s.id+')">More</button><button class="btn btn-sm" style="background:#f87171;color:#fff" onclick="delStu('+s.id+')">Del</button></div></div>';});document.getElementById('dashList').innerHTML=html;document.getElementById('studentList').innerHTML=html;var fl=document.getElementById('feeList');if(fl){var fh='';if(list.length===0) fh='<div class="card" style="text-align:center">No data</div>';else list.forEach(s=>{var paid=fees.filter(f=>f.sid===s.id&&f.year===yr&&f.paid).length;fh+='<div class="card" style="text-align:left"><b>Roll '+s.roll+'</b> - '+s.name+' - '+s.class+' - Rs '+(s.monthlyFee||0)+'<br><div style="margin-top:6px;font-size:11px;color:#94a3b8">'+paid+'/12 Paid</div><button class="btn btn-sm" style="margin-top:6px" onclick="openFeeModal('+s.id+')">Open 12 Months</button></div>';});fl.innerHTML=fh;}var ml=document.getElementById('moreList');if(ml){var mh='';if(list.length===0) mh='<p style="color:#94a3b8">No students</p>';else list.forEach(s=>{mh+='<div class="card" style="text-align:left;border:1px solid #334155"><b>Roll '+s.roll+'</b> - '+s.name+' - '+s.class+'<br><small style="color:#94a3b8">Father: '+s.father+'<br>Fee: Rs '+(s.monthlyFee||0)+'<br>B-Form: '+(s.bform||'-')+'<br>DOB: '+(s.dob||'-')+'<br>ID: '+(s.idcard||'-')+'<br>Addr: '+(s.address||'-')+'</small><br><button class="btn btn-sm" style="margin-top:6px" onclick="openMore('+s.id+')">Edit</button></div>';});ml.innerHTML=mh;}var rb=document.getElementById('reportBox');if(rb){var status=profit>=0?'Profit ✅':'Loss ❌';var color=profit>=0?'#4ade80':'#f87171';rb.innerHTML='<div style="background:#0f172a;padding:12px;border-radius:10px"><div style="display:flex;justify-content:space-between"><span>Expected (12 months):</span><b>Rs '+expected+'</b></div><div style="display:flex;justify-content:space-between;margin-top:6px"><span>Collected:</span><b>Rs '+collected+'</b></div><div style="display:flex;justify-content:space-between;margin-top:6px"><span>Loss:</span><b style="color:#f87171">Rs '+loss+'</b></div><div style="display:flex;justify-content:space-between;margin-top:6px"><span>Expense:</span><b>Rs '+exp+'</b></div><div style="display:flex;justify-content:space-between;margin-top:8px;padding-top:8px;border-top:1px solid #334155"><span>Net Profit/Loss:</span><b style="color:'+color+';font-size:18px">Rs '+profit+' - '+status+'</b></div></div>';}document.getElementById('reportText').innerText='Year '+yr+' | Students: '+list.length+' | Paid Months: '+paidMonths+' | Expected Rs '+expected+' | Collected Rs '+collected;}
-function delStu(id){if(!confirm('Delete?')) return;students=students.filter(s=>s.id!==id);fees=fees.filter(f=>f.sid!==id);localStorage.setItem('rgs_students_v2',JSON.stringify(students));localStorage.setItem('rgs_fees_v2',JSON.stringify(fees));render();}
-function clearAll(){if(!confirm('Delete all?')) return;localStorage.removeItem('rgs_students_v2');localStorage.removeItem('rgs_fees_v2');students=[];fees=[];render();}
-document.getElementById('sRoll').value=getNextRoll();
-document.getElementById('p').addEventListener('keydown', e=>{if(e.key==='Enter') doLogin();});
-</script>
-</body></html>
+let students=[{id:1,name:"Ahmad Khan",father:"Muhammad Khan",phone:"03078134467",class:"Class 5",fee:5000,paid:3000,status:"active",bday:"12 Dec"},{id:2,name:"Ali Raza",father:"Raza Ali",phone:"03001234567",class:"Class 5",fee:5000,paid:5000,status:"active",bday:"05 Jan"},{id:3,name:"Fatima Zahra",father:"Ahmed Ali",phone:"03007813467",class:"Class 3",fee:4000,paid:0,status:"left",bday:"Today"},{id:4,name:"Usman Ghani",father:"Ghani Khan",phone:"03009876543",class:"Class 5",fee:5000,paid:2000,status:"kharij",bday:"15 Mar"},{id:5,name:"Sir Ahmad",father:"Teacher",phone:"03001112222",class:"Teachers",fee:25000,paid:25000,status:"active",bday:"15 Mar"}];
+let family=[{name:"Bacha 1 - Ahmad",fee:5000},{name:"Bacha 2 - Ali",fee:5000},{name:"Bacha 3 - Fatima",fee:4000},{name:"Bacha 4 - Usman",fee:5000},{name:"Bacha 5 - Zain",fee:5000},{name:"Bacha 6 - Ayesha",fee:4000},{name:"Bacha 7 - Bilal",fee:5000}];
+function login(){let u=document.getElementById("user").value,p=document.getElementById("pass").value;if(u==="RGSJALLAHJEEM" && p==="RGS123"){document.getElementById("loginPage").classList.add("hidden");document.getElementById("appPage").classList.remove("hidden");renderContacts();renderFamily();renderJanDec();}else alert("Username: RGSJALLAHJEEM Password: RGS123");}
+function showP(id){document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));document.getElementById(id).classList.remove("hidden");document.querySelectorAll(".nav-i").forEach(n=>n.classList.remove("active"));}
+function renderContacts(){let tb=document.getElementById("contactTable");let s=(document.getElementById("searchContact").value||"").toLowerCase();let cf=document.getElementById("classFilter").value;tb.innerHTML="";students.filter(x=>{let ok=true;if(s) ok=(x.name.toLowerCase().includes(s)||x.father.toLowerCase().includes(s)||x.class.toLowerCase().includes(s));if(cf) ok=ok && x.class===cf;return ok;}).forEach((st,i)=>{let b=st.status==="active"?"bg-green":st.status==="left"?"bg-red":"bg-yellow";let lbl=st.status==="active"?"Active":st.status==="left"?"Chor Gaya":"Principal Nikala";tb.innerHTML+=`<tr><td>${i+1}</td><td><b>${st.name}</b><br><small>${st.father} • ${st.class}</small><br><span class="badge ${b}">${lbl}</span></td><td style="font-weight:700">${st.phone}</td><td><button class="btn btn-green" style="padding:7px 10px;font-size:11px" onclick="waDirect('${st.phone}','${st.name}')"><i class="fab fa-whatsapp"></i> WhatsApp</button></td></tr>`;});}
+function renderFamily(){let d=document.getElementById("familyList");d.innerHTML="";family.forEach((c,i)=>{d.innerHTML+=`<div style="display:flex;gap:8px;margin:6px 0"><input value="${c.name}" onchange="family[${i}].name=this.value" style="flex:1"><input type="number" value="${c.fee}" onchange="family[${i}].fee=parseInt(this.value)||0;calcF()" style="width:110px"></div>`;});calcF();}
+function addChild(){if(family.length>=10){alert("Max 10 bache");return} family.push({name:`Bacha ${family.length+1}`,fee:5000});renderFamily();}
+function calcF(){let t=family.reduce((a,b)=>a+b.fee,0);let dis=Math.round(t*0.15);let net=t-dis;document.getElementById("tot").innerText="Rs "+t.toLocaleString();document.getElementById("disc").innerText="-Rs "+dis.toLocaleString();document.getElementById("net").innerText="Rs "+net.toLocaleString();}
+function renderJanDec(){let d=document.getElementById("janDec");let months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];d.innerHTML=`<div style="margin:10px 0"><b>Bachon ki Fee Jan-Dec:</b><br>${months.map((m,i)=>`<span class="month-chip ${i<2?'month-paid':'month-due'}">${m}: ${i<2?'Paid':'Due'} Rs 5k</span>`).join("")}</div><div><b>Teacher Salary Jan-Dec:</b><br>${months.map((m,i)=>`<span class="month-chip ${i<2?'month-paid':'month-due'}">${m}: ${i<2?'25k Paid':'Due'}</span>`).join("")}</div><small style="opacity:0.6;display:block;margin-top:8px">Year 2030 Tak Supported - Graph Har Jagah</small>`;}
+function printFamily(){let w=window.open("","","width=350,height=700");w.document.write(`<pre style="width:80mm;font-family:monospace;font-size:13px">Radiant Grammar School Jallah Jeem\nFamily Fee Slip - 7 Bache\nDate: ${new Date().toLocaleDateString()}\n------------------------------\n${family.map(c=>`${c.name}: Rs ${c.fee}`).join("\n")}\n------------------------------\n${document.getElementById("tot").innerText}\n${document.getElementById("disc").innerText}\n${document.getElementById("net").innerText}\n------------------------------\nSchool WhatsApp: 0307-8134467\n</pre>`);w.document.close();w.print();}
+function waFamily(){let msg=`Radiant Grammar School Jallah Jeem - Family Fee\n${family.map(c=>c.name+": Rs "+c.fee).join("\n")}\n${document.getElementById("net").innerText}\nSchool: 0307-8134467`;window.open(`https://wa.me/923078134467?text=${encodeURIComponent(msg)}`);}
+function waDirect(phone,name){let st=students.find(s=>s.phone===phone);let baq=st.fee-st.paid;let msg=`As-salamu Alaikum ${name} Walid ${st.father} - ${st.class}\nFee Baqaya: Rs ${baq}\nJama: ${st.paid} | Total: ${st.fee}\nRadiant Grammar School Jallah Je
